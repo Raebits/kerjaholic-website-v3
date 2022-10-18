@@ -1,10 +1,12 @@
 import React from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import AppAuthContext from "../../utils/context/auth-context";
 
 export default function TopNavigationIndex(): JSX.Element {
     
     const router = useRouter()
+    const {isAuth, setAuth} = React.useContext(AppAuthContext)
 
     let listener = null
     const [navBarColor, setNavBarColor] = React.useState<string>("")
@@ -33,7 +35,7 @@ export default function TopNavigationIndex(): JSX.Element {
 
     return (
         
-        <div className = {"fixed w-full z-50 flex "+navBarColor+" p-2  items-center justify-center rounded-md h-16 px-6 md:px-10"}>
+        <div className = {"fixed w-full z-30 flex "+navBarColor+" p-2  items-center justify-center rounded-md h-16 px-6 md:px-10"}>
             <div className = "flex-none h-full flex items-center justify-center">
             <Link href="/">
                     <img className="h-7 md:h-9 w-auto" src="/images/ic_logo.png" />
@@ -47,7 +49,7 @@ export default function TopNavigationIndex(): JSX.Element {
                         <a className="px-2 text-sm md:text-md">Artikel</a>
                     </Link>
                     <a href="https://academy.kerjaholic.com" className="px-2 text-sm md:text-md">Akademi</a>
-                    
+                    <div style={{cursor: "pointer"}} onClick = {() => setAuth(!isAuth)} className = "px-2 text-sm md:text-md">Login</div>
             </div>
         </div>
     )

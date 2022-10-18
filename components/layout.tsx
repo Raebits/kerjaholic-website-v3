@@ -5,6 +5,7 @@ import FooterSectionHome from "../components/home-index/footer-section-component
 import SeperatorGrayComponent from "./home-index/seperator-gray-component";
 import TopNavigationIndex from "./navigation/top-navigation-index";
 import AppPreloadContext from "../utils/context/preload-context";
+import LoginModal from "./auth/login-modal";
 
 export default function Layout({ children, title }: LayoutProps): JSX.Element {
 
@@ -23,6 +24,7 @@ export default function Layout({ children, title }: LayoutProps): JSX.Element {
                 </div>
             )}
 
+            <LoginModal showed = {true}/>
             {/* meta content */}
             <Meta title={title} />
             {/* top navigation */}
