@@ -9,7 +9,6 @@ export async function getAllArticle_json(lastPage: number, take: number, searchW
         take: take,
         searchWord: searchWord
     })
-    
     let request = await fetch(GetAllArticle_EndPoints, {
         method: 'POST',
         headers: {

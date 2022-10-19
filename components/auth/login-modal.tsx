@@ -27,20 +27,19 @@ function useOnClickOutside(ref, handler) {
     );
 }
 
-export default function LoginModal({ showed }: LoginModalProps): JSX.Element {
-    const {isAuth, setAuth} = React.useContext(AppAuthContext)
+export default function LoginModal({ showed, setShowed, doLogin, loading }: LoginModalProps): JSX.Element {
     const router = useRouter()
     const ref = React.useRef();
-
-    useOnClickOutside(ref, () => setAuth(false));
+    console.log(loading)
+    useOnClickOutside(ref, () => setShowed(false));
     return (
         <>
 
         {/* <div className = {`${!isAuth ? 'scale-0' : 'scale-100'} bg-gray-600 bg-opacity-60 transition transform  duration-50 w-full fixed top-0 flex justify-center h-screen items-center z-40`}/> */}
-        {isAuth && (
+        {showed && (
             <div className = {`bg-gray-600 bg-opacity-60 transition transform  duration-50 w-full fixed top-0 flex justify-center h-screen items-center z-40`}/>
         )}
-        <div className = {`${!isAuth ? '-translate-y-full' : 'translate-y-0'} bg-opacity-60 transition transform ease-in-out duration-1000 w-full fixed top-0 flex justify-center h-screen items-center z-40`}>
+        <div className = {`${!showed ? '-translate-y-full' : 'translate-y-1/4'} bg-opacity-60 transition transform ease-in-out duration-1000 w-full fixed top-0 flex justify-center z-40`}>
             <div ref={ref} className =  "flex flex-col px-5 py-3 bg-white w-full mx-2 sm:mx-0 sm:w-2/3 lg:w-1/3 z-50">
 
                 {/* title */}
@@ -50,13 +49,13 @@ export default function LoginModal({ showed }: LoginModalProps): JSX.Element {
                 {/* password  */}
                 <input type="text" onChange = {() => {}} id="disabled-input-2" aria-label="disabled input 2" className="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-600 focus:border-red-600 block w-full p-2.5 " value="Password"/>
                 {/* lupa kata sandi  */}
-                <div className = "flex my-3 px-1">Lupa Kata Sandi ? <p className = "text-red-600 mx-1">Ya</p></div>
+                <div className = "flex my-3 px-1">Lupa Kata Sandi ? <p className = "text-[#ff0000] mx-1">Ya</p></div>
                 {/* tombol login manual */}
-                <div className = "bg-red-600 p-3 rounded-lg flex justify-center text-white">Masuk</div>
+                <div onClick={() => doLogin('manual')} className = "bg-[#ff0000] p-3 rounded-lg flex justify-center text-white">{(loading) ? 'Menunggu ... ' : 'Masuk'}</div>
                 {/* tombol login google  */}
                 <div className  = "bg-white border border-gray-400 p-3 rounded-lg flex justify-center mt-3">Lanjutkan dengan Google</div>
                 {/* belum memiliki akun  */}
-                <div className = "flex my-5">Belum Memiliki AKun <p className = "text-red-600 mx-1">Daftar</p></div>
+                <div onClick={() => doLogin('google')} className = "flex my-5">Belum Memiliki AKun <p className = "text-red-600 mx-1">Daftar</p></div>
             </div>
         </div>
         </>

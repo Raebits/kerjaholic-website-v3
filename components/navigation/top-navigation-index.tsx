@@ -2,12 +2,15 @@ import React from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import AppAuthContext from "../../utils/context/auth-context";
+import MainNavigationProps from "../../types/navigation/main-navigation-props";
+import MiniProfileProps from "../../types/profile/mini-profile-props";
+import MiniProfile from "../profile/mini-profile";
 
-export default function TopNavigationIndex(): JSX.Element {
+export default function TopNavigationIndex({ setShowed }: MainNavigationProps): JSX.Element {
     
     const router = useRouter()
     const {isAuth, setAuth} = React.useContext(AppAuthContext)
-
+    const [openProfile, setOpenProfile] = React.useState<boolean>(false)
     let listener = null
     const [navBarColor, setNavBarColor] = React.useState<string>("")
   
@@ -34,7 +37,7 @@ export default function TopNavigationIndex(): JSX.Element {
     }, [navBarColor])
 
     return (
-        
+        <>
         <div className = {"fixed w-full z-30 flex "+navBarColor+" p-2  items-center justify-center rounded-md h-16 px-6 md:px-10"}>
             <div className = "flex-none h-full flex items-center justify-center">
             <Link href="/">
@@ -49,8 +52,38 @@ export default function TopNavigationIndex(): JSX.Element {
                         <a className="px-2 text-sm md:text-md">Artikel</a>
                     </Link>
                     <a href="https://academy.kerjaholic.com" className="px-2 text-sm md:text-md">Akademi</a>
-                    <div style={{cursor: "pointer"}} onClick = {() => setAuth(!isAuth)} className = "px-2 text-sm md:text-md">Login</div>
+                    {isAuth === null ? (
+                        <div onClick = {() => setOpenProfile(true)} className = "flex space-x-1 items-center px-3">
+                            <div className = "flex animate-pulse justify-center">
+                                <div className="w-8  ">
+                                    <img src="./images/loading-people.svg" alt="profile" className="shadow rounded-full max-w-full h-auto align-middle border-none" />
+                                </div>
+                            </div>
+
+                            <div className = "text-sm md:text-md h-4 w-20 bg-gray-400 animate-pulse rounded-lg"></div>
+                        </div>
+                    ):(
+                        !isAuth ? (
+                            <div style={{cursor: "pointer"}} onClick = {()=>setShowed(true)} className = "text-sm md:text-md bg-[#FF0000] shadow-md px-4 py-2 rounded-lg text-white">Login</div>
+                        ):(
+                            <>
+                            <div className="bg-[#ff0000] text-white px-4 py-2 shadow-lg rounded-md">Project Management</div>
+                            <div onClick = {() => setOpenProfile(true)} className = "flex space-x-3 items-center px-3">
+                                <div className = "flex-none flex justify-center">
+                                    <div className="w-8 ">
+                                        <img src={'https://kerjaholic.s3.ap-southeast-1.amazonaws.com/images/profile/pic/d1d58f73-870d-43da-be37-ffffa7712d3c-nLSPmOVXPM1GD.jpg'} alt="profile" className="shadow rounded-full max-w-full h-auto align-middle border-none" />
+                                    </div>
+                                </div>
+    
+                                <div className = "text-sm md:text-md">Aranda San</div>
+                            </div>
+                            </>
+                        )
+                    )}
+                    
             </div>
         </div>
+        <MiniProfile showed = {openProfile} setShowed = {(isShowed) => setOpenProfile(isShowed)} loading={false}/>
+        </>
     )
 }

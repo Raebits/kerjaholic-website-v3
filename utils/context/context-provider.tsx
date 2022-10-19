@@ -4,11 +4,12 @@ import ContextProviderProps from "../../types/context/context-provider-props";
 import AppRedirectContext from './app-redirect-context';
 import AppPreloadContext from "./preload-context";
 import AppAuthContext from "./auth-context";
+import Cookies from 'universal-cookie';
 
 function ContextProvider<FC>({ children }: ContextProviderProps) {
     const router = useRouter()
     const { ref } = router.query
-    const [isAuth , setIsAuth] = React.useState<boolean>(false);
+    const [isAuth , setIsAuth] = React.useState<boolean>(null);
     const setAuth = (val: boolean) => setIsAuth(val);
 
     const [isPreload, setIsPreload] = React.useState<boolean>(true);
