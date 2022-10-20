@@ -67,7 +67,7 @@ export default function TopNavigationIndex({ setShowed }: MainNavigationProps): 
                             <div style={{cursor: "pointer"}} onClick = {()=>setShowed(true)} className = "text-sm md:text-md bg-[#FF0000] shadow-md px-4 py-2 rounded-lg text-white">Login</div>
                         ):(
                             <>
-                            <div className="bg-[#ff0000] text-white px-4 py-2 shadow-lg rounded-md">Project Management</div>
+                            <div className="bg-[#ff0000] text-white px-4 py-2 shadow-lg rounded-md">Kolaborasi</div>
                             <div onClick = {() => setOpenProfile(true)} className = "flex space-x-3 items-center px-3">
                                 <div className = "flex-none flex justify-center">
                                     <div className="w-8 ">
