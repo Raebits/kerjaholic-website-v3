@@ -3,6 +3,7 @@ import React from "react"
 import MiniProfileProps from "../../types/profile/mini-profile-props";
 import AppAuthContext from "../../utils/context/auth-context";
 import Cookies from 'universal-cookie';
+import { requestUserLogout } from "../../api/profile/request-user-logout";
 
 // Hook
 function useOnClickOutside(ref, handler) {
@@ -36,17 +37,26 @@ export default function MiniProfile({ showed, setShowed, loading }: MiniProfileP
     const [logoutLoading, setLogoutLoading] = React.useState<boolean>(false)
     const {isAuth, setAuth} = React.useContext(AppAuthContext)
     const cookies = new Cookies();
+
+    async function logout() {
+
+        // await firebase.auth().signOut();
+        await setLogoutLoading(true)
+        await requestUserLogout()
+
+        setAuth(false);
+        localStorage.clear();
+
+        cookies.remove("auth", { path: '/' });
+        cookies.remove("token", { path: '/' });
+        cookies.remove("userId", { path: '/' });
+        await setShowed(false)
+        await setLogoutLoading(false)
+        await router.push('/');
+    };
+
     useOnClickOutside(ref, () => setShowed(false));
 
-    async function logout () {
-        setLogoutLoading(true)
-        await setTimeout(async() => {
-            await setAuth(false)
-            await new Cookies().remove("auth")
-            await setShowed(false)
-            await setLogoutLoading(false)
-        }, 2000);
-    }
 
     return (
         <>

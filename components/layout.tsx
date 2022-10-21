@@ -11,6 +11,9 @@ import AppAuthContext from "../utils/context/auth-context";
 import Cookies from 'universal-cookie';
 import FirebaseConfiguration from '../utils/firebase-config'
 import firebase from 'firebase';
+import { requestDataProfileUser } from "../api/profile/request-data-profile-user";
+import { saveDataProfileLocal } from "../helper/profile/save-data-profile-local";
+import { responseErrorHandler } from "../helper/common/response-request-handler";
 
 export default function Layout({ children, title }: LayoutProps): JSX.Element {
     const router = useRouter();
@@ -23,48 +26,96 @@ export default function Layout({ children, title }: LayoutProps): JSX.Element {
     const [loginModal, setLoginModal] = React.useState<boolean>(false)
     const [isLoading, setIsLoading] = React.useState<boolean>(false)
     const [idTokenFirebase, setIDTokenFirebase] = React.useState<string>("-");
-    // Firebase Configuration
-    FirebaseConfiguration();
+    const [firebaseToken, setFirebaseToken] = React.useState<string>("-")
 
     React.useEffect(() => {
-        const messaging = firebase.messaging();
-  
-        messaging.requestPermission().then(() => {
-          return messaging.getToken()
-        }).then(token=>{
-          console.log(token)
-        }).catch((error) => {
-          console.log(error)
-        })
-        
+        // Firebase Configuration
+        FirebaseConfiguration();
+        // firebase init 
+        firebaseInit()
+        // set preload loading end
+        preloadEnd()
+        // update auth context based on cookies value
+        setAuth(new Cookies().get("auth") == "true")
+        // updating, checking jwt validation
+        deviceCheck()
+        // checking require redirect after login
+        checkRedirectAfterLogin()
+    }, [])
+
+    async function deviceCheck(){
+        if(isAuth){
+            const token = new Cookies().get("token")
+            const response = await requestDataProfileUser(token, firebaseToken)
+
+            if (response) {
+            
+                if (response.status == 'success') {
+                    // save data profile in local
+                    saveDataProfileLocal(response, token)
+                } else {
+                    responseErrorHandler(response, (message) => {
+                        console.log(message)
+                        if(response.error.status_code === 401){
+                            // token cannot be verified then kick user out
+                            // dont hit logout API because token also cannot be verified
+                            setAuth(false);
+                            localStorage.clear();
+                            cookies.remove("auth", { path: '/' });
+                            cookies.remove("token", { path: '/' });
+                            cookies.remove("userId", { path: '/' });
+                            router.push('/');
+                        }
+                    })
+                }
+            }
+        }
+    }
+
+    // firebase init and notification permision
+    async function firebaseInit() {
+        try {
+            const messaging = firebase.messaging();
+            await messaging.requestPermission();
+            const token = await messaging.getToken();
+            console.log(token)
+            setFirebaseToken(token)
+            await showFirebaseMessage()
+        } catch (e) {
+            console.log(e);
+        }
+    
         // Event listener that listens for the push notification event in the background
         if ("serviceWorker" in navigator) {
             navigator.serviceWorker.addEventListener("message", (event) => {
-                console.log(event.data.firebaseMessaging.payload.notification.title)
+                console.log(event.data.notification.title,"background handler")
             });
         }
-        messaging.onMessage((payload) => {
-            console.log(payload.data.notiFor)
-            console.log(payload.notification.title)
-            console.log(payload.notification.body)
-        });
-      },[])
+        
+    }
 
-    React.useEffect(() => {
-        preloadEnd()
-        checkLogin()
-        setTimeout(() => {
-        setAuth(
-            new Cookies().get("auth") == "true")
-        }, 1000);
-    }, [])
-    
-    async function checkLogin(){
-        if (redirect == "true" && isAuth != true) {
+    // listener for firebase cloud messaging
+    function showFirebaseMessage() {
+        try {
+            const messaging = firebase.messaging();
+            messaging.onMessage((payload) => {
+                console.log(payload.notification.title);
+                console.log(payload.notification.body);
+            })
+        } catch (e) {
+          console.log(e)
+        }
+    }
+
+    // checking redirect page and need login
+    async function checkRedirectAfterLogin(){
+        console.log(isAuth,'checking')
+        if (redirect == "true" && !isAuth) {
             await setLoginModal(true)
         }
     }
 
+    // login action
     const loginAction = async(typeLogin) => {
         if(typeLogin === 'manual'){
             await setIsLoading(true)
@@ -95,7 +146,7 @@ export default function Layout({ children, title }: LayoutProps): JSX.Element {
                 </div>
             )}
 
-            <LoginModal loading = {isLoading} showed = {loginModal} setShowed = {(isShowed) => setLoginModal(isShowed)} doLogin = {(typeLogin) => loginAction(typeLogin)}/>
+            <LoginModal deviceToken = {firebaseToken} loading = {isLoading} showed = {loginModal} setShowed = {(isShowed) => setLoginModal(isShowed)} />
             {/* meta content */}
             <Meta title={title} />
             {/* top navigation */}

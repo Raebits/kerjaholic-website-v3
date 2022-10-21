@@ -1,7 +1,7 @@
 type LoginModalProps = {
+    deviceToken?: string,
     showed?: boolean,
     setShowed?: (val:boolean) => void,
-    doLogin?: (val:string) => void,
     loading?: boolean
 }
   

@@ -1,7 +1,11 @@
 import { useRouter } from "next/router"
 import React from "react"
+import { requestDataProfileUser } from "../../api/profile/request-data-profile-user";
+import { responseErrorHandler } from "../../helper/common/response-request-handler";
+import { saveDataProfileLocal } from "../../helper/profile/save-data-profile-local";
 import LoginModalProps from "../../types/auth/login-modal-props"
 import AppAuthContext from "../../utils/context/auth-context"
+import { BtnLoginEmailComponent } from "./btn-login-email-component";
 
 // Hook
 function useOnClickOutside(ref, handler) {
@@ -27,11 +31,43 @@ function useOnClickOutside(ref, handler) {
     );
 }
 
-export default function LoginModal({ showed, setShowed, doLogin, loading }: LoginModalProps): JSX.Element {
+export default function LoginModal({ deviceToken, showed, setShowed, loading }: LoginModalProps): JSX.Element {
     const router = useRouter()
+    const { redirect, pn } = router.query;
     const ref = React.useRef();
     console.log(loading)
     useOnClickOutside(ref, () => setShowed(false));
+    // Show Hide Password
+
+    const {isAuth, setAuth} = React.useContext(AppAuthContext)
+    const [email, setEmail] = React.useState<string>("");
+    const [password, setPassword] = React.useState<string>("");
+
+    async function getDataProfile(token: string) {
+        // loading here
+
+        const response = await requestDataProfileUser(token, deviceToken)
+
+        if (response) {
+            
+            if (response.status == 'success') {
+
+                // save data profile in local
+                saveDataProfileLocal(response, token)
+                setAuth(true);
+                setShowed(false)
+
+                if (redirect == "true") {
+                    router.replace(pn as string)
+                } 
+            } else {
+                responseErrorHandler(response, (message) => {
+                    console.log(message)
+                })
+            }
+        }
+    }
+
     return (
         <>
 
@@ -45,20 +81,26 @@ export default function LoginModal({ showed, setShowed, doLogin, loading }: Logi
                 {/* title */}
                 <div className = "text-3xl mb-4 flex items-center justify-center"> Masuk</div>
                 {/* username / email */}
-                <input type="text" onChange = {() => {}} id="disabled-input" aria-label="disabled input" className="mb-6 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-600 focus:border-red-600 block w-full p-2.5 " value="Email"/>
+                <input type="text" onChange={(a) => {setEmail(a.target.value)}} placeholder="Alamat Email" value={email} className="mb-6 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-600 focus:border-red-600 block w-full p-2.5 " />
                 {/* password  */}
-                <input type="text" onChange = {() => {}} id="disabled-input-2" aria-label="disabled input 2" className="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-600 focus:border-red-600 block w-full p-2.5 " value="Password"/>
+                <input type="text" onChange={(a) => {setPassword(a.target.value)}} placeholder="Password" value={password} className="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-600 focus:border-red-600 block w-full p-2.5 " />
                 {/* lupa kata sandi  */}
                 <div className = "flex my-3 px-1">Lupa Kata Sandi ? <p className = "text-[#ff0000] mx-1">Ya</p></div>
                 {/* tombol login manual */}
-                <div onClick={() => doLogin('manual')} className = "bg-[#ff0000] p-3 rounded-lg flex justify-center text-white">{(loading) ? 'Menunggu ... ' : 'Masuk'}</div>
+                {/* Button Login with Email Component  */}
+                <BtnLoginEmailComponent 
+                        email={email}
+                        password={password}
+                        success={(token) => getDataProfile(token)}
+                    />
                 {/* tombol login google  */}
                 <div className  = "bg-white border border-gray-400 p-3 rounded-lg flex justify-center mt-3">Lanjutkan dengan Google</div>
                 {/* belum memiliki akun  */}
-                <div onClick={() => doLogin('google')} className = "flex my-5">Belum Memiliki AKun <p className = "text-red-600 mx-1">Daftar</p></div>
+                <div onClick={() => {}} className = "flex my-5">Belum Memiliki AKun <p className = "text-red-600 mx-1">Daftar</p></div>
             </div>
         </div>
         </>
     )
 }
+
   

@@ -14,8 +14,8 @@
  // Give the service worker access to Firebase Messaging.
  // Note that you can only use Firebase Messaging here, other Firebase libraries
  // are not available in the service worker.**/
- importScripts('https://www.gstatic.com/firebasejs/7.14.4/firebase-app.js');
- importScripts('https://www.gstatic.com/firebasejs/7.14.4/firebase-messaging.js');
+ importScripts('https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js');
+ importScripts('https://www.gstatic.com/firebasejs/8.2.1/firebase-messaging.js');
  // Initialize the Firebase app in the service worker by passing in
  // your app's Firebase config object.
  // https://firebase.google.com/docs/web/setup#config-object
@@ -38,14 +38,33 @@
 // background (Web app is closed or not in browser focus) then you should
 // implement this optional method.
 // [START background_handler]
-messaging.setBackgroundMessageHandler(function(payload) {
-  console.log('[firebase-messaging-sw.js] Received background message ', payload);
-  // Customize notification here
-  const notificationTitle = 'Background Message Title';
-  const notificationOptions = {
-    body: 'Background Message body.',
-    icon: '/images/favicon.png'
-  };
 
-  return self.registration.showNotification(notificationTitle, notificationOptions);
+// v1
+// messaging.setBackgroundMessageHandler(function(payload) {
+//   console.log('[firebase-messaging-sw.js] Received background message ', payload);
+//   // Customize notification here
+//   const notificationTitle = 'Background Message Title';
+//   const notificationOptions = {
+//     body: 'Background Message body.',
+//     icon: '/images/thumbnail.png'
+//   };
+
+//   return self.registration.showNotification(notificationTitle, notificationOptions);
+// });
+
+// v2
+messaging.setBackgroundMessageHandler(function (payload) {
+  console.log('Handling background message ', payload);
+
+  return self.registration.showNotification(payload.data.title, {
+    body: payload.data.body,
+    icon: payload.data.icon,
+    tag: payload.data.tag,
+    data: payload.data.link,
+  });
+});
+
+self.addEventListener('notificationclick', function (event) {
+  event.notification.close();
+  event.waitUntil(self.clients.openWindow(event.notification.data));
 });
