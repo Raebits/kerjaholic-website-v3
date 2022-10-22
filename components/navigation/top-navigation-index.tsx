@@ -13,7 +13,14 @@ export default function TopNavigationIndex({ setShowed }: MainNavigationProps): 
     const [openProfile, setOpenProfile] = React.useState<boolean>(false)
     let listener = null
     const [navBarColor, setNavBarColor] = React.useState<string>("")
-  
+    const [avatar, setAvatar] = React.useState<string>('?')
+    const [username, setUsername] = React.useState<string>('?')
+
+    React.useEffect(() => {
+        setAvatar(localStorage.getItem("avatar"))
+        setUsername(localStorage.getItem("username"))
+    })
+
     React.useEffect(() => {
         if (document.scrollingElement.scrollTop >= 60) {
             setNavBarColor("bg-white shadow-md")
@@ -71,11 +78,11 @@ export default function TopNavigationIndex({ setShowed }: MainNavigationProps): 
                             <div onClick = {() => setOpenProfile(true)} className = "flex space-x-3 items-center px-3">
                                 <div className = "flex-none flex justify-center">
                                     <div className="w-8 ">
-                                        <img src={'https://kerjaholic.s3.ap-southeast-1.amazonaws.com/images/profile/pic/d1d58f73-870d-43da-be37-ffffa7712d3c-nLSPmOVXPM1GD.jpg'} alt="profile" className="shadow rounded-full max-w-full h-auto align-middle border-none" />
+                                        <img src={avatar} alt="profile" className="shadow rounded-full max-w-full h-auto align-middle border-none" />
                                     </div>
                                 </div>
     
-                                <div className = "text-sm md:text-md">Aranda San</div>
+                                <div className = "text-sm md:text-md">{username}</div>
                             </div>
                             </>
                         )

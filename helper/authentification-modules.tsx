@@ -1,6 +1,7 @@
 
 
 import { GetServerSidePropsContext } from 'next'
+import { requestCheckToken } from '../api/auth/request-check-token';
 
 export const withAuth = (gssp: any) => {
     return async (context: GetServerSidePropsContext) => {
@@ -16,20 +17,26 @@ export const withAuth = (gssp: any) => {
             }
         }else{
             // check jwt token valid or not 
-
-            // if false
-            // res.setHeader(
-            //     "Set-Cookie", [
-            //     `token=deleted; Max-Age=0; path=/`,
-            //     `userId=deleted; Max-Age=0; path=/`,
-            //     `auth=deleted; Max-Age=0; path=/`]
-            //     ); 
-            // return {
-            //     redirect: {
-            //         destination: "/",
-            //         permanent: false,
-            //     }
-            // }
+            const response = await requestCheckToken(token)
+            console.log(response)
+            if (response.error) {
+                if(response.error.status_code === 401){
+            
+                    // if false
+                    res.setHeader(
+                        "Set-Cookie", [
+                        `token=deleted; Max-Age=0; path=/`,
+                        `userId=deleted; Max-Age=0; path=/`,
+                        `auth=deleted; Max-Age=0; path=/`]
+                        ); 
+                    return {
+                        redirect: {
+                            destination: "/",
+                            permanent: false,
+                        }
+                    }
+                }
+            }
         }
 
         return await gssp(context)

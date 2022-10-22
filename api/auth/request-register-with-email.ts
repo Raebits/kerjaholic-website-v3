@@ -1,5 +1,5 @@
 import { UserRegisterEmail } from "../../models/auth/user-register-email";
-import { RegisterEmail_EndPoints } from "../endpoints";
+import { RegisterEmail_EndPoints } from "../../endpoints/endpoints";
 
 export const requestRegisterWithEmail = async (user: UserRegisterEmail) => {
 

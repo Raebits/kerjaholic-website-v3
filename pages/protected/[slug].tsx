@@ -7,6 +7,7 @@ import { authGuard } from "../../helper/authentification-modules";
 import HTMLReactParser from "html-react-parser";
 import { GetServerSidePropsContext } from 'next'
 import DetailProjectPageProps from "../../types/project/detail-project-page-props";
+import Layout from "../../components/layout";
 
 function DetailProject({ slug, userIdAccess, dataServer }: DetailProjectPageProps) {
     React.useEffect(() => {
@@ -14,9 +15,9 @@ function DetailProject({ slug, userIdAccess, dataServer }: DetailProjectPageProp
     })
 
     return (
-        <div>
+        <Layout title={"Tambah Kenalan sekaligus Cari Kerjaan | Kerjaholic"}>
             protected routes
-        </div>
+        </Layout>
     )
 }
 

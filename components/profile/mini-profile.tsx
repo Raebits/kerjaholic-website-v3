@@ -35,9 +35,15 @@ export default function MiniProfile({ showed, setShowed, loading }: MiniProfileP
     const router = useRouter()
     const ref = React.useRef();
     const [logoutLoading, setLogoutLoading] = React.useState<boolean>(false)
+    const [avatar, setAvatar] = React.useState<string>('-')
+    const [username, setUsername] = React.useState<string>('-')
     const {isAuth, setAuth} = React.useContext(AppAuthContext)
     const cookies = new Cookies();
 
+    React.useEffect(() => {
+        setAvatar(localStorage.getItem("avatar"))
+        setUsername(localStorage.getItem("username"))
+    })
     async function logout() {
 
         // await firebase.auth().signOut();
@@ -71,12 +77,12 @@ export default function MiniProfile({ showed, setShowed, loading }: MiniProfileP
                 <div className = "flex space-x-3 items-center px-3">
                     <div className = "flex-none flex justify-center">
                         <div className="w-14 ">
-                            <img src={'https://kerjaholic.s3.ap-southeast-1.amazonaws.com/images/profile/pic/d1d58f73-870d-43da-be37-ffffa7712d3c-nLSPmOVXPM1GD.jpg'} alt="profile" className="shadow rounded-full max-w-full h-auto align-middle border-none" />
+                            <img src={avatar !== '-' ? avatar : "./images/loading-people.svg"} alt="profile" className="shadow rounded-full max-w-full h-auto align-middle border-none" />
                         </div>
                     </div>
                     <div className = "flex flex-col">
                         <div className = "text-md">Profil Anda</div>
-                        <div className = "text-sm md:text-md">Aranda San</div>
+                        <div className = "text-sm md:text-md">{username}</div>
                     </div>
                 </div>
                 <hr className = "mt-3"/>

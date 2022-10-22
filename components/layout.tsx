@@ -11,7 +11,7 @@ import AppAuthContext from "../utils/context/auth-context";
 import Cookies from 'universal-cookie';
 import FirebaseConfiguration from '../utils/firebase-config'
 import firebase from 'firebase';
-import { requestDataProfileUser } from "../api/profile/request-data-profile-user";
+import { requestCheckToken } from "../api/auth/request-check-token";
 import { saveDataProfileLocal } from "../helper/profile/save-data-profile-local";
 import { responseErrorHandler } from "../helper/common/response-request-handler";
 
@@ -46,28 +46,21 @@ export default function Layout({ children, title }: LayoutProps): JSX.Element {
     async function deviceCheck(){
         if(isAuth){
             const token = new Cookies().get("token")
-            const response = await requestDataProfileUser(token, firebaseToken)
-
-            if (response) {
+            const response = await requestCheckToken(token)
             
-                if (response.status == 'success') {
-                    // save data profile in local
-                    saveDataProfileLocal(response, token)
-                } else {
-                    responseErrorHandler(response, (message) => {
-                        console.log(message)
-                        if(response.error.status_code === 401){
-                            // token cannot be verified then kick user out
-                            // dont hit logout API because token also cannot be verified
-                            setAuth(false);
-                            localStorage.clear();
-                            cookies.remove("auth", { path: '/' });
-                            cookies.remove("token", { path: '/' });
-                            cookies.remove("userId", { path: '/' });
-                            router.push('/');
-                        }
-                    })
+            if (response.error) {
+                if(response.error.status_code === 401){
+                    // token cannot be verified then kick user out
+                    // dont hit logout API because token also cannot be verified
+                    setAuth(false);
+                    localStorage.clear();
+                    cookies.remove("auth", { path: '/' });
+                    cookies.remove("token", { path: '/' });
+                    cookies.remove("userId", { path: '/' });
+                    router.push('/');
                 }
+            }else{
+                saveDataProfileLocal(response.data, token)
             }
         }
     }
@@ -112,29 +105,6 @@ export default function Layout({ children, title }: LayoutProps): JSX.Element {
         console.log(isAuth,'checking')
         if (redirect == "true" && !isAuth) {
             await setLoginModal(true)
-        }
-    }
-
-    // login action
-    const loginAction = async(typeLogin) => {
-        if(typeLogin === 'manual'){
-            await setIsLoading(true)
-            await setTimeout(async() => {
-                await setAuth(true)
-                await setLoginModal(false)
-                await setIsLoading(false)
-                // cookies.set("token", token, { path: '/' });
-                await cookies.set("auth", "true", { path: '/', secure: true });
-                // Reload Page
-                if (redirect == "true") {
-                    router.replace(pn as string)
-                } 
-                // else {
-                //     router.reload();
-                // }
-            }, 1000);
-            
-            
         }
     }
     

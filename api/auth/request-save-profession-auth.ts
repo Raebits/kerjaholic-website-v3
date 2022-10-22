@@ -1,4 +1,4 @@
-import { SaveProfessionAuth_EndPoints } from "../endpoints";
+import { SaveProfessionAuth_EndPoints } from "../../endpoints/endpoints";
 
 export const requestSaveProfessionAuth = async (categoryID: number, profession: string) => {
 

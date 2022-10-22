@@ -51,7 +51,6 @@ export default function LoginModal({ deviceToken, showed, setShowed, loading }: 
         if (response) {
             
             if (response.status == 'success') {
-
                 // save data profile in local
                 saveDataProfileLocal(response, token)
                 setAuth(true);
