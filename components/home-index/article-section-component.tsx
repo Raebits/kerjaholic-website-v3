@@ -27,17 +27,17 @@ export default function ArticleSectionHome(): JSX.Element {
     return (
         <div className = "relative px-5 md:px-10">
             <div style = {{zIndex:-1}} className = "absolute -top-40 left-0 h-screen w-full bg-cover bg-[url('/images/index/bg-testimonials.png')]  bg-no-repeat "></div>
-            <div className = " flex justify-center text-3xl font-bold py-5">Artikel</div>
+            <div className = " flex justify-center text-3xl font-bold py-5 text-black dark:text-white">Artikel</div>
             
             <div  className = "flex flex-wrap w-full justify-between items-center ">
                 {listArticle.map((obj, i) => 
 
                     <div key={i} className = "w-full lg:w-1/3 flex justify-center items-center">
-                        <div  onClick={() => router.push('article/'+obj.slug)} style={{cursor: "pointer"}} className="block w-full mx-2 my-3 h-64 bg-white ">
+                        <div  onClick={() => router.push('article/'+obj.slug)} style={{cursor: "pointer"}} className="block w-full mx-2 my-3 h-64 bg-white dark:bg-[#0F172A] ">
 
-                                <img className="object-cover w-full h-36" src={obj.image} alt="Article image"/>
+                                <img className="object-cover w-full h-36 rounded-md" src={obj.image} alt="Article image"/>
                             
-                            <div className="mb-1 mt-3 text-md md:text-xl font-bold tracking-tight text-gray-900 ">{obj.title}</div>
+                            <div className="mb-1 mt-3 text-md md:text-xl font-bold tracking-tight text-gray-900 dark:text-white ">{obj.title}</div>
                             <div className = "text-gray-500">
                             {obj.postDate}
                             </div>

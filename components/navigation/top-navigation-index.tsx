@@ -5,10 +5,12 @@ import AppAuthContext from "../../utils/context/auth-context";
 import MainNavigationProps from "../../types/navigation/main-navigation-props";
 import MiniProfileProps from "../../types/profile/mini-profile-props";
 import MiniProfile from "../profile/mini-profile";
+import AppDarkContext from "../../utils/context/dark-context";
 
 export default function TopNavigationIndex({ setShowed }: MainNavigationProps): JSX.Element {
     
     const router = useRouter()
+    const {isDark, setDark} = React.useContext(AppDarkContext)
     const {isAuth, setAuth} = React.useContext(AppAuthContext)
     const [openProfile, setOpenProfile] = React.useState<boolean>(false)
     let listener = null
@@ -23,18 +25,18 @@ export default function TopNavigationIndex({ setShowed }: MainNavigationProps): 
 
     React.useEffect(() => {
         if (document.scrollingElement.scrollTop >= 60) {
-            setNavBarColor("bg-white shadow-md")
+            setNavBarColor("bg-white dark:bg-[#0F172A] shadow-md")
         } else {
-            setNavBarColor("")
+            setNavBarColor("dark:bg-[#0F172A] dark:bg-opacity-50")
         }
         
         listener = document.addEventListener("scroll", e => {
             var scrolled = document.scrollingElement.scrollTop
             if (scrolled <= 200) {
                 if (scrolled >= 60) {
-                    setNavBarColor("bg-white shadow-md")
+                    setNavBarColor("bg-white dark:bg-[#0F172A] shadow-md")
                 } else {
-                    setNavBarColor("")
+                    setNavBarColor("dark:bg-[#0F172A] dark:bg-opacity-50")
                 }
             }
         })
@@ -43,22 +45,38 @@ export default function TopNavigationIndex({ setShowed }: MainNavigationProps): 
         }
     }, [navBarColor])
 
+    function setDarkMode(val){
+        setDark(val)
+        if(val){
+            localStorage.setItem("darkMode","true")
+        }else{
+            localStorage.setItem("darkMode","false")
+        }
+    }
     return (
         <>
-        <div className = {"fixed w-full z-30 flex "+navBarColor+" p-2  items-center justify-center rounded-md h-16 px-6 md:px-10"}>
-            <div className = "flex-none h-full flex items-center justify-center">
-            <Link href="/">
-                    <img className="h-7 md:h-9 w-auto" src="/images/ic_logo.png" />
-            </Link>
-            </div>
-            <div className = "grow h-full flex items-center justify-center">
-                
-            </div>
-            <div className = "flex-none h-full text-center flex items-center justify-center">
+            <div className = {"fixed w-full z-30 flex "+navBarColor+" p-2  items-center justify-center h-16 px-6 md:px-10"}>
+                <div className = "flex-none h-full flex items-center justify-center">
+                <Link href="/">
+                        <img className="h-7 md:h-9 w-auto" src="/images/ic_logo.png" />
+                </Link>
+                </div>
+                <div className = "grow h-full flex items-center justify-center">
+                    
+                </div>
+                <div className = "flex-none h-full text-center flex items-center justify-center">
+                    <div onClick={() => setDarkMode(!isDark)} className="px-3">
+                        {isDark ?(
+                            <img className = "w-5 h-5" src = "./images/sun.svg"/>
+                        ):(
+                            <img className = "w-4 h-4" src = "./images/moon.svg"/>
+                        )}
+                    </div>
+
                     <Link href="/article">
-                        <a className="px-2 text-sm md:text-md">Artikel</a>
+                        <a className="px-2 text-sm md:text-md text-black dark:text-white">Artikel</a>
                     </Link>
-                    <a href="https://academy.kerjaholic.com" className="px-2 text-sm md:text-md">Akademi</a>
+                    <a href="https://academy.kerjaholic.com" className="px-2 text-sm md:text-md text-black dark:text-white">Akademi</a>
                     {isAuth === null ? (
                         <div onClick = {() => setOpenProfile(true)} className = "flex space-x-1 items-center px-3">
                             <div className = "flex animate-pulse justify-center">
@@ -81,16 +99,16 @@ export default function TopNavigationIndex({ setShowed }: MainNavigationProps): 
                                         <img src={avatar} alt="profile" className="shadow rounded-full max-w-full h-auto align-middle border-none" />
                                     </div>
                                 </div>
-    
-                                <div className = "text-sm md:text-md">{username}</div>
+
+                                <div className = "text-sm md:text-md text-black dark:text-white">{username}</div>
                             </div>
                             </>
                         )
                     )}
-                    
+                        
+                </div>
             </div>
-        </div>
-        <MiniProfile showed = {openProfile} setShowed = {(isShowed) => setOpenProfile(isShowed)} loading={false}/>
+            <MiniProfile showed = {openProfile} setShowed = {(isShowed) => setOpenProfile(isShowed)} loading={false}/>
         </>
     )
 }

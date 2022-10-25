@@ -8,7 +8,7 @@ export default function FollowUsFooterSectionHome({ name, icon, link }: FollowUs
                 <div className="flex-none flex justify-between">
                 <a href={link} target="_blank"><img src = {icon}/></a>
                 </div>
-                <div className="grow flex text-gray-700">
+                <div className="grow flex text-gray-700 dark:text-gray-400">
                     <div className = " px-2"><a href={link} target="_blank">{name}</a></div>
                 </div>
         </div>

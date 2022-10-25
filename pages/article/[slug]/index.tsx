@@ -93,17 +93,17 @@ function DetailArticle({ slug, userIdAccess, dataServer, anotherArticleData }: D
             />
             <div ref={layoutRef} className="mt-10 mx-6 md:px-32 " >
                 {/* slug part */}
-                <div className = "flex">
-                <p onClick = {() => router.push('/')} style={{cursor: "pointer"}} className = "mr-2 text-gray-500">Home</p> / <p onClick = {() => router.push('/article')} style={{cursor: "pointer"}} className = "mx-2 text-gray-500">Artikel</p> / <a className = "text-[#FF0000] mx-2 truncate">{detailArticle.title}</a>
+                <div className = "flex text-gray-500 dark:text-white">
+                <p onClick = {() => router.push('/')} style={{cursor: "pointer"}} className = "mr-2 text-gray-500 dark:text-white">Home</p> / <p onClick = {() => router.push('/article')} style={{cursor: "pointer"}} className = "mx-2 text-gray-500 dark:text-white">Artikel</p> / <a className = "text-[#FF0000] mx-2 truncate">{detailArticle.title}</a>
                 </div>
                 {/* judul */}
-                <div className = "text-2xl mt-2">{detailArticle.title}</div>
+                <div className = "text-2xl mt-2 text-gray-500 dark:text-white">{detailArticle.title}</div>
                 {/* article date */}
                 <div className = "flex items-center justify-center mt-3">
                     <div className = "flex-none text-gray-500">{detailArticle.postDate}</div>
                     <div className = "grow"></div>
                     <div className = "flex-none">
-                        <div className = "flex justify-center items-center">
+                        <div className = "flex justify-center items-center text-black dark:text-gray-500">
                             Share
                             <FacebookShareButton
                                 url={shareUrl}
@@ -127,18 +127,18 @@ function DetailArticle({ slug, userIdAccess, dataServer, anotherArticleData }: D
                     </div>
                 </div>
                 {/* content part */}
-                <div className = "mt-5">
+                <div className = "mt-5 text-black dark:text-white">
                     {HTMLReactParser(detailArticle.content)}
                 </div>
                 {/* like button */}
                 <div className = "flex justify-center">
-                    <button className = "flex border border-gray-400 px-3 py-2 rounded-full mt-10 mb-20">
+                    <button className = "flex border border-gray-400 px-3 py-2 rounded-full mt-10 mb-20 bg-transparent dark:bg-white">
                         <img src = "https://kerjaholic.s3.ap-southeast-1.amazonaws.com/images/website-assets/like.png" className = "h-22 w-auto mr-3"/>
                         {detailArticle.liked}
                     </button>
                 </div>
                 {/* artikel lain */}
-                <div className = "flex justify-center text-2xl font-bold">
+                <div className = "flex justify-center text-2xl font-bold text-black dark:text-white">
                     Artikel Lainnya
                 </div>
                 {/* list another article */}
@@ -147,8 +147,8 @@ function DetailArticle({ slug, userIdAccess, dataServer, anotherArticleData }: D
 
                     <div key={i} className = "w-full lg:w-1/3 flex justify-center items-center lg:px-2 mb-6">
                         <div  onClick={() => router.push('/article/'+obj.slug)} style={{cursor: "pointer"}} className="w-full my-3 h-64">
-                            <img className="object-cover" src={obj.image} alt="Article image"/>
-                            <div className="mb-1 mt-3 text-md md:text-xl font-bold tracking-tight text-gray-900 truncate">
+                            <img className="object-cover rounded-lg" src={obj.image} alt="Article image"/>
+                            <div className="mb-1 mt-3 text-md md:text-xl font-bold tracking-tight text-gray-900 dark:text-white truncate">
                                 {obj.title}
                             </div>
                             <div className = "font-poppinsRegular  text-gray-500">

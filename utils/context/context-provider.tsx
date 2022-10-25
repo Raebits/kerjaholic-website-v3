@@ -5,13 +5,17 @@ import AppRedirectContext from './app-redirect-context';
 import AppPreloadContext from "./preload-context";
 import AppAuthContext from "./auth-context";
 import Cookies from 'universal-cookie';
+import AppDarkContext from "./dark-context";
 
 function ContextProvider<FC>({ children }: ContextProviderProps) {
     const router = useRouter()
     const { ref } = router.query
     const [isAuth , setIsAuth] = React.useState<boolean>(null);
     const setAuth = (val: boolean) => setIsAuth(val);
-
+    
+    const [isDark , setIsDark] = React.useState<boolean>(null);
+    const setDark = (val: boolean) => setIsDark(val);
+    
     const [isPreload, setIsPreload] = React.useState<boolean>(true);
     const preloadEnd = () => setIsPreload(false);
     const [showAppRedirect, setShowAppRedirect] = React.useState<boolean>((ref != null));
@@ -21,31 +25,38 @@ function ContextProvider<FC>({ children }: ContextProviderProps) {
     const toggleAppRedirectFull = () => setShowAppRedirectMini(false);
 
     return (
-        <AppAuthContext.Provider
+        <AppDarkContext.Provider
             value={{
-                isAuth,
-                setAuth
+                isDark,
+                setDark
             }}
         >
-            <AppPreloadContext.Provider
+            <AppAuthContext.Provider
                 value={{
-                    isPreload,
-                    preloadEnd
+                    isAuth,
+                    setAuth
                 }}
             >
-                <AppRedirectContext.Provider
+                <AppPreloadContext.Provider
                     value={{
-                        showAppRedirect,
-                        showAppRedirectMini,
-                        toggleAppRedirect,
-                        toggleAppRedirectMini,
-                        toggleAppRedirectFull
+                        isPreload,
+                        preloadEnd
                     }}
-                    >
-                    {children}
-                </AppRedirectContext.Provider>
-            </AppPreloadContext.Provider>
-        </AppAuthContext.Provider>
+                >
+                    <AppRedirectContext.Provider
+                        value={{
+                            showAppRedirect,
+                            showAppRedirectMini,
+                            toggleAppRedirect,
+                            toggleAppRedirectMini,
+                            toggleAppRedirectFull
+                        }}
+                        >
+                        {children}
+                    </AppRedirectContext.Provider>
+                </AppPreloadContext.Provider>
+            </AppAuthContext.Provider>
+        </AppDarkContext.Provider>
     )
 }
 

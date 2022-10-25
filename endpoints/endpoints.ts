@@ -18,7 +18,7 @@ export const ConvertImageToBase64_EndPoints = baseUrl + "social/meta/image"
 // Auth
 export const LoginEmail_EndPoints = baseUrl + "auth/loginV2"
 export const RegisterEmail_EndPoints = baseUrl + "auth/signupV2"
-export const AuthWithProvider_EndPoints = baseUrl + "auth/googleV2"
+export const AuthWithProvider_EndPoints = baseUrl + "auth/googleV4"
 export const SaveProfessionAuth_EndPoints = baseUrl + "training/save/profession"
 export const ForgotPassword_EndPoints = baseUrl + "iForgotMyPassword"
 export const UserCheckAuth_EndPoints = baseUrl + "user/checkAuth"

@@ -14,6 +14,7 @@ import firebase from 'firebase';
 import { requestCheckToken } from "../api/auth/request-check-token";
 import { saveDataProfileLocal } from "../helper/profile/save-data-profile-local";
 import { responseErrorHandler } from "../helper/common/response-request-handler";
+import AppDarkContext from "../utils/context/dark-context";
 
 export default function Layout({ children, title }: LayoutProps): JSX.Element {
     const router = useRouter();
@@ -27,7 +28,19 @@ export default function Layout({ children, title }: LayoutProps): JSX.Element {
     const [isLoading, setIsLoading] = React.useState<boolean>(false)
     const [idTokenFirebase, setIDTokenFirebase] = React.useState<string>("-");
     const [firebaseToken, setFirebaseToken] = React.useState<string>("-")
+    const {isDark, setDark} = React.useContext(AppDarkContext)
 
+    React.useEffect(() => {
+        if(localStorage.getItem("darkMode")){
+            if(localStorage.getItem("darkMode") === 'true'){
+                setDark(true)
+            }else{
+                setDark(false)
+            }
+        }else{
+            localStorage.setItem("darkMode",'false')
+        }
+    })
     React.useEffect(() => {
         // Firebase Configuration
         FirebaseConfiguration();
@@ -109,7 +122,7 @@ export default function Layout({ children, title }: LayoutProps): JSX.Element {
     }
     
     return (
-        <div className="font-poppinsRegular" onClick={() => setshowPopUpMore(!showPopUpMore)}>
+        <div className={`${isDark && 'dark'} font-poppinsRegular`} onClick={() => setshowPopUpMore(!showPopUpMore)}>
             {isPreload && (
                 <div className = "bg-red-600 h-1 animate-pulse absolute flex top-0 w-full">
 
@@ -122,11 +135,11 @@ export default function Layout({ children, title }: LayoutProps): JSX.Element {
             {/* top navigation */}
             <TopNavigationIndex setShowed={(isShowed) => setLoginModal(isShowed)}/>
             {/* content */}
-            <div className = "pt-14">
+            <div className = "pt-14 bg-white dark:bg-[#0F172A]">
                 {children}
             </div>
             {/* footer separator */}
-            <SeperatorGrayComponent />
+            <div className = "bg-gray-100 dark:bg-gray-700 h-1"/>
             {/* Footer Home  */}
             <FooterSectionHome />
         </div>

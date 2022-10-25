@@ -5,9 +5,9 @@ export default function TestimonialsSectionHome(): JSX.Element {
     
 
     return (
-        <div className = "relative px-5 md:px-10 mb-10">
-            <div style = {{zIndex:-1}} className = "absolute -top-40 left-0 h-screen w-full bg-cover bg-[url('/images/index/bg-testimonials.png')]  bg-no-repeat "></div>
-            <div className = " flex justify-center text-3xl font-bold py-5">Testimoni</div>
+        <div className = "relative px-5 md:px-10 pb-10">
+            <div style = {{zIndex:-1}} className = "absolute -top-40 left-0 h-screen w-full bg-cover bg-[url('/images/index/bg-testimonials.png')] dark:bg-[#0F172A]  bg-no-repeat "></div>
+            <div className = " flex justify-center text-3xl font-bold py-5 text-black dark:text-white">Testimoni</div>
             
             <div  className = "flex flex-wrap w-full justify-between items-center ">
 

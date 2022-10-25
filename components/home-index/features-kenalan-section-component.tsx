@@ -6,7 +6,7 @@ export default function FeatureKenalanSectionHome(): JSX.Element {
         
     return (
         <>
-        <div className = " bg-white px-5 md:px-10 mb-5">
+        <div className = " bg-white dark:bg-[#0F172A] px-5 md:px-10 mb-5">
             {/* lg screen */}
             <div className = "hidden h-full md:flex">
                 <div className = "w-1/2  py-10 md:py-20 flex">
@@ -14,25 +14,25 @@ export default function FeatureKenalanSectionHome(): JSX.Element {
                 </div>
                 <div className = " w-1/2">
                     <div className = "md:mt-48 md:mr-5 text-right">
-                        <div className = " text-2xl lg:text-4xl mb-2">Dapatkan teman & </div>
-                        <div className = "text-[#FF0000] text-2xl lg:text-4xl mb-2">pekerjaan <a className = "text-black">di</a> fitur</div>
+                        <div className = "text-black dark:text-white  text-2xl lg:text-4xl mb-2">Dapatkan teman & </div>
+                        <div className = "text-[#FF0000] text-2xl lg:text-4xl mb-2">pekerjaan <a className = "text-black dark:text-white">di</a> fitur</div>
                         <div className = "text-[#FF0000] text-2xl lg:text-4xl mb-10">kenalan</div>
                     </div>
                 </div>
             </div>
             {/* sm screen */}
-            <div className = "md:hidden w-full flex flex-col justify-center items-center text-center">
+            <div className = "md:hidden bg-white dark:bg-[#0F172A] w-full flex flex-col justify-center items-center text-center">
                 <img className = "w-full" src = "/images/index/feature-kenalan-1.png"></img>
-                <div className = " text-xl mb-2 text-[#FF0000] mt-4">Dapatkan teman & pekerjaan <a className = "text-black">di</a> fitur kenalan</div>
+                <div className = " text-xl mb-2 text-[#FF0000] mt-4">Dapatkan teman & pekerjaan <a className = "text-black dark:text-white">di</a> fitur kenalan</div>
             </div>
         </div>
-        <div className = " bg-white px-5 md:px-10 mb-5">
+        <div className = " bg-white dark:bg-[#0F172A] px-5 md:px-10 mb-5">
             {/* lg screen */}
             <div className = "hidden h-full md:flex">
                 
                 <div className = " w-1/2">
                     <div className = "md:mt-48 md:ml-5 text-left">
-                        <div className = "text-[#FF0000] text-2xl lg:text-4xl mb-2"><a className = "text-black">Lamar Kerja dengan</a></div>
+                        <div className = "text-[#FF0000] text-2xl lg:text-4xl mb-2"><a className = "text-black dark:text-white">Lamar Kerja dengan</a></div>
                         <div className = "text-[#FF0000] text-2xl lg:text-4xl mb-10">CV Menarik</div>
                     </div>
                 </div>
@@ -43,10 +43,10 @@ export default function FeatureKenalanSectionHome(): JSX.Element {
             {/* sm screen */}
             <div className = "md:hidden w-full flex flex-col justify-center items-center text-center">
                 <img className = "w-full" src = "/images/index/feature-kenalan-2.png"></img>
-                <div className = " text-xl mb-2 text-[#FF0000] mt-4"><a className = "text-black">Lamar Kerja dengan</a> CV Menarik</div>
+                <div className = " text-xl mb-2 text-[#FF0000] mt-4"><a className = "text-black dark:text-white">Lamar Kerja dengan</a> CV Menarik</div>
             </div>
         </div>
-        <div className = " bg-white px-5 md:px-10 mb-5">
+        <div className = " bg-white dark:bg-[#0F172A] px-5 md:px-10 mb-5">
             {/* lg screen */}
             <div className = "hidden h-full md:flex">
                 <div className = "w-1/2  py-10 md:py-20 flex">
@@ -54,16 +54,16 @@ export default function FeatureKenalanSectionHome(): JSX.Element {
                 </div>
                 <div className = " w-1/2">
                     <div className = "md:mt-48 md:mr-5 text-right">
-                        <div className = " text-2xl lg:text-4xl mb-2"><a className = "text-black">Update Terus</a> Bagikan </div>
+                        <div className = " text-2xl lg:text-4xl mb-2 text-black dark:text-white"><a className = "text-black dark:text-white">Update Terus</a> Bagikan </div>
                         <div className = "text-[#FF0000] text-2xl lg:text-4xl mb-2">aktifitas sehari - hari </div>
-                        <div className = "text-[#FF0000] text-2xl lg:text-4xl mb-10"><a className = "text-black">ke semua teman</a></div>
+                        <div className = "text-[#FF0000] text-2xl lg:text-4xl mb-10"><a className = "text-black dark:text-white">ke semua teman</a></div>
                     </div>
                 </div>
             </div>
             {/* sm screen */}
             <div className = "md:hidden w-full flex flex-col justify-center items-center text-center">
                 <img className = "w-full" src = "/images/index/feature-kenalan-3.png"></img>
-                <div className = " text-xl mb-2 text-[#FF0000] mt-4"><a className = "text-black">Update Terus</a> Bagikan aktifitas sehari - hari <a className = "text-black">ke semua teman</a></div>
+                <div className = " text-xl mb-2 text-[#FF0000] mt-4"><a className = "text-black dark:text-white">Update Terus</a> Bagikan aktifitas sehari - hari <a className = "text-black dark:text-white">ke semua teman</a></div>
             </div>
         </div>
         </>

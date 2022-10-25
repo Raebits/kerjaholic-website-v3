@@ -75,8 +75,8 @@ export default function Index(): JSX.Element {
         <Layout title={"Artikel"}>
             <div className = "mt-10 mx-6 md:px-32 ">
                 {/* breadcrumb */}
-                <div className = "mb-5 flex">
-                    <p onClick = {() => router.push('/')} style={{cursor: "pointer"}} className = "mr-2 text-gray-500">Home</p> / <p className = "mx-2 text-[#FF0000]">Artikel</p>
+                <div className = "mb-5 flex text-gray-500 dark:text-white">
+                    <p onClick = {() => router.push('/')} style={{cursor: "pointer"}} className = "mr-2 text-gray-500 dark:text-white">Home</p> / <p className = "mx-2 text-[#FF0000]">Artikel</p>
                 </div>
                 {/* content */}
                 {/* mdup handler */}
@@ -92,7 +92,7 @@ export default function Index(): JSX.Element {
                                     </div>
                                     <div className = "w-full sm:w-1/2 md:w-2/3 lg:w-3/4">
                                         <div className = "flex flex-col p-2">
-                                            <div className="text-xl text-gray-800" >
+                                            <div className="text-xl text-gray-800 dark:text-white" >
                                             {obj.title}
                                             </div>
                                             <div className="text-gray-500" >
@@ -111,7 +111,7 @@ export default function Index(): JSX.Element {
                                     </div>
                                     <div className = "w-full sm:w-1/2 md:w-2/3 lg:w-3/4">
                                         <div className = "flex flex-col p-2">
-                                            <div className="text-xl text-gray-800" >
+                                            <div className="text-xl text-gray-800 dark:text-white" >
                                             {obj.title}
                                             </div>
                                             <div className="text-gray-500" >

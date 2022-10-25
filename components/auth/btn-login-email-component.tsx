@@ -24,7 +24,7 @@ export function BtnLoginEmailComponent({ email, password, success }: BtnLoginEma
 
 
     return (
-        <div className = "bg-[#ff0000] p-3 rounded-lg flex justify-center text-white"
+        <div className = "bg-[#ff0000] p-3 my-1 rounded-lg flex justify-center text-white"
                 onClick={() => onLoginWithEmail()}>
                 MASUK
         </div>

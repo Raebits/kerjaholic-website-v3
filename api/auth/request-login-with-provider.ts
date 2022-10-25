@@ -1,6 +1,6 @@
 import { ProviderAuthType } from "../../enum/auth/provider-auth-type";
 import { UserRegisterProvider } from "../../models/auth/user-register-provider";
-import { AuthWithProvider_EndPoints } from "../endpoints";
+import { AuthWithProvider_EndPoints } from "../../endpoints/endpoints";
 
 export const requestLoginWithProvider = async (type: ProviderAuthType, idTokenProvider: string, user: UserRegisterProvider) => {
 
