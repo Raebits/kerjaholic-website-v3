@@ -52,7 +52,10 @@ export default function MiniProfile({ showed, setShowed, loading }: MiniProfileP
         await requestUserLogout()
 
         setAuth(false);
-        localStorage.clear();
+        localStorage.removeItem("auth");
+        localStorage.removeItem("avatar");
+        localStorage.removeItem("userId");
+        localStorage.removeItem("username");
 
         cookies.remove("auth", { path: '/' });
         cookies.remove("token", { path: '/' });
@@ -89,11 +92,11 @@ export default function MiniProfile({ showed, setShowed, loading }: MiniProfileP
                 </div>
                 <hr className = "mt-3"/>
                 <div className="flex my-1 py-3 hover:bg-[#FF0000] hover:text-white rounded-lg">
-                    <img className = "px-3" src="./images/bell.svg"/>
+                    <img className = "px-3" src="../images/bell.svg"/>
                     <div className = "block text-black dark:text-white">Indonesia | English</div>
                 </div>
                 <div className="flex my-1 py-3 hover:bg-[#FF0000] hover:text-white rounded-lg">
-                    <img className = "px-3" src="./images/bell.svg"/>
+                    <img className = "px-3" src="../images/bell.svg"/>
                     <div className = "block text-black dark:text-white ">Pengaturan</div>
                 </div>
                 <GoogleLogout
@@ -102,7 +105,7 @@ export default function MiniProfile({ showed, setShowed, loading }: MiniProfileP
                     onLogoutSuccess={logout}
                     render={renderProps => (
                         <div onClick={renderProps.onClick} className="flex my-1 py-3 bg-[#FF0000] text-white rounded-lg">
-                             <img className = "px-3 h-6 w-auto" src="./images/logout.svg"/>
+                             <img className = "px-3 h-6 w-auto" src="../images/logout.svg"/>
                             <div className = "block ">{!logoutLoading ? 'Keluar' : 'Loading . . .'}</div>
                          </div>
                      )} 

@@ -24,3 +24,10 @@
     font-family: 'poppins_thin';
     src: url(../font/Poppins-Thin.ttf);
 }
+
+@layer base {
+    .quill-handler span,em,strong {
+        @apply text-black dark:text-white !important;;
+      }
+    /* ... */
+  }

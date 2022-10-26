@@ -4,4 +4,5 @@ export type BtnLoginGoogleComponentProps = {
     success: (token: string) => void,
     notFound: (user: firebase.User, idTokenFirebase: string) => void
     className?: string 
+    onLoading: (status: boolean) => void
 }

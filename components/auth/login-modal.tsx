@@ -7,7 +7,7 @@ import LoginModalProps from "../../types/auth/login-modal-props"
 import AppAuthContext from "../../utils/context/auth-context"
 import { BtnLoginEmailComponent } from "./btn-login-email-component";
 import { BtnLoginGoogleComponent } from "./btn-login-google-component";
-import RegisterEmailModal from "./register-email-modal";
+import Loading from "../loading";
 
 // Hook
 function useOnClickOutside(ref, handler) {
@@ -33,7 +33,7 @@ function useOnClickOutside(ref, handler) {
     );
 }
 
-export default function LoginModal({ deviceToken, showed, setShowed, loading }: LoginModalProps): JSX.Element {
+export default function LoginModal({ deviceToken, showed, setShowed, loading, setEmailReg, setProviderReg }: LoginModalProps): JSX.Element {
     const router = useRouter()
     const { redirect, pn } = router.query;
     const ref = React.useRef();
@@ -45,10 +45,10 @@ export default function LoginModal({ deviceToken, showed, setShowed, loading }: 
     const [email, setEmail] = React.useState<string>("");
     const [password, setPassword] = React.useState<string>("");
     const [isEmailRegister, setIsEmailRegister] = React.useState<boolean>(false);
-
+    const [isLoading, setIsLoading] = React.useState<boolean>(false);
+    
     async function getDataProfile(token: string) {
         // loading here
-        console.log("get profile")
         const response = await requestDataProfileUser(token, deviceToken)
 
         if (response) {
@@ -58,7 +58,7 @@ export default function LoginModal({ deviceToken, showed, setShowed, loading }: 
                 saveDataProfileLocal(response, token)
                 setAuth(true);
                 setShowed(false)
-
+                setIsLoading(false)
                 if (redirect == "true") {
                     router.replace(pn as string)
                 } 
@@ -72,7 +72,7 @@ export default function LoginModal({ deviceToken, showed, setShowed, loading }: 
 
     return (
         <>
-
+        <Loading showed={isLoading} />
         {/* <div className = {`${!isAuth ? 'scale-0' : 'scale-100'} bg-gray-600 bg-opacity-60 transition transform  duration-50 w-full fixed top-0 flex justify-center h-screen items-center z-40`}/> */}
         {showed && (
             <div className = {`bg-gray-600 bg-opacity-60 transition transform  duration-50 w-full fixed top-0 flex justify-center h-screen items-center z-40`}/>
@@ -94,6 +94,7 @@ export default function LoginModal({ deviceToken, showed, setShowed, loading }: 
                         email={email}
                         password={password}
                         success={(token) => getDataProfile(token)}
+                        onLoading={(status) => setIsLoading(status)}
                     />
                 {/* tombol login google  */}
                 <BtnLoginGoogleComponent 
@@ -101,15 +102,17 @@ export default function LoginModal({ deviceToken, showed, setShowed, loading }: 
                         notFound={(user, token) => {
                             // toggle()
                             // setShowRegisterProvider(true, user, ProviderAuthType.google, token)
+                            setProviderReg(true, user,token)
+                            setShowed(false)
                             console.log(user)
                             console.log
                         }}
+                        onLoading={(status) => setIsLoading(status)}
                     />
                 {/* belum memiliki akun  */}
-                <div  className = "flex my-5 text-black dark:text-white">Belum Memiliki AKun <p className = "text-[#FF0000] dark:text-red-300 mx-1" onClick={() => {setIsEmailRegister(true); setShowed(false)}}>Daftar</p></div>
+                <div onClick={() => setEmailReg(true)} className = "flex my-5 text-black dark:text-white">Belum Memiliki AKun <p className = "text-[#FF0000] dark:text-red-300 mx-1" onClick={() => {setIsEmailRegister(true); setShowed(false)}}>Daftar</p></div>
             </div>
         </div>
-        <RegisterEmailModal showed = {isEmailRegister} setShowed = {(isShowed) => setIsEmailRegister(isShowed)} />
            
         </>
     )

@@ -127,12 +127,12 @@ function DetailArticle({ slug, userIdAccess, dataServer, anotherArticleData }: D
                     </div>
                 </div>
                 {/* content part */}
-                <div className = "mt-5 text-black dark:text-white">
+                <div className = "mt-5 quill-handler">
                     {HTMLReactParser(detailArticle.content)}
                 </div>
                 {/* like button */}
                 <div className = "flex justify-center">
-                    <button className = "flex border border-gray-400 px-3 py-2 rounded-full mt-10 mb-20 bg-transparent dark:bg-white">
+                    <button className = "flex border border-gray-400 dark:border-white px-3 py-2 rounded-full mt-10 mb-20 bg-transparent dark:bg-white">
                         <img src = "https://kerjaholic.s3.ap-southeast-1.amazonaws.com/images/website-assets/like.png" className = "h-22 w-auto mr-3"/>
                         {detailArticle.liked}
                     </button>

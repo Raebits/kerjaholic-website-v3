@@ -8,7 +8,7 @@ import { UserRegisterProvider } from "../../models/auth/user-register-provider";
 
 import { BtnLoginGoogleComponentProps } from "../../types/auth/btn-login-google-component-props";
 
-export function BtnLoginGoogleComponent( { success, notFound, className } : BtnLoginGoogleComponentProps) {
+export function BtnLoginGoogleComponent( { success, notFound, className, onLoading } : BtnLoginGoogleComponentProps) {
 
 
     const [ userProvider, setUserProvider ] = React.useState<UserRegisterProvider>(new UserRegisterProvider());
@@ -17,16 +17,18 @@ export function BtnLoginGoogleComponent( { success, notFound, className } : BtnL
         firebase.auth().signOut();
         // - Listened from state change
         firebase.auth().onAuthStateChanged(function (user) {
+            onLoading(true)
             if (user) {
                 user.getIdToken().then(function (idToken) {
                     requestLogin(idToken, user);
                 });
+            }else{
+                onLoading(false)
             }
         });
     }
 
     async function requestLogin(idToken: string, user: firebase.User) {
-        
         const requestSignIn =  await requestLoginWithProvider(ProviderAuthType.google, idToken, { ...userProvider, firebaseUser: user})
 
         if (requestSignIn.status == 'success') {
@@ -36,9 +38,12 @@ export function BtnLoginGoogleComponent( { success, notFound, className } : BtnL
 
         } else {
             if (requestSignIn.status === 'notFound') {
+                onLoading(false)
                 notFound(user, idToken);
+                console.log('redirect to register page')
             } else {
                 responseErrorHandler(requestSignIn, (message) => {
+                    onLoading(false)
                     console.log(message)
                 })
             }
@@ -66,7 +71,7 @@ export function BtnLoginGoogleComponent( { success, notFound, className } : BtnL
     };
 
     return (
-        <div className={((className != null) ? className : "m-0 p-0")}>
+        <div >
             <GoogleLogin
                 clientId="17773254584-tv67vbs94kln4jvsj86q4setb5ee0uc5.apps.googleusercontent.com"
                 buttonText="Login with Google"

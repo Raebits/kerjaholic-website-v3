@@ -4,11 +4,11 @@ import { requestLoginWithEmail } from "../../api/auth/request-login-with-email";
 import { responseErrorHandler } from "../../helper/common/response-request-handler";
 import { BtnLoginEmailComponentProps } from "../../types/auth/btn-login-email-component-props";
 
-export function BtnLoginEmailComponent({ email, password, success }: BtnLoginEmailComponentProps) {
+export function BtnLoginEmailComponent({ email, password, success, onLoading }: BtnLoginEmailComponentProps) {
 
 
     async function onLoginWithEmail() {
-
+        onLoading(true)
         const response = await requestLoginWithEmail(email, password);
 
         if (response.status == 'success') {

@@ -16,8 +16,8 @@ export default function TestimonialsSectionHome(): JSX.Element {
                         return (
 
                             <div key={"TestimonialsData" + index} className = "w-full lg:w-1/3 flex flex-col justify-center items-center ">
-                                <div className = "border bg-gray-50 border-gray-400 rounded-lg  m-2">
-                                    <div className="block text-sm w-full mx-2 my-3 px-5 py-2  ">
+                                <div className = "border bg-gray-50 dark:bg-slate-700 border-gray-400 rounded-lg  m-2">
+                                    <div className="block text-sm w-full mx-2 my-3 px-5 py-2 text-black dark:text-white  ">
                                     {prop.text}
                                     </div>
                                     <div className = "flex w-full px-5 py-2">
@@ -25,8 +25,8 @@ export default function TestimonialsSectionHome(): JSX.Element {
                                         <img src = {prop.avatar}/>
                                         </div>
                                         <div className="grow flex flex-col justify-center">
-                                            <div className = " px-2 text-base">{prop.name}</div>
-                                            <div className = " px-2 text-sm text-gray-500">{prop.date}</div>
+                                            <div className = "text-black dark:text-white px-2 text-base">{prop.name}</div>
+                                            <div className = " px-2 text-sm text-gray-500 dark:text-gray-300">{prop.date}</div>
                                         </div>
                                     </div>
                                 </div>

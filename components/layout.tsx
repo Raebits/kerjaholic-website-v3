@@ -15,6 +15,8 @@ import { requestCheckToken } from "../api/auth/request-check-token";
 import { saveDataProfileLocal } from "../helper/profile/save-data-profile-local";
 import { responseErrorHandler } from "../helper/common/response-request-handler";
 import AppDarkContext from "../utils/context/dark-context";
+import RegisterEmailModal from "./auth/register-email-modal";
+import RegisterProviderModal from "./auth/register-provider-modal";
 
 export default function Layout({ children, title }: LayoutProps): JSX.Element {
     const router = useRouter();
@@ -26,10 +28,14 @@ export default function Layout({ children, title }: LayoutProps): JSX.Element {
     const {isAuth, setAuth} = React.useContext(AppAuthContext)
     const [loginModal, setLoginModal] = React.useState<boolean>(false)
     const [isLoading, setIsLoading] = React.useState<boolean>(false)
-    const [idTokenFirebase, setIDTokenFirebase] = React.useState<string>("-");
     const [firebaseToken, setFirebaseToken] = React.useState<string>("-")
     const {isDark, setDark} = React.useContext(AppDarkContext)
-
+    const [isEmailRegister, setIsEmailRegister] = React.useState<boolean>(false)
+    const [isProviderRegister, setIsProviderRegister] = React.useState<boolean>(false)
+    
+    const [userRegisterProvider, setUserRegisterProvider] = React.useState<firebase.User>(null);
+    const [idTokenFirebase, setIDTokenFirebase] = React.useState<string>("-");
+   
     React.useEffect(() => {
         if(localStorage.getItem("darkMode")){
             if(localStorage.getItem("darkMode") === 'true'){
@@ -128,8 +134,25 @@ export default function Layout({ children, title }: LayoutProps): JSX.Element {
 
                 </div>
             )}
-
-            <LoginModal deviceToken = {firebaseToken} loading = {isLoading} showed = {loginModal} setShowed = {(isShowed) => setLoginModal(isShowed)} />
+            <RegisterEmailModal showed = {isEmailRegister} setShowed = {(isShowed) => setIsEmailRegister(isShowed)} />
+            <RegisterProviderModal 
+            showed = {isEmailRegister} 
+            setShowed = {(isShowed) => setIsEmailRegister(isShowed)}
+            user = {userRegisterProvider}
+            idTokenFirebase = {idTokenFirebase} />
+        
+            <LoginModal 
+                setEmailReg={(data)=> setIsEmailRegister(data)} 
+                setProviderReg={(state,user,token)=> {
+                    setIsEmailRegister(state)
+                    setIDTokenFirebase(token)
+                    setUserRegisterProvider(user)
+                }} 
+                deviceToken = {firebaseToken} 
+                loading = {isLoading} 
+                showed = {loginModal} 
+                setShowed = {(isShowed) => setLoginModal(isShowed)} 
+            />
             {/* meta content */}
             <Meta title={title} />
             {/* top navigation */}
