@@ -17,12 +17,14 @@ import { responseErrorHandler } from "../helper/common/response-request-handler"
 import AppDarkContext from "../utils/context/dark-context";
 import RegisterEmailModal from "./auth/register-email-modal";
 import RegisterProviderModal from "./auth/register-provider-modal";
+import { ProviderAuthType } from "../enum/auth/provider-auth-type";
 
 export default function Layout({ children, title }: LayoutProps): JSX.Element {
     const router = useRouter();
     const { redirect, pn } = router.query;
 
     const cookies = new Cookies();
+    const [providerAuthType, setProviderAuthType] = React.useState<ProviderAuthType>(null);
     const [ showPopUpMore, setshowPopUpMore ] = React.useState<boolean>()
     const {isPreload, preloadEnd} = React.useContext(AppPreloadContext)
     const {isAuth, setAuth} = React.useContext(AppAuthContext)
@@ -134,19 +136,25 @@ export default function Layout({ children, title }: LayoutProps): JSX.Element {
 
                 </div>
             )}
-            <RegisterEmailModal showed = {isEmailRegister} setShowed = {(isShowed) => setIsEmailRegister(isShowed)} />
-            <RegisterProviderModal 
+            <RegisterEmailModal 
             showed = {isEmailRegister} 
             setShowed = {(isShowed) => setIsEmailRegister(isShowed)}
+            deviceToken = {firebaseToken}  />
+            <RegisterProviderModal 
+            providerType={providerAuthType}
+            showed = {isProviderRegister} 
+            setShowed = {(isShowed) => setIsProviderRegister(isShowed)}
             user = {userRegisterProvider}
-            idTokenFirebase = {idTokenFirebase} />
+            idTokenFirebase = {idTokenFirebase} 
+            deviceToken = {firebaseToken} />
         
             <LoginModal 
                 setEmailReg={(data)=> setIsEmailRegister(data)} 
-                setProviderReg={(state,user,token)=> {
-                    setIsEmailRegister(state)
+                setProviderReg={(state,user,token, provider)=> {
+                    setIsProviderRegister(state)
                     setIDTokenFirebase(token)
                     setUserRegisterProvider(user)
+                    setProviderAuthType(provider)
                 }} 
                 deviceToken = {firebaseToken} 
                 loading = {isLoading} 

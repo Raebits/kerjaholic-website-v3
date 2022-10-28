@@ -67,9 +67,9 @@ export default function TopNavigationIndex({ setShowed }: MainNavigationProps): 
                 <div className = "flex-none h-full text-center flex items-center justify-center">
                     <div onClick={() => setDarkMode(!isDark)} className="px-3">
                         {isDark ?(
-                            <img className = "w-5 h-5" src = "../images/sun.svg"/>
+                            <img className = "w-5 h-5" src = "../icons/ic_sun.svg"/>
                         ):(
-                            <img className = "w-4 h-4" src = "../images/moon.svg"/>
+                            <img className = "w-4 h-4" src = "../icons/ic_moon.svg"/>
                         )}
                     </div>
 

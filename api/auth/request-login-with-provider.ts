@@ -26,7 +26,9 @@ export const requestLoginWithProvider = async (type: ProviderAuthType, idTokenPr
         profileType: user.role,
         companyName: '-',
         phoneActivated: '0',
-        deviceType: 'web'
+        deviceType: 'web',
+        domisile: user.domisile,
+        username: user.username
     })
 
     let headers = {

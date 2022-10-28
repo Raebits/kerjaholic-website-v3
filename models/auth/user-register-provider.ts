@@ -7,4 +7,6 @@ export class UserRegisterProvider {
     gender: string =  "male";
     role: string =  "workerIndividual";
     status: string =  "-"
+    username: string = "";
+    domisile: string = "";
 }

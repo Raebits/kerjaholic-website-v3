@@ -17,7 +17,7 @@ export const ConvertImageToBase64_EndPoints = baseUrl + "social/meta/image"
 
 // Auth
 export const LoginEmail_EndPoints = baseUrl + "auth/loginV2"
-export const RegisterEmail_EndPoints = baseUrl + "auth/signupV2"
+export const RegisterEmail_EndPoints = baseUrl + "auth/signupV4"
 export const AuthWithProvider_EndPoints = baseUrl + "auth/googleV4"
 export const SaveProfessionAuth_EndPoints = baseUrl + "training/save/profession"
 export const ForgotPassword_EndPoints = baseUrl + "iForgotMyPassword"
@@ -33,3 +33,7 @@ export const UpdateProfileCV_EndPoints = baseUrl + "user/profile/cv/update"
 export const VerifyKTP_EndPoints = baseUrl + "user/verify/accountV2"
 export const UpdateLanguage_EndPoints = baseUrl + "user/language"
 export const UserLogout_EndPoints = baseUrl + "user/setLogout"
+
+
+// global
+export const GetListCity_EndPoints = baseUrl + "City"

@@ -5,32 +5,7 @@ import AppAuthContext from "../../utils/context/auth-context";
 import Cookies from 'universal-cookie';
 import { requestUserLogout } from "../../api/profile/request-user-logout";
 import { useGoogleLogout, GoogleLogout } from 'react-google-login'
-
-// Hook
-function useOnClickOutside(ref, handler) {
-    React.useEffect(
-        () => {
-            const listener = (event) => {
-            if (!ref.current || ref.current.contains(event.target)) {
-                return;
-            }
-    
-            handler(event);
-            };
-    
-            document.addEventListener("mousedown", listener);
-            document.addEventListener("touchstart", listener);
-    
-            return () => {
-            document.removeEventListener("mousedown", listener);
-            document.removeEventListener("touchstart", listener);
-            };
-        },
-        [ref, handler]
-    );
-}
-
-
+import { useOnClickOutside } from "../../helper/click-outside";
 
 export default function MiniProfile({ showed, setShowed, loading }: MiniProfileProps): JSX.Element {
     const router = useRouter()
@@ -92,11 +67,11 @@ export default function MiniProfile({ showed, setShowed, loading }: MiniProfileP
                 </div>
                 <hr className = "mt-3"/>
                 <div className="flex my-1 py-3 hover:bg-[#FF0000] hover:text-white rounded-lg">
-                    <img className = "px-3" src="../images/bell.svg"/>
+                    <img className = "px-3" src="../icons/ic_bell.svg"/>
                     <div className = "block text-black dark:text-white">Indonesia | English</div>
                 </div>
                 <div className="flex my-1 py-3 hover:bg-[#FF0000] hover:text-white rounded-lg">
-                    <img className = "px-3" src="../images/bell.svg"/>
+                    <img className = "px-3" src="../icons/ic_bell.svg"/>
                     <div className = "block text-black dark:text-white ">Pengaturan</div>
                 </div>
                 <GoogleLogout
@@ -105,7 +80,7 @@ export default function MiniProfile({ showed, setShowed, loading }: MiniProfileP
                     onLogoutSuccess={logout}
                     render={renderProps => (
                         <div onClick={renderProps.onClick} className="flex my-1 py-3 bg-[#FF0000] text-white rounded-lg">
-                             <img className = "px-3 h-6 w-auto" src="../images/logout.svg"/>
+                             <img className = "px-3 h-6 w-auto" src="../icons/ic_logout.svg"/>
                             <div className = "block ">{!logoutLoading ? 'Keluar' : 'Loading . . .'}</div>
                          </div>
                      )} 

@@ -8,37 +8,16 @@ import AppAuthContext from "../../utils/context/auth-context"
 import { BtnLoginEmailComponent } from "./btn-login-email-component";
 import { BtnLoginGoogleComponent } from "./btn-login-google-component";
 import Loading from "../loading";
+import { useOnClickOutside } from "../../helper/click-outside";
+import { InputDefaultComponent } from "../imput/imput-default-component";
+import { InputPasswordComponent } from "../imput/input-password-component";
 
-// Hook
-function useOnClickOutside(ref, handler) {
-    React.useEffect(
-        () => {
-            const listener = (event) => {
-            if (!ref.current || ref.current.contains(event.target)) {
-                return;
-            }
-    
-            handler(event);
-            };
-    
-            document.addEventListener("mousedown", listener);
-            document.addEventListener("touchstart", listener);
-    
-            return () => {
-            document.removeEventListener("mousedown", listener);
-            document.removeEventListener("touchstart", listener);
-            };
-        },
-        [ref, handler]
-    );
-}
-
-export default function LoginModal({ deviceToken, showed, setShowed, loading, setEmailReg, setProviderReg }: LoginModalProps): JSX.Element {
+export default function LoginModal({ deviceToken, showed, setShowed, showedRegEmail, setShowedRegEmail, showedRegProvider, setShowedRegProvider, loading, setEmailReg, setProviderReg }: LoginModalProps): JSX.Element {
     const router = useRouter()
     const { redirect, pn } = router.query;
-    const ref = React.useRef();
-    console.log(loading)
-    useOnClickOutside(ref, () => setShowed(false));
+    // click outside handler
+    const ref = React.useRef()
+    useOnClickOutside(ref, () => {setShowed(false)});
     // Show Hide Password
 
     const {isAuth, setAuth} = React.useContext(AppAuthContext)
@@ -46,7 +25,7 @@ export default function LoginModal({ deviceToken, showed, setShowed, loading, se
     const [password, setPassword] = React.useState<string>("");
     const [isEmailRegister, setIsEmailRegister] = React.useState<boolean>(false);
     const [isLoading, setIsLoading] = React.useState<boolean>(false);
-    
+
     async function getDataProfile(token: string) {
         // loading here
         const response = await requestDataProfileUser(token, deviceToken)
@@ -61,10 +40,13 @@ export default function LoginModal({ deviceToken, showed, setShowed, loading, se
                 setIsLoading(false)
                 if (redirect == "true") {
                     router.replace(pn as string)
-                } 
+                }
+                // else{
+                //     router.reload()
+                // }
             } else {
                 responseErrorHandler(response, (message) => {
-                    console.log(message)
+                    alert(message)
                 })
             }
         }
@@ -83,9 +65,14 @@ export default function LoginModal({ deviceToken, showed, setShowed, loading, se
                 {/* title */}
                 <div className = "text-3xl mb-4 flex items-center text-black dark:text-white justify-center"> Masuk</div>
                 {/* username / email */}
-                <input type="text" onChange={(a) => {setEmail(a.target.value)}} placeholder="Alamat Email" value={email} className="mb-6 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-600 focus:border-red-600 block w-full p-2.5 " />
-                {/* password  */}
-                <input type="text" onChange={(a) => {setPassword(a.target.value)}} placeholder="Password" value={password} className="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-600 focus:border-red-600 block w-full p-2.5 " />
+
+                <InputDefaultComponent 
+                        onChange={(val) => setEmail(val)} 
+                        placeholder="Alamat Email" 
+                        value={email}
+                    />
+                {/* Password Field  */}
+                <InputPasswordComponent onChange={(val) => setPassword(val)} />
                 {/* lupa kata sandi  */}
                 <div className = "flex my-3 px-1 text-black dark:text-white">Lupa Kata Sandi ? <p className = "text-[#ff0000] dark:text-red-300 mx-1">Ya</p></div>
                 {/* tombol login manual */}

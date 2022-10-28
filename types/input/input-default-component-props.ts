@@ -8,7 +8,6 @@ export type InputDefaultComponentProps = {
     showLabel?: boolean
     type?: string
     value: string
-    className?: string 
     showValidInput?: boolean 
     disabled?: boolean 
 }

@@ -44,7 +44,7 @@ export function BtnLoginGoogleComponent( { success, notFound, className, onLoadi
             } else {
                 responseErrorHandler(requestSignIn, (message) => {
                     onLoading(false)
-                    console.log(message)
+                    alert(message)
                 })
             }
         }
@@ -55,9 +55,7 @@ export function BtnLoginGoogleComponent( { success, notFound, className, onLoadi
         // init Auth State Changed
         initOnAuthStateChanged()
         let googleUser = data as GoogleLoginResponse
-        console.log(googleUser,'1')
         if (googleUser) {
-            console.log(googleUser,'2')
             var credential = firebase.auth.GoogleAuthProvider.credential(googleUser.getAuthResponse().id_token);
 
             var requestSignIn = await firebase.auth().signInWithCredential(credential)
@@ -71,7 +69,7 @@ export function BtnLoginGoogleComponent( { success, notFound, className, onLoadi
     };
 
     return (
-        <div >
+        <div onClick = {() => onLoading(true)}>
             <GoogleLogin
                 clientId="17773254584-tv67vbs94kln4jvsj86q4setb5ee0uc5.apps.googleusercontent.com"
                 buttonText="Login with Google"
@@ -79,7 +77,7 @@ export function BtnLoginGoogleComponent( { success, notFound, className, onLoadi
                 onFailure={(error) => handleFailure(error)}
                 render={renderProps => (
                    <div onClick={renderProps.onClick} className = "bg-white border border-gray-500 p-3 my-1 rounded-lg flex justify-center text-white">
-                        <img src="../images/ic_google.png" width="26px" height="25px"/>
+                        <img src="../icons/ic_google.png" width="26px" height="25px"/>
                         <div className="text-black ml-3">Lanjutkan dengan Google</div>
                     </div>
                 )} 

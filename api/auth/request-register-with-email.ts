@@ -8,7 +8,7 @@ export const requestRegisterWithEmail = async (user: UserRegisterEmail) => {
         password: user.password,
         deviceToken: '-',
         phoneNumber: user.phoneNumber,
-        displayName: user.firstName + ' ' + user.lastName,
+        displayName: user.displayName,
         gender: user.gender,
         birthday: user.dateBirth,
         referalSender: '-',
@@ -21,7 +21,10 @@ export const requestRegisterWithEmail = async (user: UserRegisterEmail) => {
         profileType: user.role,
         companyName: '-',
         phoneActivated: '0',
-        deviceType: 'web'
+        deviceType: 'web',
+        username: user.username,
+        userName: user.userName,
+        domisile: user.domisile
     })
 
     console.log(JSON.parse(body))

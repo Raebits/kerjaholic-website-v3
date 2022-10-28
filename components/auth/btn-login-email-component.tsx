@@ -17,7 +17,8 @@ export function BtnLoginEmailComponent({ email, password, success, onLoading }: 
         } else {
             
             responseErrorHandler(response, (message) => {
-                console.log("message", message)
+                alert(message)
+                onLoading(false)
             })
         }
     };
