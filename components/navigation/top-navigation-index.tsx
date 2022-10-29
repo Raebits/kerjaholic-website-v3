@@ -23,27 +23,27 @@ export default function TopNavigationIndex({ setShowed }: MainNavigationProps): 
         setUsername(localStorage.getItem("username"))
     })
 
-    React.useEffect(() => {
-        if (document.scrollingElement.scrollTop >= 60) {
-            setNavBarColor("bg-white dark:bg-[#0F172A] shadow-md")
-        } else {
-            setNavBarColor("dark:bg-[#0F172A] dark:bg-opacity-50")
-        }
+    // React.useEffect(() => {
+    //     if (document.scrollingElement.scrollTop >= 60) {
+    //         setNavBarColor("bg-white dark:bg-[#0F172A] shadow-md")
+    //     } else {
+    //         setNavBarColor("dark:bg-[#0F172A] dark:bg-opacity-50")
+    //     }
         
-        listener = document.addEventListener("scroll", e => {
-            var scrolled = document.scrollingElement.scrollTop
-            if (scrolled <= 200) {
-                if (scrolled >= 60) {
-                    setNavBarColor("bg-white dark:bg-[#0F172A] shadow-md")
-                } else {
-                    setNavBarColor("dark:bg-[#0F172A] dark:bg-opacity-50")
-                }
-            }
-        })
-        return () => {
-            document.removeEventListener("scroll", listener)
-        }
-    }, [navBarColor])
+    //     listener = document.addEventListener("scroll", e => {
+    //         var scrolled = document.scrollingElement.scrollTop
+    //         if (scrolled <= 200) {
+    //             if (scrolled >= 60) {
+    //                 setNavBarColor("bg-white dark:bg-[#0F172A] shadow-md")
+    //             } else {
+    //                 setNavBarColor("dark:bg-[#0F172A] dark:bg-opacity-50")
+    //             }
+    //         }
+    //     })
+    //     return () => {
+    //         document.removeEventListener("scroll", listener)
+    //     }
+    // }, [navBarColor])
 
     function setDarkMode(val){
         setDark(val)
@@ -55,7 +55,8 @@ export default function TopNavigationIndex({ setShowed }: MainNavigationProps): 
     }
     return (
         <>
-            <div className = {"fixed w-full z-30 flex "+navBarColor+" p-2  items-center justify-center h-16 px-6 md:px-10"}>
+            {/* <div className = {"fixed w-full z-30 flex "+navBarColor+" p-2  items-center justify-center h-16 px-6 md:px-10"}> */}
+            <div className = {"fixed w-full z-30 flex bg-white dark:bg-[#0F172A] shadow-md p-2  items-center justify-center h-16 px-6 md:px-10"}>
                 <div className = "flex-none h-full flex items-center justify-center">
                 <Link href="/">
                         <img className="h-7 md:h-9 w-auto" src="../images/ic_logo.png" />
@@ -77,6 +78,9 @@ export default function TopNavigationIndex({ setShowed }: MainNavigationProps): 
                         <a className="px-2 text-sm md:text-md text-black dark:text-white">Artikel</a>
                     </Link>
                     <a href="https://academy.kerjaholic.com" className="px-2 text-sm md:text-md text-black dark:text-white">Akademi</a>
+                    <Link href="/kolaborasi">
+                        <a className="px-2 text-sm md:text-md text-black dark:text-white">Kolaborasi</a>
+                    </Link>
                     {isAuth === null ? (
                         <div onClick = {() => setOpenProfile(true)} className = "flex space-x-1 items-center px-3">
                             <div className = "flex animate-pulse justify-center">
@@ -88,11 +92,12 @@ export default function TopNavigationIndex({ setShowed }: MainNavigationProps): 
                             <div className = "text-sm md:text-md h-4 w-20 bg-gray-400 animate-pulse rounded-lg"></div>
                         </div>
                     ):(
-                        !isAuth ? (
+                        <>
+                        {!isAuth && (
                             <div style={{cursor: "pointer"}} onClick = {()=>setShowed(true)} className = "text-sm md:text-md bg-[#FF0000] shadow-md px-4 py-2 rounded-lg text-white">Login</div>
-                        ):(
-                            <>
-                            <div className="bg-[#ff0000] text-white px-4 py-2 shadow-lg rounded-md">Kolaborasi</div>
+                        )}
+
+                        {isAuth && (  
                             <div onClick = {() => setOpenProfile(true)} className = "flex space-x-3 items-center px-3">
                                 <div className = "flex-none flex justify-center">
                                     <div className="w-8 ">
@@ -102,8 +107,9 @@ export default function TopNavigationIndex({ setShowed }: MainNavigationProps): 
 
                                 <div className = "text-sm md:text-md text-black dark:text-white">{username}</div>
                             </div>
-                            </>
-                        )
+                        )}
+                        </>
+                        
                     )}
                         
                 </div>

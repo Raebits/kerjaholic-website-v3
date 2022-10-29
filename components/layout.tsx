@@ -49,6 +49,20 @@ export default function Layout({ children, title }: LayoutProps): JSX.Element {
             localStorage.setItem("darkMode",'false')
         }
     })
+
+    // React.useEffect(() => {
+    //     var observer = new IntersectionObserver(function(entries) {
+    //         // if(entries[0].isIntersecting === true){
+    //         //     console.log('Element is fully visible in screen');
+    //         // }else{
+    //         //     console.log("element invisible")
+    //         // }
+    //         console.log(entries[0].isIntersecting)
+    //     }, { threshold: [1] });
+
+    //     observer.observe(document.querySelector("#banner"));
+    // })
+
     React.useEffect(() => {
         // Firebase Configuration
         FirebaseConfiguration();

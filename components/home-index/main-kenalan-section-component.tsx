@@ -5,7 +5,8 @@ export default function MainKenalanSectionHome({ heightDevice }: MainKenalanSect
     
     return (
 
-        <div className = "relative h-screen mb-10 bg-white bg-no-repeat bg-cover bg-center md:bg-left-top bg-[url('/images/index/bg-main-section-kenalan.png')] md:bg-[url('/images/index/bg-main-section-kenalan-desktop.png')]">
+        // <div className = "relative h-screen mb-10 bg-white bg-no-repeat bg-cover bg-center md:bg-left-top bg-[url('/images/index/bg-main-section-kenalan.png')] md:bg-[url('/images/index/bg-main-section-kenalan-desktop.png')]">
+        <div className = "relative h-screen md:mt-16 mb-10 bg-white bg-no-repeat bg-cover bg-center md:bg-left-top bg-[url('/images/index/bg-main-section-kenalan.png')] md:bg-[url('/images/index/bg-main-section-kenalan-desktop.png')]">
             {/* lg screen */}
             <div className = "hidden h-full md:flex">
                 <div className = "w-1/2">
