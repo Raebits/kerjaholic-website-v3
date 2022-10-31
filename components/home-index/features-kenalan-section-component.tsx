@@ -1,7 +1,5 @@
 import React from "react";
 
-import FeatureKenalanComponent from "./feature-kenalan-component";
-
 export default function FeatureKenalanSectionHome(): JSX.Element {
         
     return (

@@ -3,7 +3,7 @@ import React from "react";
 import { InputPasswordComponentProps } from "../../types/input/input-password-component-props";
 
 
-export function InputPasswordComponent( { onChange, placeholder, label, showValidInput } : InputPasswordComponentProps) {
+export function InputPasswordComponent( {showTitle, onChange, placeholder, title, showValidInput } : InputPasswordComponentProps) {
     const router = useRouter()
 
     const [passwordHide, setPasswordHide] = React.useState<boolean>(true);
@@ -19,6 +19,9 @@ export function InputPasswordComponent( { onChange, placeholder, label, showVali
     return (
         <>
         <div className="flex flex-col mb-3">
+            {(showTitle == true) && (
+                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">{title}</label>
+            )}
             <div className="flex ">
                 <input 
                     type={(passwordHide)? "password": "text"}
@@ -39,10 +42,12 @@ export function InputPasswordComponent( { onChange, placeholder, label, showVali
                 </span>
             </div>
             {(isInvalid()) && (
-                <p className="mt-2 text-sm text-red-600 dark:text-red-500">
+                <div className="flex mt-1 text-xs text-red-600 dark:text-red-500">
                     <span className="font-medium">Oops!</span>
-                    '{label}' {((router.locale == "en") ? " cannot empty" : " tidak boleh kosong")}
-                </p>
+                    <div className = "mx-1">
+                        '{title}' {((router.locale == "en") ? " tidak boleh kosong" : " tidak boleh kosong")}
+                    </div>
+                </div>
             )}
         </div>
         </>

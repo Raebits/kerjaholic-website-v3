@@ -122,29 +122,34 @@ export default function RegisterProviderModal({ deviceToken, showed, setShowed, 
         {showed && (
             <div className = {`bg-gray-600 bg-opacity-60 transition transform  duration-50 w-full fixed top-0 flex justify-center h-screen items-center z-40`}/>
         )}
-        <div className = {`${!showed ? '-translate-y-full' : 'translate-y-1/4'} bg-opacity-60 transition transform ease-in-out duration-1000 w-full fixed top-0 flex justify-center z-40`}>
+        <div className = {`${!showed ? '-translate-y-full' : 'translate-y-1/4'} bg-opacity-60 transition transform ease-in-out duration-1000 w-full fixed -top-20 flex justify-center z-40`}>
             <div ref={ref} className =  "flex flex-col px-5 py-3 bg-white w-full mx-2 sm:mx-0 sm:w-2/3 lg:w-1/3 z-50">              
                 {/* title */}
                 <div className = "text-3xl mb-4 flex items-center justify-center"> Daftar</div>
                 <InputDefaultComponent 
-                    label="Username"
+                    title="Username"
                     placeholder="Username"
                     onChange={(val) => setUserProvider({...userProvider, username: val})}
                     value={userProvider.username}
                     showValidInput={showValidInput}
+                    showTitle = {true}
                 />
                 <InputDefaultComponent 
-                    label="Phone Number"
+                    title="Phone Number"
                     placeholder="Phone Number"
                     onChange={(val) => setUserProvider({...userProvider, phoneNumber: val})}
                     value={userProvider.phoneNumber}
                     showValidInput={showValidInput}
+                    showTitle={true}
                 />
                 <InputSelectComponent
                     placeHolder="Pilih Domisili"
                     list={listCity}
                     value = "id" // define key for value
                     label = "city" // define key for label
+                    title = "Domisili"
+                    showTitle = {true}
+                    showValidInput = {true}
                     fetchData = {(val) => val? getCity("") : setListCity([])}
                     onSelect={(val) => {
                         setUserProvider({...userProvider, domisile: val.id})
@@ -153,7 +158,7 @@ export default function RegisterProviderModal({ deviceToken, showed, setShowed, 
                     loading = {loadingCity}
                 />
 
-                    <div onClick={() => checkCompleteData(() => onRegister())} className=" bg-[#FF0000] px-4 py-1">
+                    <div onClick={() => checkCompleteData(() => onRegister())} className=" bg-[#FF0000] px-4 py-4 my-3 rounded-full text-white text-center">
                         Lanjutkan
                     </div>
             </div>

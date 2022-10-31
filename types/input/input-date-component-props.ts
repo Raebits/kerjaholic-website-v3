@@ -1,5 +1,5 @@
 export type InputDateComponentProps = {
-    label: string
+    title: string
     hideLabel?: boolean
     onChange: (value: string) => void
     outFormat?: string

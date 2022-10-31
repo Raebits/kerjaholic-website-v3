@@ -1,4 +1,5 @@
 export type InputSelectComponentProps = {
+    showTitle? : boolean
     placeHolder: string
     loading: boolean
     onSelect: (obj: selectedObject) => void
@@ -7,6 +8,8 @@ export type InputSelectComponentProps = {
     list: ListType[]
     value: string
     label:string
+    title: string
+    showValidInput? : boolean
 }
 
 type ListType = {

@@ -1,7 +1,7 @@
 import React from "react";
 import { InputChexboxComponentProps } from "../../types/input/input-checkbox-component-props";
 
-export function InputCheckboxComponent( { onChange, label, name, initValue, children} : InputChexboxComponentProps) {
+export function InputCheckboxComponent( { onChange, title, name, initValue, children} : InputChexboxComponentProps) {
 
     return (
         <div className="flex items-center">

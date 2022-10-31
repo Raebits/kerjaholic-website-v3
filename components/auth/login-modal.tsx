@@ -11,6 +11,7 @@ import Loading from "../loading";
 import { useOnClickOutside } from "../../helper/click-outside";
 import { InputDefaultComponent } from "../imput/imput-default-component";
 import { InputPasswordComponent } from "../imput/input-password-component";
+import { ProviderAuthType } from "../../enum/auth/provider-auth-type";
 
 export default function LoginModal({ deviceToken, showed, setShowed, showedRegEmail, setShowedRegEmail, showedRegProvider, setShowedRegProvider, loading, setEmailReg, setProviderReg }: LoginModalProps): JSX.Element {
     const router = useRouter()
@@ -59,7 +60,7 @@ export default function LoginModal({ deviceToken, showed, setShowed, showedRegEm
         {showed && (
             <div className = {`bg-gray-600 bg-opacity-60 transition transform  duration-50 w-full fixed top-0 flex justify-center h-screen items-center z-40`}/>
         )}
-        <div className = {`${!showed ? '-translate-y-full' : 'translate-y-1/4'} bg-opacity-60 transition transform ease-in-out duration-1000 w-full fixed top-0 flex justify-center z-40`}>
+        <div className = {`${!showed ? '-translate-y-full' : 'translate-y-1/4'} bg-opacity-60 transition transform ease-in-out duration-1000 w-full fixed -top-0 flex justify-center z-40`}>
             <div ref={ref} className =  "flex flex-col px-5 py-3 bg-white dark:bg-gray-800 w-full mx-2 sm:mx-0 sm:w-2/3 lg:w-1/3 z-50">
 
                 {/* title */}
@@ -89,7 +90,7 @@ export default function LoginModal({ deviceToken, showed, setShowed, showedRegEm
                         notFound={(user, token) => {
                             // toggle()
                             // setShowRegisterProvider(true, user, ProviderAuthType.google, token)
-                            setProviderReg(true, user,token)
+                            setProviderReg(true, user,token, ProviderAuthType.google)
                             setShowed(false)
                             console.log(user)
                             console.log

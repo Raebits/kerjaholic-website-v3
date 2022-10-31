@@ -1,7 +1,5 @@
 import React from "react";
-import MainKenalanSectionComponentProps from "../../types/home/main-kenalan-section-component-props";
-
-export default function MainKenalanSectionHome({ heightDevice }: MainKenalanSectionComponentProps): JSX.Element {
+export default function MainKenalanSectionHome(): JSX.Element {
     
     return (
 

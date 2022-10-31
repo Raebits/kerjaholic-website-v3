@@ -12,17 +12,11 @@ import Cookies from "universal-cookie";
 
 function Index(): JSX.Element {
 
-    const [ heightDevice, setHeightDevice] = React.useState(0)
-
-    React.useEffect(() => {
-        setHeightDevice(window.innerHeight)
-    }, [])
-
     return (
         <Layout title={"Tambah Kenalan sekaligus Cari Kerjaan | Kerjaholic"}>
             <div className="-mt-14">
                 {/* Main Section */}
-                <MainKenalanSectionHome heightDevice={heightDevice} />
+                <MainKenalanSectionHome />
                 {/* Feature App Section */}
                 <FeatureKenalanSectionHome />
 

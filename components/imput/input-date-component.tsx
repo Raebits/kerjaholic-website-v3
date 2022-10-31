@@ -4,7 +4,7 @@ import { InputDateComponentProps } from "../../types/input/input-date-component-
 import moment from "moment";
 import { useRouter } from "next/router";
 
-export function InputDateComponent( { onChange, outFormat, label, hideLabel, showValidInput, value } : InputDateComponentProps) {
+export function InputDateComponent( { onChange, outFormat, title, hideLabel, showValidInput, value } : InputDateComponentProps) {
 
     const [ newValue, setNewValue ] = React.useState<string>("")
 
@@ -20,7 +20,7 @@ export function InputDateComponent( { onChange, outFormat, label, hideLabel, sho
     return (
         <div className = "flex flex-col mb-3">
             {(!hideLabel) && (
-                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">{label}</label>
+                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">{title}</label>
             )}
             <div className="flex">
                 <span className="inline-flex items-center px-3 text-xs text-gray-900 bg-gray-200 rounded-l-lg border border-r-0 border-gray-300 dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
@@ -40,10 +40,12 @@ export function InputDateComponent( { onChange, outFormat, label, hideLabel, sho
                 />
             </div>
             {(isInvalid()) && (
-                <p className="mt-2 text-sm text-red-600 dark:text-red-500">
+                <div className="flex mt-1 text-xs text-red-600 dark:text-red-500">
                     <span className="font-medium">Oops!</span>
-                    '{label}' {((router.locale == "en") ? " cannot empty" : " tidak boleh kosong")}
-                </p>
+                    <div className = "mx-1">
+                        '{title}' {((router.locale == "en") ? " tidak boleh kosong" : " tidak boleh kosong")}
+                    </div>
+                </div>
             )}
         </div>
     );

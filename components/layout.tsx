@@ -64,19 +64,27 @@ export default function Layout({ children, title }: LayoutProps): JSX.Element {
     // })
 
     React.useEffect(() => {
+        // ===== start firebase function =====
         // Firebase Configuration
         FirebaseConfiguration();
         // firebase init 
         firebaseInit()
+        // ===== end of firebase function =====
+
         // set preload loading end
         preloadEnd()
         // update auth context based on cookies value
         setAuth(new Cookies().get("auth") == "true")
         // updating, checking jwt validation
         deviceCheck()
-        // checking require redirect after login
-        checkRedirectAfterLogin()
+       
     }, [])
+
+    React.useEffect(() => {
+        console.log("router changed")
+         // checking require redirect after login
+         checkRedirectAfterLogin()   
+    },[redirect == "true"])
 
     async function deviceCheck(){
         if(isAuth){
@@ -140,6 +148,7 @@ export default function Layout({ children, title }: LayoutProps): JSX.Element {
         console.log(isAuth,'checking')
         if (redirect == "true" && !isAuth) {
             await setLoginModal(true)
+            console.log("modal opened")
         }
     }
     

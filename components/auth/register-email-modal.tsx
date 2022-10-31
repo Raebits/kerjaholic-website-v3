@@ -20,6 +20,7 @@ import { requestRegisterWithEmail } from "../../api/auth/request-register-with-e
 import { checkDataModelEmpty } from "../../helper/common/check-data-model-empty";
 import { isValidEmail } from "../../helper/auth/is-valid-email";
 import { InputCheckboxComponent } from "../imput/input-checkbox-component";
+import { InputPhoneComponent } from "../imput/imput-phone-component";
 
 
 export default function RegisterEmailModal({ deviceToken, showed, setShowed, loading }: RegisterEmailModalProps): JSX.Element {
@@ -131,72 +132,80 @@ export default function RegisterEmailModal({ deviceToken, showed, setShowed, loa
             <div ref={ref} className =  "flex flex-col px-5 py-3 bg-white dark:bg-gray-800 w-full mx-2 md:mx-8 lg:w-2/3 z-50">
 
                 {/* title */}
-                <div className = "text-3xl mb-4 flex items-center justify-center text-black dark:text-white"> Masuk</div>
+                <div className = "text-2xl mb-4 flex items-center justify-center text-black dark:text-white"> Daftar</div>
                 <div className = "flex flex-col md:flex-row md:space-x-3">
                     <div className = "w-full md:w-1/2">
                         <InputDefaultComponent 
-                            label="Username"
+                            title="Username"
                             placeholder="john_doe"
                             onChange={(val) => setDataRegister({...dataRegister, username: val})}
                             value={dataRegister.username}
                             showValidInput={showValidInput}
+                            showTitle = {false}
                         />
                         <InputDefaultComponent 
-                            label="Nama"
+                            title="Nama"
                             placeholder="Contoh: John Doe"
                             onChange={(val) => setDataRegister({...dataRegister, userName: val, displayName: val})}
                             value={dataRegister.userName}
                             showValidInput={showValidInput}
+                            showTitle = {false}
                         />
                         <InputSelectComponent
                             placeHolder="Pilih Domisili"
                             list={listCity}
                             value = "id" // define key for value
-                            label = "city" // define key for label
+                            title = "Domisili" // define key for label
+                            label = "city"
                             fetchData = {(val) => val? getCity("") : setListCity([])}
                             onSelect={(val) => {
                                 setDataRegister({...dataRegister, domisile: val.id})
                             }}
                             onSearch = {(keyword) => getCity(keyword)}
                             loading = {loadingCity}
+                            showValidInput={showValidInput}
+                            showTitle = {false}
                         />
                         
                     </div>
                     <div className = "w-full md:w-1/2">
                         <InputDefaultComponent 
                             type="email"
-                            label="Alamat Email"
+                            title="Alamat Email"
                             placeholder="Alamat Email"
                             onChange={(val) => setDataRegister({...dataRegister, email: val})}
                             value={dataRegister.email}
                             showValidInput={showValidInput}
+                            showTitle = {false}
                         />
-                        <InputDefaultComponent 
-                            label="Nomor Telepon"
+                        <InputPhoneComponent 
+                            title="Nomor Telepon"
                             placeholder="Nomor Telepon : Eg 08960820XXXX"
-                            type="number"
+                            type="tel"
                             onChange={(val) => setDataRegister({...dataRegister, phoneNumber: val})}
                             value={dataRegister.phoneNumber}
                             showValidInput={showValidInput}
+                            showTitle = {false}
                         />
                         <InputPasswordComponent 
-                            label="Kata Sandi"
+                            title="Kata Sandi"
                             placeholder="Kata Sandi"
                             onChange={(val) => setDataRegister({...dataRegister, password: val})}
                             showValidInput={showValidInput}
+                            showTitle = {false}
                         />
                     </div>
                 </div>
                 <InputCheckboxComponent
                     onChange={(val) => setIsCheckedTerm(val)}
                     initValue={isCheckedTerm}
-                    label="syarat"
+                    title="Syarat"
                 >
                     <div className = "flex">
                         <div className = "ml-2">
-                            <span className="text-sm font-medium text-gray-900 dark:text-gray-300">Dengan mendaftar, saya setuju dengan</span>
+                            <span className="text-xs font-medium text-gray-900 dark:text-gray-300">Dengan mendaftar, saya setuju dengan</span>
            
-                            <a className = "text-sm font-medium text-gray-900 dark:text-gray-300" href="https://privacy.kerjaholic.com/term/indo" target="_blank"> {' '} syarat dan ketentuan</a>
+                            <a className = "text-xs font-medium text-gray-900 dark:text-gray-300" href="https://privacy.kerjaholic.com/term/indo" target="_blank"> {' '} syarat dan ketentuan</a>
                         </div>
                     </div>
                 </InputCheckboxComponent>

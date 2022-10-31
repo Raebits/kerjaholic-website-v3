@@ -22,7 +22,7 @@ function Index(): JSX.Element {
         <Layout title={"Tambah Kenalan sekaligus Cari Kerjaan | Kerjaholic"}>
             <div className="-mt-14">
                 {/* Main Section */}
-                <MainKenalanSectionHome heightDevice={heightDevice} />
+                <MainKenalanSectionHome />
                 {/* Feature App Section */}
                 <FeatureKenalanSectionHome />
 

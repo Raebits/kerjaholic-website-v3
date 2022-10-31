@@ -1,6 +1,6 @@
 import React from "react";
 
-export type InputDefaultComponentProps = {
+export type InputPhoneComponentProps = {
     onChange?: (value: string) => void
     onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void
     placeholder: string

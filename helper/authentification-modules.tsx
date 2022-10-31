@@ -8,6 +8,7 @@ export const withAuth = (gssp: any) => {
         const { req, res, resolvedUrl } = context
         const auth = req.cookies.auth;
         const token = req.cookies.token;
+        console.log("auth server checking")
         if (auth !== 'true') {
             return {
                 redirect: {

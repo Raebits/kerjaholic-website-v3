@@ -1,6 +1,7 @@
 export type InputPasswordComponentProps = {
     onChange: (value: string) => void
-    label?: string
+    title?: string
     placeholder?: string
     showValidInput?: boolean 
+    showTitle? : boolean
 }

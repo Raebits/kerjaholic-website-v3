@@ -1,4 +1,6 @@
 import firebase from "firebase";
+import { ProviderAuthType } from "../../enum/auth/provider-auth-type";
+
 type LoginModalProps = {
     deviceToken?: string,
     showed?: boolean,
@@ -8,7 +10,7 @@ type LoginModalProps = {
     showedRegProvider?: boolean,
     setShowedRegProvider?: (val:boolean) => void,
     loading?: boolean,
-    setProviderReg?: (state?: boolean, user?: firebase.User, idTokenFirebase?: string) => void,
+    setProviderReg?: (state?: boolean, user?: firebase.User, idTokenFirebase?: string, provider? : ProviderAuthType) => void,
     setEmailReg?: (val:boolean) => void,
 }
   

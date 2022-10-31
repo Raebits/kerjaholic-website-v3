@@ -75,11 +75,11 @@ export default function TopNavigationIndex({ setShowed }: MainNavigationProps): 
                     </div>
 
                     <Link href="/article">
-                        <a className="px-2 text-sm md:text-md text-black dark:text-white">Artikel</a>
+                        <a className=" hidden sm:block px-2 text-sm md:text-md text-black dark:text-white">Artikel</a>
                     </Link>
-                    <a href="https://academy.kerjaholic.com" className="px-2 text-sm md:text-md text-black dark:text-white">Akademi</a>
+                    <a className="hidden sm:block px-2 text-sm md:text-md text-black dark:text-white" href="https://academy.kerjaholic.com" >Akademi</a>
                     <Link href="/kolaborasi">
-                        <a className="px-2 text-sm md:text-md text-black dark:text-white">Kolaborasi</a>
+                        <a className="hidden sm:block last:px-2 text-sm md:text-md text-black dark:text-white">Kolaborasi</a>
                     </Link>
                     {isAuth === null ? (
                         <div onClick = {() => setOpenProfile(true)} className = "flex space-x-1 items-center px-3">
@@ -89,12 +89,12 @@ export default function TopNavigationIndex({ setShowed }: MainNavigationProps): 
                                 </div>
                             </div>
 
-                            <div className = "text-sm md:text-md h-4 w-20 bg-gray-400 animate-pulse rounded-lg"></div>
+                            <div className = " hidden md:block text-sm md:text-md h-4 w-20 bg-gray-400 animate-pulse rounded-lg"></div>
                         </div>
                     ):(
                         <>
                         {!isAuth && (
-                            <div style={{cursor: "pointer"}} onClick = {()=>setShowed(true)} className = "text-sm md:text-md bg-[#FF0000] shadow-md px-4 py-2 rounded-lg text-white">Login</div>
+                            <div style={{cursor: "pointer"}} onClick = {()=>setShowed(true)} className = "text-sm md:text-md bg-[#FF0000] shadow-md px-4 mx-2 py-2 rounded-lg text-white">Login</div>
                         )}
 
                         {isAuth && (  
@@ -105,7 +105,7 @@ export default function TopNavigationIndex({ setShowed }: MainNavigationProps): 
                                     </div>
                                 </div>
 
-                                <div className = "text-sm md:text-md text-black dark:text-white">{username}</div>
+                                <div className = "hidden md:block text-sm md:text-md text-black dark:text-white">{username}</div>
                             </div>
                         )}
                         </>
