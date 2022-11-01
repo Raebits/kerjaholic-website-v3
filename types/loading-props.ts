@@ -1,6 +1,7 @@
 
 type LoadingProps = {
-    showed:boolean
+    showed?:boolean,
+    text?:string
 }
   
 export default LoadingProps

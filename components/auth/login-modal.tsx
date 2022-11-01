@@ -12,6 +12,7 @@ import { useOnClickOutside } from "../../helper/click-outside";
 import { InputDefaultComponent } from "../imput/imput-default-component";
 import { InputPasswordComponent } from "../imput/input-password-component";
 import { ProviderAuthType } from "../../enum/auth/provider-auth-type";
+import { InputToggleComponent } from "../imput/input-toggle-component";
 
 export default function LoginModal({ deviceToken, showed, setShowed, showedRegEmail, setShowedRegEmail, showedRegProvider, setShowedRegProvider, loading, setEmailReg, setProviderReg }: LoginModalProps): JSX.Element {
     const router = useRouter()
@@ -55,7 +56,7 @@ export default function LoginModal({ deviceToken, showed, setShowed, showedRegEm
 
     return (
         <>
-        <Loading showed={isLoading} />
+        <Loading showed={isLoading} text={"Loading ..."} />
         {/* <div className = {`${!isAuth ? 'scale-0' : 'scale-100'} bg-gray-600 bg-opacity-60 transition transform  duration-50 w-full fixed top-0 flex justify-center h-screen items-center z-40`}/> */}
         {showed && (
             <div className = {`bg-gray-600 bg-opacity-60 transition transform  duration-50 w-full fixed top-0 flex justify-center h-screen items-center z-40`}/>

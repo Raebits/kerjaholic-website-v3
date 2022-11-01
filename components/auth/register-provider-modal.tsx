@@ -17,6 +17,7 @@ import { useOnClickOutside } from "../../helper/click-outside";
 import { CityModel } from "../../models/city-model";
 import { getCity_json } from "../../api/get-list-city";
 import { InputSelectComponent } from "../imput/input-select-component";
+import { InputPhoneComponent } from "../imput/imput-phone-component";
 
 export default function RegisterProviderModal({ deviceToken, showed, setShowed, loading, providerType, user, idTokenFirebase }: RegisterProviderModalProps): JSX.Element {
     const router = useRouter()
@@ -117,7 +118,7 @@ export default function RegisterProviderModal({ deviceToken, showed, setShowed, 
 
     return (
         <>
-        <Loading showed={isLoading} />
+        <Loading showed={isLoading} text={"Loading ..."} />
         {/* <div className = {`${!isAuth ? 'scale-0' : 'scale-100'} bg-gray-600 bg-opacity-60 transition transform  duration-50 w-full fixed top-0 flex justify-center h-screen items-center z-40`}/> */}
         {showed && (
             <div className = {`bg-gray-600 bg-opacity-60 transition transform  duration-50 w-full fixed top-0 flex justify-center h-screen items-center z-40`}/>
@@ -134,13 +135,14 @@ export default function RegisterProviderModal({ deviceToken, showed, setShowed, 
                     showValidInput={showValidInput}
                     showTitle = {true}
                 />
-                <InputDefaultComponent 
-                    title="Phone Number"
-                    placeholder="Phone Number"
+                <InputPhoneComponent 
+                    title="Nomor Telepon"
+                    placeholder="Nomor Telepon : Eg 08960820XXXX"
+                    type="tel"
                     onChange={(val) => setUserProvider({...userProvider, phoneNumber: val})}
                     value={userProvider.phoneNumber}
                     showValidInput={showValidInput}
-                    showTitle={true}
+                    showTitle = {true}
                 />
                 <InputSelectComponent
                     placeHolder="Pilih Domisili"
