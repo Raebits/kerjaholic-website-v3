@@ -3,15 +3,15 @@ import { GetServerSideProps } from "next";
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from "next-i18next";
 import qs from 'querystring';
-import { authGuard } from "../../helper/authentification-modules";
+import { authGuard } from "../../../helper/authentification-modules";
 import HTMLReactParser from "html-react-parser";
 import { GetServerSidePropsContext } from 'next'
-import DetailProjectPageProps from "../../types/project/detail-project-page-props";
-import Layout from "../../components/layout";
-import { InputSelectComponent } from "../../components/imput/input-select-component";
-import { getCity_json } from "../../api/get-list-city";
-import { CityModel } from "../../models/city-model";
-import SidebarNavigation from "../../components/navigation/sidebar-navigation";
+import DetailProjectPageProps from "../../../types/project/detail-project-page-props";
+import Layout from "../../../components/layout";
+import { InputSelectComponent } from "../../../components/imput/input-select-component";
+import { getCity_json } from "../../../api/get-list-city";
+import { CityModel } from "../../../models/city-model";
+import SidebarNavigation from "../../../components/navigation/sidebar-navigation";
 
 function DetailProject({ slug, userIdAccess, dataServer }: DetailProjectPageProps) {
     // React.useEffect(() => {
@@ -37,7 +37,7 @@ function DetailProject({ slug, userIdAccess, dataServer }: DetailProjectPageProp
     return (
         <Layout title={"Tambah Kenalan sekaligus Cari Kerjaan | Kerjaholic"} useFooter = {false}>
                 <SidebarNavigation>
-                    <div className="h-screen">I want to redirect You</div>
+                    <div className="h-screen p-3">Tugas Page</div>
                 </SidebarNavigation>
             
         </Layout>
@@ -47,10 +47,7 @@ function DetailProject({ slug, userIdAccess, dataServer }: DetailProjectPageProp
 export const getServerSideProps = authGuard((context) => {
     // const { slug } = context.query
     return {
-        redirect: {
-            destination: "/kolaborasi/proyek",
-            permanent: false
-        }
+        props: {},
     }
 })
 

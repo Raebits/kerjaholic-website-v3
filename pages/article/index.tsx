@@ -72,7 +72,7 @@ export default function Index(): JSX.Element {
     }
 
     return (
-        <Layout title={"Artikel"}>
+        <Layout title={"Artikel"} useFooter = {true}>
             <div className = "mt-10 mx-6 md:px-32 ">
                 {/* breadcrumb */}
                 <div className = "mb-5 flex text-gray-500 dark:text-white">

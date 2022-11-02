@@ -57,7 +57,7 @@ export default function MiniProfile({ showed, setShowed, loading }: MiniProfileP
                 <div className = "flex space-x-3 items-center px-3">
                     <div className = "flex-none flex justify-center">
                         <div className="w-14 ">
-                            <img src={avatar !== '-' ? avatar : "./images/loading-people.svg"} alt="profile" className="shadow rounded-full max-w-full h-auto align-middle border-none" />
+                            <img src={avatar !== '-' ? avatar : "../images/loading-people.svg"} alt="profile" className="shadow rounded-full max-w-full h-auto align-middle border-none" />
                         </div>
                     </div>
                     <div className = "flex flex-col">

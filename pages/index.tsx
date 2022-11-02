@@ -13,7 +13,7 @@ import Cookies from "universal-cookie";
 function Index(): JSX.Element {
 
     return (
-        <Layout title={"Tambah Kenalan sekaligus Cari Kerjaan | Kerjaholic"}>
+        <Layout title={"Tambah Kenalan sekaligus Cari Kerjaan | Kerjaholic"} useFooter = {true}>
             <div className="-mt-14">
                 {/* Main Section */}
                 <MainKenalanSectionHome />

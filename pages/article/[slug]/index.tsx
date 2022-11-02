@@ -74,7 +74,7 @@ function DetailArticle({ slug, userIdAccess, dataServer, anotherArticleData }: D
 
     if (detailArticle == null) {
         return (
-            <Layout title={"Artikel"}>
+            <Layout title={"Artikel"} useFooter = {true}>
                 <div ref={layoutRef} className="w-30 m-5 bg-primary">
                     <div className="col-lg-12 m-0 p-0 pt-2 pb-3">
 
@@ -85,7 +85,7 @@ function DetailArticle({ slug, userIdAccess, dataServer, anotherArticleData }: D
     }
 
     return (
-        <Layout title={"Artikel"}>
+        <Layout title={"Artikel"} useFooter = {true}>
             {/* Meta */}
             <Meta title = {detailArticle.title}
                 desc = {detailArticle.content}

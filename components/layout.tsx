@@ -19,7 +19,7 @@ import RegisterEmailModal from "./auth/register-email-modal";
 import RegisterProviderModal from "./auth/register-provider-modal";
 import { ProviderAuthType } from "../enum/auth/provider-auth-type";
 
-export default function Layout({ children, title }: LayoutProps): JSX.Element {
+export default function Layout({ children, title, useFooter }: LayoutProps): JSX.Element {
     const router = useRouter();
     const { redirect, pn } = router.query;
 
@@ -195,7 +195,7 @@ export default function Layout({ children, title }: LayoutProps): JSX.Element {
             {/* footer separator */}
             <div className = "bg-gray-100 dark:bg-gray-700 h-1"/>
             {/* Footer Home  */}
-            <FooterSectionHome />
+            {useFooter && <FooterSectionHome />}
         </div>
     )
   }
