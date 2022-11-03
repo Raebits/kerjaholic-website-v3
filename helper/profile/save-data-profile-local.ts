@@ -8,7 +8,7 @@ export function saveDataProfileLocal(data: any, token: string) {
     localStorage.setItem('username', data.userName);
     localStorage.setItem('avatar', data.userPhoto);
 
-    cookies.set("auth", "true", { path: '/', secure: true });
-    cookies.set("token", token, { path: '/', secure: true });
-    cookies.set("userId", data.userId, { path: '/', secure: true });
+    cookies.set("auth", "true", { path: '/', secure: true, sameSite:"lax" });
+    cookies.set("token", token, { path: '/', secure: true,sameSite:"lax" });
+    cookies.set("userId", data.userId, { path: '/', secure: true,sameSite:"lax" });
 }

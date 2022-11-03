@@ -16,8 +16,8 @@ function ContextProvider<FC>({ children }: ContextProviderProps) {
     const [isDark , setIsDark] = React.useState<boolean>(null);
     const setDark = (val: boolean) => setIsDark(val);
     
-    const [isPreload, setIsPreload] = React.useState<boolean>(true);
-    const preloadEnd = () => setIsPreload(false);
+    const [isPreload, setIsPreload] = React.useState<boolean>(false);
+    const setPreload = (val) => setIsPreload(val);
     const [showAppRedirect, setShowAppRedirect] = React.useState<boolean>((ref != null));
     const [showAppRedirectMini, setShowAppRedirectMini] = React.useState<boolean>(false);
     const toggleAppRedirect = () => setShowAppRedirect(!showAppRedirect);
@@ -40,7 +40,7 @@ function ContextProvider<FC>({ children }: ContextProviderProps) {
                 <AppPreloadContext.Provider
                     value={{
                         isPreload,
-                        preloadEnd
+                        setPreload
                     }}
                 >
                     <AppRedirectContext.Provider

@@ -3,7 +3,7 @@ import PreloadContextState from '../../types/context/context-preload';
 
 const contextPreloadValues: PreloadContextState = {
     isPreload: true,
-    preloadEnd: () => {}   
+    setPreload: (val:boolean) => {}   
 };
 
 const AppPreloadContext = React.createContext<PreloadContextState>(

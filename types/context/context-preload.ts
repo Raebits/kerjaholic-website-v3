@@ -1,6 +1,6 @@
 type PreloadContextState = {
     isPreload: boolean,
-    preloadEnd: () => void
+    setPreload: (val:boolean) => void
 }
   
 export default PreloadContextState

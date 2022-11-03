@@ -26,7 +26,7 @@ export default function Layout({ children, title, useFooter }: LayoutProps): JSX
     const cookies = new Cookies();
     const [providerAuthType, setProviderAuthType] = React.useState<ProviderAuthType>(null);
     const [ showPopUpMore, setshowPopUpMore ] = React.useState<boolean>()
-    const {isPreload, preloadEnd} = React.useContext(AppPreloadContext)
+    const {isPreload, setPreload} = React.useContext(AppPreloadContext)
     const {isAuth, setAuth} = React.useContext(AppAuthContext)
     const [loginModal, setLoginModal] = React.useState<boolean>(false)
     const [isLoading, setIsLoading] = React.useState<boolean>(false)
@@ -37,7 +37,18 @@ export default function Layout({ children, title, useFooter }: LayoutProps): JSX
     
     const [userRegisterProvider, setUserRegisterProvider] = React.useState<firebase.User>(null);
     const [idTokenFirebase, setIDTokenFirebase] = React.useState<string>("-");
-   
+    
+    // handling routes loading on client side 
+    if (typeof window !== "undefined") {
+        router.events.on('routeChangeStart', (url) => {
+            setPreload(true);
+        });
+    
+        router.events.on('routeChangeComplete', (url) => {
+            setPreload(false);
+        });
+    }
+
     React.useEffect(() => {
         if(localStorage.getItem("darkMode")){
             if(localStorage.getItem("darkMode") === 'true'){
@@ -48,6 +59,7 @@ export default function Layout({ children, title, useFooter }: LayoutProps): JSX
         }else{
             localStorage.setItem("darkMode",'false')
         }
+        
     })
 
     // React.useEffect(() => {
@@ -63,6 +75,7 @@ export default function Layout({ children, title, useFooter }: LayoutProps): JSX
     //     observer.observe(document.querySelector("#banner"));
     // })
 
+    // all function one time rendered
     React.useEffect(() => {
         // ===== start firebase function =====
         // Firebase Configuration
@@ -70,9 +83,6 @@ export default function Layout({ children, title, useFooter }: LayoutProps): JSX
         // firebase init 
         firebaseInit()
         // ===== end of firebase function =====
-
-        // set preload loading end
-        preloadEnd()
         // update auth context based on cookies value
         setAuth(new Cookies().get("auth") == "true")
         // updating, checking jwt validation
@@ -80,12 +90,12 @@ export default function Layout({ children, title, useFooter }: LayoutProps): JSX
        
     }, [])
 
+    // rendering when redirect true
     React.useEffect(() => {
-        console.log("router changed")
          // checking require redirect after login
          checkRedirectAfterLogin()   
     },[redirect == "true"])
-
+   
     async function deviceCheck(){
         if(isAuth){
             const token = new Cookies().get("token")
@@ -114,7 +124,6 @@ export default function Layout({ children, title, useFooter }: LayoutProps): JSX
             const messaging = firebase.messaging();
             await messaging.requestPermission();
             const token = await messaging.getToken();
-            console.log(token)
             setFirebaseToken(token)
             await showFirebaseMessage()
         } catch (e) {
@@ -145,17 +154,15 @@ export default function Layout({ children, title, useFooter }: LayoutProps): JSX
 
     // checking redirect page and need login
     async function checkRedirectAfterLogin(){
-        console.log(isAuth,'checking')
         if (redirect == "true" && !isAuth) {
             await setLoginModal(true)
-            console.log("modal opened")
         }
     }
     
     return (
         <div className={`${isDark && 'dark'} font-poppinsRegular`} onClick={() => setshowPopUpMore(!showPopUpMore)}>
             {isPreload && (
-                <div className = "bg-red-600 h-1 animate-pulse absolute flex top-0 w-full">
+                <div className = "bg-[#FF0000] h-1 animate-pulse absolute flex top-0 w-full z-50">
 
                 </div>
             )}
