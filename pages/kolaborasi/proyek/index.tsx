@@ -13,24 +13,46 @@ import { getCity_json } from "../../../api/get-list-city";
 import { CityModel } from "../../../models/city-model";
 import SidebarNavigation from "../../../components/navigation/sidebar-navigation";
 import StickyHeader from "../../../components/kolaborasi/sticky-header";
-import ProjectListCard from "../../../components/kolaborasi/project-list-card";
+import ProjectListCard from "../../../components/kolaborasi/project/project-list-card";
+import Cookies from 'universal-cookie';
+import { requestListProject } from "../../../api/kolaborasi/project/request-list-project";
+import { checkValidResponse } from "../../../helper/check-error-response";
+import ListProjectProps from "../../../types/kolaborasi/project/list-project-props";
+import { ListProjectModel } from "../../../models/kolaborasi/project/ListProjectModel";
+import { ListProjectBuilder } from "../../../model-builder/kolaborasi/project/list-project-builder";
+import ServerError from "../../../components/kolaborasi/server-error";
+import EmptyData from "../../../components/kolaborasi/empty-data";
 
-function DetailProject({ slug, userIdAccess, dataServer }: DetailProjectPageProps) {
-    
-    const [listCity, setListCity] = React.useState<CityModel[]>([])
-    const [loadingCity, setLoadingCity] = React.useState<boolean>(false)
-    async function getCity(searchWord){
-        await setLoadingCity(true)
-        // hit endpoint
-        let response = await getCity_json(searchWord as string)
-    
-    
-        if (response) {
-                await setListCity(response)
-                console.log(response)
-                await setLoadingCity(false)
-        }
 
+function ListProject({ dataServer }: ListProjectProps) {
+    
+    let serverData = ListProjectBuilder.jsonParse((dataServer == null)? null : dataServer)
+    if(serverData == null){
+        return (
+            <ServerError/>
+        )
+    }
+    
+    const [loading, setLoading] = React.useState<boolean>(false)
+    const [listProject, setListProject] = React.useState<ListProjectModel[]>(serverData)
+    
+    React.useEffect(() => {
+        console.log(listProject)
+    })
+
+    async function searchingFunc(e){
+        const token = '-'
+        const lastPage = 0
+        const take = 10
+        const keyword = e
+        const sorting = "asc"
+        const response = await requestListProject(token, lastPage,take,keyword,sorting)
+        await setListProject(response)
+    
+    }
+
+    function progressCounter(done,all){
+        return done / all * 100
     }
 
     return (
@@ -41,7 +63,7 @@ function DetailProject({ slug, userIdAccess, dataServer }: DetailProjectPageProp
                             title = {"Proyek"}
                             useSearching = {true}
                             useSorting = {true}
-                            onSearching = {(e) => console.log(e, 'searching value')}
+                            onSearching = {(e) => searchingFunc(e)}
                             onSorting = {(e) => console.log(e)}
                         >
                             {/* button add project */}
@@ -65,17 +87,30 @@ function DetailProject({ slug, userIdAccess, dataServer }: DetailProjectPageProp
                         </StickyHeader>
                         {/* content */}
                         <div className="flex flex-wrap w-full mt-6 px-3">
-                            <ProjectListCard
-                                title = {"Judul Project 1"}
-                                totalColaborator = {3}
-                                totalTask = {2}
-                                creator = {"Aranda Palguno"}
-                                createdDate = {"3 Maret 1990"}
-                                pic = {"https://kerjaholic.s3.ap-southeast-1.amazonaws.com/images/profile/pic/d1d58f73-870d-43da-be37-ffffa7712d3c-nLSPmOVXPM1GD.jpg"}
-                                messageUnread = {30}
-                                onClick = {(slug) => console.log(slug)}
-                                slug = "hello-world"
-                            />
+                            {listProject.length > 0 ? (
+                                listProject.map((obj, key) => {
+                                    return(
+                                    <ProjectListCard
+                                        key = {key}
+                                        listId = {key}
+                                        title = {obj.projectTitle}
+                                        totalColaborator = {obj.colaboratorTotal}
+                                        totalTask = {obj.taskTotal}
+                                        creator = {obj.creatorName}
+                                        createdDate = {"3 Maret 1990"}
+                                        pic = {obj.projectLogo}
+                                        messageUnread = {obj.messageUnreadTotal}
+                                        onClick = {(slug) => console.log(slug)}
+                                        slug = "hello-world"
+                                        done={obj.taskDone}
+                                        projectCreated = {obj.projectCreated}
+                                    />
+                                    )
+                                })
+                            ) : (
+                                <EmptyData/>
+                            )}
+                            
                         </div>
                     </div>
                 </SidebarNavigation>
@@ -84,12 +119,32 @@ function DetailProject({ slug, userIdAccess, dataServer }: DetailProjectPageProp
     )
 }
 
-export const getServerSideProps = authGuard((context) => {
+export const getServerSideProps = authGuard(async(context) => {
     // const { slug } = context.query
-    return {
-        props: {},
+    
+    const cookies = await context.req ? new Cookies(context.req.headers.cookie) : new Cookies();
+    const token = await cookies.get("token")
+    const lastPage = 0
+    const take = 10
+    const keyword = ""
+    const sorting = "asc"
+    const response = await requestListProject(token, lastPage,take,keyword,sorting)
+    var dataServer = await JSON.stringify(response)
+
+    if (checkValidResponse(dataServer) == true) {
+        return {
+            props: {
+                dataServer,
+            }
+        }    
+    } else {
+        return {
+            props: {
+                
+            }
+        }    
     }
 })
 
 
-export default DetailProject;
+export default ListProject;

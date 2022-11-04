@@ -1,14 +1,21 @@
 import React from "react";
 import { useRouter } from "next/router";
-import ProjectListCardProps from "../../types/kolaborasi/project-list-card-props";
+import ProjectListCardProps from "../../../types/kolaborasi/project/project-list-card-props";
 
-export default function ProjectListCard({ onClick, title, totalColaborator, totalTask, creator, createdDate, messageUnread, pic, slug }: ProjectListCardProps): JSX.Element {
+export default function ProjectListCard({ listId, onClick, title, totalColaborator, totalTask, creator, createdDate, messageUnread, pic, slug, done, projectCreated }: ProjectListCardProps): JSX.Element {
     
     const router = useRouter()
     
-    
+    function progressCounter(done){
+        if(totalTask > 0 ){
+            return done / totalTask * 100
+        }else{
+            return 0
+        }
+    }
+
     return (
-        <div onClick={() => onClick(slug) } className = "w-full lg:w-1/2">
+        <div key = {listId} onClick={() => onClick(slug) } className = "w-full lg:w-1/2">
             <div className = "bg-white dark:bg-[#CCCCCC] shadow-md rounded-md m-2 p-3 relative">
                 {/* chat absolute */}
                 <div className = "absolute right-3 top-2 p-2">
@@ -46,15 +53,16 @@ export default function ProjectListCard({ onClick, title, totalColaborator, tota
                             </div>
                         </div>
                         <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
-                            <div className="bg-green-600 h-2.5 rounded-full dark:bg-green-500" style={{width: '50%'}}></div>
+                        
+                            <div className={`${progressCounter(done) < 100 ? 'bg-red-500 dark:bg-red-500' :'bg-green-500 dark:bg-green-500'}  h-2.5 rounded-full`} style={{width: progressCounter(done)+'%'}}></div>
                         </div>
-                        <div className = "text-xs m-1">2/3</div>
+                        <div className = "text-xs m-1">{done}/{totalTask}</div>
                         <div className = "flex mt-3 text-xs justify-between">
                             <div className = "flex">
                                 Dibuat Oleh {creator}
                             </div>
                             <div className = "flex">
-                                {createdDate}
+                                {projectCreated}
                             </div>
                         </div>
                         

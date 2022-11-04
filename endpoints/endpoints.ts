@@ -34,6 +34,8 @@ export const VerifyKTP_EndPoints = baseUrl + "user/verify/accountV2"
 export const UpdateLanguage_EndPoints = baseUrl + "user/language"
 export const UserLogout_EndPoints = baseUrl + "user/setLogout"
 
+// kolaborasi
+export const GetListProject_EndPoints = baseUrl + "pm/list/project"
 
 // global
 export const GetListCity_EndPoints = baseUrl + "City"
