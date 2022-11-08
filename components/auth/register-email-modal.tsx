@@ -9,18 +9,18 @@ import { UserRegisterEmail } from "../../models/auth/user-register-email";
 import { CityModel } from "../../models/city-model";
 import RegisterEmailModalProps from "../../types/auth/register-email-modal-props";
 import AppAuthContext from "../../utils/context/auth-context"
-import { InputDefaultComponent } from "../imput/imput-default-component";
-import { InputDateComponent } from "../imput/input-date-component";
-import { InputPasswordComponent } from "../imput/input-password-component";
-import { InputSelectComponent } from "../imput/input-select-component";
+import { InputDefaultComponent } from "../input/input-default-component";
+import { InputDateComponent } from "../input/input-date-component";
+import { InputPasswordComponent } from "../input/input-password-component";
+import { InputSelectComponent } from "../input/input-select-component";
 import { BtnLoginEmailComponent } from "./btn-login-email-component";
 import { BtnLoginGoogleComponent } from "./btn-login-google-component";
 import Loading from "../loading";
 import { requestRegisterWithEmail } from "../../api/auth/request-register-with-email";
 import { checkDataModelEmpty } from "../../helper/common/check-data-model-empty";
 import { isValidEmail } from "../../helper/auth/is-valid-email";
-import { InputCheckboxComponent } from "../imput/input-checkbox-component";
-import { InputPhoneComponent } from "../imput/imput-phone-component";
+import { InputCheckboxComponent } from "../input/input-checkbox-component";
+import { InputPhoneComponent } from "../input/input-phone-component";
 
 
 export default function RegisterEmailModal({ deviceToken, showed, setShowed, loading }: RegisterEmailModalProps): JSX.Element {

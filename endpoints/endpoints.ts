@@ -34,8 +34,15 @@ export const VerifyKTP_EndPoints = baseUrl + "user/verify/accountV2"
 export const UpdateLanguage_EndPoints = baseUrl + "user/language"
 export const UserLogout_EndPoints = baseUrl + "user/setLogout"
 
-// kolaborasi
+// begin colaboration
+// == project module ==
 export const GetListProject_EndPoints = baseUrl + "pm/list/project"
+export const AddProject_EndPoints = baseUrl + "pm/create/project"
+// == task module ==
+export const GetListTask_EndPoints = baseUrl + "pm/task/list"
+// == global module
+export const GetListColor_EndPoints = baseUrl + "pm/list/color"
+// end of collaboration
 
 // global
 export const GetListCity_EndPoints = baseUrl + "City"

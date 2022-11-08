@@ -6,7 +6,7 @@ import { saveDataProfileLocal } from "../../helper/profile/save-data-profile-loc
 import { UserRegisterEmail } from "../../models/auth/user-register-email";
 import RegisterProviderModalProps from "../../types/auth/register-provider-modal-props";
 import AppAuthContext from "../../utils/context/auth-context"
-import { InputDefaultComponent } from "../imput/imput-default-component";
+import { InputDefaultComponent } from "../input/input-default-component";
 import { BtnLoginEmailComponent } from "./btn-login-email-component";
 import { BtnLoginGoogleComponent } from "./btn-login-google-component";
 import Loading from "../loading";
@@ -16,8 +16,8 @@ import { checkDataModelEmpty } from "../../helper/common/check-data-model-empty"
 import { useOnClickOutside } from "../../helper/click-outside";
 import { CityModel } from "../../models/city-model";
 import { getCity_json } from "../../api/get-list-city";
-import { InputSelectComponent } from "../imput/input-select-component";
-import { InputPhoneComponent } from "../imput/imput-phone-component";
+import { InputSelectComponent } from "../input/input-select-component";
+import { InputPhoneComponent } from "../input/input-phone-component";
 
 export default function RegisterProviderModal({ deviceToken, showed, setShowed, loading, providerType, user, idTokenFirebase }: RegisterProviderModalProps): JSX.Element {
     const router = useRouter()

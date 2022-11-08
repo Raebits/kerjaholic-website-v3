@@ -59,7 +59,7 @@ export default function TopNavigationIndex({ setShowed }: MainNavigationProps): 
             <div className = {"fixed w-full z-30 flex bg-white dark:bg-[#0F172A] shadow-md p-2  items-center justify-center h-16 px-6 md:px-10"}>
                 <div className = "flex-none h-full flex items-center justify-center">
                 <Link href="/">
-                        <img className="h-7 md:h-9 w-auto" src="../images/ic_logo.png" />
+                        <img className="h-7 md:h-9 w-auto" src="/images/ic_logo.png" />
                 </Link>
                 </div>
                 <div className = "grow h-full flex items-center justify-center">
@@ -68,9 +68,9 @@ export default function TopNavigationIndex({ setShowed }: MainNavigationProps): 
                 <div className = "flex-none h-full text-center flex items-center justify-center">
                     <div onClick={() => setDarkMode(!isDark)} className="px-3">
                         {isDark ?(
-                            <img className = "w-5 h-5" src = "../icons/ic_sun.svg"/>
+                            <img className = "w-5 h-5" src = "/icons/ic_sun.svg"/>
                         ):(
-                            <img className = "w-4 h-4" src = "../icons/ic_moon.svg"/>
+                            <img className = "w-4 h-4" src = "/icons/ic_moon.svg"/>
                         )}
                     </div>
 
@@ -78,14 +78,14 @@ export default function TopNavigationIndex({ setShowed }: MainNavigationProps): 
                         <a className=" hidden sm:block px-2 text-sm md:text-md text-black dark:text-white">Artikel</a>
                     </Link>
                     <a className="hidden sm:block px-2 text-sm md:text-md text-black dark:text-white" href="https://academy.kerjaholic.com" >Akademi</a>
-                    <Link href="/kolaborasi">
+                    <Link href="/colaboration">
                         <a className="hidden sm:block last:px-2 text-sm md:text-md text-black dark:text-white">Kolaborasi</a>
                     </Link>
                     {isAuth === null ? (
                         <div onClick = {() => setOpenProfile(true)} className = "flex space-x-1 items-center px-3">
                             <div className = "flex animate-pulse justify-center">
                                 <div className="w-8  ">
-                                    <img src="../images/loading-people.svg" alt="profile" className="shadow rounded-full max-w-full h-auto align-middle border-none" />
+                                    <img src="/images/loading-people.svg" alt="profile" className="shadow rounded-full max-w-full h-auto align-middle border-none" />
                                 </div>
                             </div>
 

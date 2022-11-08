@@ -57,7 +57,7 @@ export default function MiniProfile({ showed, setShowed, loading }: MiniProfileP
                 <div className = "flex space-x-3 items-center px-3">
                     <div className = "flex-none flex justify-center">
                         <div className="w-14 ">
-                            <img src={avatar !== '-' ? avatar : "../images/loading-people.svg"} alt="profile" className="shadow rounded-full max-w-full h-auto align-middle border-none" />
+                            <img src={avatar !== '-' ? avatar : "/images/loading-people.svg"} alt="profile" className="shadow rounded-full max-w-full h-auto align-middle border-none" />
                         </div>
                     </div>
                     <div className = "flex flex-col">
@@ -96,7 +96,7 @@ export default function MiniProfile({ showed, setShowed, loading }: MiniProfileP
                     >
                 </GoogleLogout>
                 {/* <div onClick = {() => logout()} className="flex my-1 py-3 bg-[#FF0000] text-white rounded-lg">
-                    <img className = "px-3 h-6 w-auto" src="./images/logout.svg"/>
+                    <img className = "px-3 h-6 w-auto" src="/images/logout.svg"/>
                     <div className = "block ">{!logoutLoading ? 'Keluar' : 'Loading . . .'}</div>
                 </div> */}
             </div>

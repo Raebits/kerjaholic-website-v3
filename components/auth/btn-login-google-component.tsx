@@ -77,7 +77,7 @@ export function BtnLoginGoogleComponent( { success, notFound, className, onLoadi
                 onFailure={(error) => handleFailure(error)}
                 render={renderProps => (
                    <div onClick={renderProps.onClick} className = "bg-white border border-gray-500 p-3 my-1 rounded-lg flex justify-center text-white">
-                        <img src="../icons/ic_google.png" width="26px" height="25px"/>
+                        <img src="/icons/ic_google.png" width="26px" height="25px"/>
                         <div className="text-black ml-3">Lanjutkan dengan Google</div>
                     </div>
                 )} 

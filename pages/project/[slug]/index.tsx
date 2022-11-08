@@ -126,7 +126,7 @@ function DetailProject({ slug, userIdAccess, dataServer }: DetailProjectPageProp
                 </div>
                 <div className = "flex overflow-x-scroll">
                     <div onClick = {() => setOptionClick(true)} className = " flex justify-center border text-gray-300 border-gray-300 rounded-full px-4 py-2 mx-1">
-                        <img className = "img-cover mx-2" src = "../icons/ic_filter.svg"/>
+                        <img className = "img-cover mx-2" src = "/icons/ic_filter.svg"/>
                                 
                         <div className = "">Urutkan</div>
                     </div>
@@ -177,7 +177,7 @@ function DetailProject({ slug, userIdAccess, dataServer }: DetailProjectPageProp
                         <div className = "flex-none">
                         {obj.reminderDate !== '-' && (
                             <div className = "flex ">
-                                <img className = "img-cover mx-2" src = "../icons/ic_bell.svg" style = {{ width : 20}}></img> 
+                                <img className = "img-cover mx-2" src = "/icons/ic_bell.svg" style = {{ width : 20}}></img> 
                                 {obj.reminderDate.split(" ")[0]+" "+obj.reminderDate.split(" ")[1]+" "+obj.reminderDate.split(" ")[2] }
                             </div>
                         )}
@@ -242,7 +242,7 @@ function DetailProject({ slug, userIdAccess, dataServer }: DetailProjectPageProp
                     <div className = "flex-none">Urutkan</div>
                     <div className = "flex-grow"/>
                     <div onClick = {() => setOptionClick(false)} className = "flex-none">
-                        <img src = "../icons/ic_close.svg" width="20"></img>
+                        <img src = "/icons/ic_close.svg" width="20"></img>
                     </div>
                 </div>
                 {detailProject.sorting.map((obj, i) => 

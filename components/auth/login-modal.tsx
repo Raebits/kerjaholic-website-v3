@@ -9,10 +9,10 @@ import { BtnLoginEmailComponent } from "./btn-login-email-component";
 import { BtnLoginGoogleComponent } from "./btn-login-google-component";
 import Loading from "../loading";
 import { useOnClickOutside } from "../../helper/click-outside";
-import { InputDefaultComponent } from "../imput/imput-default-component";
-import { InputPasswordComponent } from "../imput/input-password-component";
+import { InputDefaultComponent } from "../input/input-default-component";
+import { InputPasswordComponent } from "../input/input-password-component";
 import { ProviderAuthType } from "../../enum/auth/provider-auth-type";
-import { InputToggleComponent } from "../imput/input-toggle-component";
+import { InputToggleComponent } from "../input/input-toggle-component";
 
 export default function LoginModal({ deviceToken, showed, setShowed, showedRegEmail, setShowedRegEmail, showedRegProvider, setShowedRegProvider, loading, setEmailReg, setProviderReg }: LoginModalProps): JSX.Element {
     const router = useRouter()
