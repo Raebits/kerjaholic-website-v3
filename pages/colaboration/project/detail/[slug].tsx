@@ -1,23 +1,23 @@
 import React, { useEffect } from "react";
-import { authGuard } from "../../../helper/authentification-modules";import Layout from "../../../components/layout";
-import SidebarNavigation from "../../../components/navigation/sidebar-navigation";
-import StickyHeader from "../../../components/colaboration/header";
-import ProjectListCard from "../../../components/colaboration/project/project-list-card";
+import { authGuard } from "../../../../helper/authentification-modules";import Layout from "../../../../components/layout";
+import SidebarNavigation from "../../../../components/navigation/sidebar-navigation";
+import StickyHeader from "../../../../components/colaboration/header";
+import ProjectListCard from "../../../../components/colaboration/project/project-list-card";
 import Cookies from 'universal-cookie';
-import { requestListProject } from "../../../api/colaboration/project/request-list-project";
-import { checkValidResponse } from "../../../helper/check-error-response";
-import { ListProjectModel } from "../../../models/colaboration/project/ListProjectModel";
-import ServerError from "../../../components/colaboration/server-error";
-import EmptyData from "../../../components/colaboration/empty-data";
+import { requestListProject } from "../../../../api/colaboration/project/request-list-project";
+import { checkValidResponse } from "../../../../helper/check-error-response";
+import { ListProjectModel } from "../../../../models/colaboration/project/ListProjectModel";
+import ServerError from "../../../../components/colaboration/server-error";
+import EmptyData from "../../../../components/colaboration/empty-data";
 import router from "next/router";
-import ServerPageProps from "../../../types/colaboration/server-page-props";
-import { ListTaskBuilder } from "../../../model-builder/colaboration/task/list-task-builder";
-import { ListTaskModel } from "../../../models/colaboration/task/ListTaskModel";
-import { requestListtask } from "../../../api/colaboration/task/request-list-task";
-import Table from "../../../components/table";
+import ServerPageProps from "../../../../types/colaboration/server-page-props";
+import { ListTaskBuilder } from "../../../../model-builder/colaboration/task/list-task-builder";
+import { ListTaskModel } from "../../../../models/colaboration/task/ListTaskModel";
+import { requestListtask } from "../../../../api/colaboration/task/request-list-task";
+import Table from "../../../../components/table";
 
 
-function ListTask({ dataServer }: ServerPageProps) {
+function ListTask({ slug,dataServer }: ServerPageProps) {
     
     let serverData = ListTaskBuilder.jsonParse((dataServer == null)? null : dataServer)
     if(serverData == null){
@@ -68,9 +68,9 @@ function ListTask({ dataServer }: ServerPageProps) {
     
     async function searchingFunc(e){
         const token = '-'
-        const projectId = '90fea43c-9b4d-4bfd-9333-cc4c6068bb65'
+        const projectId = slug
         const taskStatus = 'init'
-        const keyword = ""
+        const keyword = e
         const taskSorting = "priorityToHigh"
         const response = await requestListtask(token, projectId,taskStatus,keyword,taskSorting)
         await setListTask(response)
@@ -125,11 +125,10 @@ function ListTask({ dataServer }: ServerPageProps) {
 }
 
 export const getServerSideProps = authGuard(async(context) => {
-    // const { slug } = context.query
-    
+    const { slug } = context.query
     const cookies = await context.req ? new Cookies(context.req.headers.cookie) : new Cookies();
     const token = await cookies.get("token")
-    const projectId = '90fea43c-9b4d-4bfd-9333-cc4c6068bb65'
+    const projectId = slug
     const taskStatus = 'init'
     const keyword = ""
     const taskSorting = "priorityToHigh"
@@ -140,6 +139,7 @@ export const getServerSideProps = authGuard(async(context) => {
         return {
             props: {
                 dataServer,
+                slug
             }
         }    
     } else {

@@ -16,7 +16,7 @@ export default function ProjectListCard({ listId, onClick, title, totalColaborat
 
     return (
         <div key = {listId} onClick={() => onClick(slug) } className = "w-full lg:w-1/2 ">
-            <div className = "bg-white dark:bg-[#CCCCCC] shadow-md rounded-md m-2 p-3 relative">
+            <div className = "bg-white dark:bg-[#374151] dark:text-[#CCCCCC] shadow-md rounded-md m-2 p-3 relative">
                 {/* chat absolute */}
                 <div className = "absolute right-3 top-2 p-2">
                     <div className = "flex flex-row">
@@ -39,7 +39,7 @@ export default function ProjectListCard({ listId, onClick, title, totalColaborat
                 <div className="flex space-x-2">
                     <div className = "flex-none">
                         <div className="w-10 ">
-                            <img src={pic} alt="project Pic" className="shadow rounded-full max-w-full h-auto align-middle border-none" />
+                            <img src={pic} alt="project Pic" className="shadow rounded-full max-w-full h-auto align-middle border-none bg-white p-1" />
                         </div>
                     </div>
                     <div className = "flex flex-col flex-grow">

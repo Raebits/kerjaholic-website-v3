@@ -5,6 +5,7 @@ export type InputColorComponentProps = {
     onSelect: (obj: selectedObject) => void
     list?: ListType
     value?: string
+    loading :boolean
 }
 
 type ListType = {

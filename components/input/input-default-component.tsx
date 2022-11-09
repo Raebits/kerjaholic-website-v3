@@ -78,7 +78,7 @@ export function InputDefaultComponent({ onChange, onKeyDown, placeholder, title,
 
 
 
-                    {(showValidInput && newValue == "") && (
+                    {(showValidInput && newValue == "" && isInvalid()) && (
                         <div className="flex mt-1 text-xs text-red-600 dark:text-red-500">
                             <span className="font-medium">Oops!</span>
                             <div className = "mx-1">

@@ -9,7 +9,6 @@ import { checkValidResponse } from "../../../../helper/check-error-response";
 import ServerError from "../../../../components/colaboration/server-error";
 import EmptyData from "../../../../components/colaboration/empty-data";
 import { getListColor } from "../../../../api/colaboration/get-list-color";
-import AddProjectProps from "../../../../types/colaboration/project/add-project-props";
 import { ListColorBuilder } from "../../../../model-builder/colaboration/ListColorBuilder";
 import { ListColorModel } from "../../../../models/colaboration/ListColorModel";
 import { InputDefaultComponent } from "../../../../components/input/input-default-component";
@@ -20,8 +19,9 @@ import { responseErrorHandler } from "../../../../helper/common/response-request
 import router from "next/router";
 import { route } from "next/dist/server/router";
 import { InputColorComponent } from "../../../../components/input/input-color-component";
+import ServerPageProps from "../../../../types/colaboration/server-page-props";
 
-function AddProject({ dataServer }: AddProjectProps) {
+function AddProject({ dataServer }: ServerPageProps) {
     
     let serverData = ListColorBuilder.jsonParse((dataServer == null)? null : dataServer)
     if(serverData == null){
@@ -69,9 +69,6 @@ function AddProject({ dataServer }: AddProjectProps) {
                     <div className="flex flex-col bg-white dark:bg-[#0F172A]">
                         <StickyHeader 
                             title = {"Tambah Proyek"}
-                            useSearching = {false}
-                            useSorting = {false}
-                            mainPage = {false}
                             onBack = {(e) => router.back()}
                         >
                             <div/>
