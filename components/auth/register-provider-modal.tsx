@@ -121,7 +121,7 @@ export default function RegisterProviderModal({ deviceToken, showed, setShowed, 
         <Loading showed={isLoading} text={"Loading ..."} />
         {/* <div className = {`${!isAuth ? 'scale-0' : 'scale-100'} bg-gray-600 bg-opacity-60 transition transform  duration-50 w-full fixed top-0 flex justify-center h-screen items-center z-40`}/> */}
         {showed && (
-            <div className = {`bg-gray-600 bg-opacity-60 transition transform  duration-50 w-full fixed top-0 flex justify-center h-screen items-center z-40`}/>
+            <div className = {`bg-gray-600 bg-opacity-60 transition transform  duration-500 w-full fixed top-0 flex justify-center h-screen items-center z-40`}/>
         )}
         <div className = {`${!showed ? '-translate-y-full' : 'translate-y-1/4'} bg-opacity-60 transition transform ease-in-out duration-1000 w-full fixed -top-20 flex justify-center z-40`}>
             <div ref={ref} className =  "flex flex-col px-5 py-3 bg-white w-full mx-2 sm:mx-0 sm:w-2/3 lg:w-1/3 z-50">              

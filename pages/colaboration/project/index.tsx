@@ -6,21 +6,22 @@ import ProjectListCard from "../../../components/colaboration/project/project-li
 import Cookies from 'universal-cookie';
 import { requestListProject } from "../../../api/colaboration/project/request-list-project";
 import { checkValidResponse } from "../../../helper/check-error-response";
-import { ListProjectModel } from "../../../models/colaboration/project/ListProjectModel";
+import { ListProjectModel } from "../../../models/colaboration/project/list-project-model";
 import { ListProjectBuilder } from "../../../model-builder/colaboration/project/list-project-builder";
 import ServerError from "../../../components/colaboration/server-error";
 import EmptyData from "../../../components/colaboration/empty-data";
 import router from "next/router";
 import ServerPageProps from "../../../types/colaboration/server-page-props";
-import ModalWrapper from "../../../components/colaboration/modal-wrapper";
+import ModalWrapper from "../../../components/modal-wrapper";
 import { InputDefaultComponent } from "../../../components/input/input-default-component";
 import { InputColorComponent } from "../../../components/input/input-color-component";
 import { responseErrorHandler } from "../../../helper/common/response-request-handler";
 import { requestAddProject } from "../../../api/colaboration/project/request-add-project";
 import { checkDataModelEmpty } from "../../../helper/common/check-data-model-empty";
-import { ListColorModel } from "../../../models/colaboration/ListColorModel";
-import { AddProjectModel } from "../../../models/colaboration/project/AddProjectModel";
+import { ListColorModel } from "../../../models/colaboration/list-color-model";
+import { AddProjectModel } from "../../../models/colaboration/project/add-project-model";
 import { getListColor } from "../../../api/colaboration/get-list-color";
+import AlertComponent from "../../../components/colaboration/alert-component";
 
 
 function ListProject({ dataServer }: ServerPageProps) {
@@ -40,7 +41,7 @@ function ListProject({ dataServer }: ServerPageProps) {
     const [listColor, setListColor] = React.useState<ListColorModel[]>([])
     const [colorFetch, setColorFetch] = React.useState<boolean>(false)
 
-    async function searchingFunc(e){
+    async function refetching(e){
         const token = '-'
         const lastPage = 0
         const take = 10
@@ -56,7 +57,7 @@ function ListProject({ dataServer }: ServerPageProps) {
         // router.push("project/add")
         // using modal
         await setDataProject(new AddProjectModel())
-        console.log(dataProject)
+        await setShowValidInput(false)
         await setNewProject(true)
         await setColorFetch(true)
         const response = await getListColor('-')
@@ -86,7 +87,7 @@ function ListProject({ dataServer }: ServerPageProps) {
         const request = await requestAddProject('-',dataProject)
 
         if (request.status == 'success') {
-
+            await refetching("")
             await setNewProject(false)
             await setLoading(false)
         } else {
@@ -104,22 +105,16 @@ function ListProject({ dataServer }: ServerPageProps) {
                         <div className="flex flex-col bg-white dark:bg-[#0F172A]">
                             <StickyHeader 
                                 title = {"Proyek"}
-                                onSearching = {(e) => searchingFunc(e)}
+                                onSearching = {(e) => refetching(e)}
                                 onSorting = {(e) => console.log(e)}
                             >
                                 {/* button add project */}
                                 <div onClick = {() => addData()} className = "flex items-center justify-center bg-[#FF0000] rounded-lg px-1 lg:px-6 ">
-                                    <svg width="41" height="40" viewBox="0 0 41 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <g clipPath="url(#clip0_8807_636)">
-                                        <path d="M20.8325 32C14.2155 32 8.83252 26.6171 8.83252 20C8.83252 13.3829 14.2155 8 20.8325 8C27.4496 8 32.8325 13.3829 32.8325 20C32.8325 26.6171 27.4496 32 20.8325 32ZM20.8325 9.5C15.0425 9.5 10.3325 14.21 10.3325 20C10.3325 25.79 15.0425 30.5 20.8325 30.5C26.6225 30.5 31.3325 25.79 31.3325 20C31.3325 14.21 26.6225 9.5 20.8325 9.5Z" fill="white"/>
-                                        <path d="M26.0825 20.75H15.5825C15.1685 20.75 14.8325 20.414 14.8325 20C14.8325 19.586 15.1685 19.25 15.5825 19.25H26.0825C26.4965 19.25 26.8325 19.586 26.8325 20C26.8325 20.414 26.4965 20.75 26.0825 20.75Z" fill="white"/>
-                                        <path d="M20.8325 26C20.4185 26 20.0825 25.664 20.0825 25.25V14.75C20.0825 14.336 20.4185 14 20.8325 14C21.2465 14 21.5825 14.336 21.5825 14.75V25.25C21.5825 25.664 21.2465 26 20.8325 26Z" fill="white"/>
+                                    <svg className = "fill-white" xmlns="http://www.w3.org/2000/svg" width="41" height="40">
+                                        <g>
+                                            <path d="M20.832 32c-6.617 0-12-5.383-12-12s5.383-12 12-12c6.618 0 12 5.383 12 12s-5.382 12-12 12Zm0-22.5c-5.79 0-10.5 4.71-10.5 10.5s4.71 10.5 10.5 10.5 10.5-4.71 10.5-10.5-4.71-10.5-10.5-10.5Z"/><path d="M26.082 20.75h-10.5a.75.75 0 0 1 0-1.5h10.5a.75.75 0 0 1 0 1.5Z"/>
+                                            <path d="M20.832 26a.75.75 0 0 1-.75-.75v-10.5a.75.75 0 0 1 1.5 0v10.5a.75.75 0 0 1-.75.75Z"/>
                                         </g>
-                                        <defs>
-                                        <clipPath id="clip0_8807_636">
-                                        <rect width="24" height="24" fill="white" transform="translate(8.83252 8)"/>
-                                        </clipPath>
-                                        </defs>
                                     </svg>
                                     <div className = "hidden lg:block whitespace-nowrap text-white">
                                         Tambah Proyek
@@ -159,40 +154,41 @@ function ListProject({ dataServer }: ServerPageProps) {
                             
                         </div>
                     </SidebarNavigation>
-                
+                    <ModalWrapper showed = {newProject} setShowed = {(e) => setNewProject(e)} loading = {loading} >
+                        <div className = "flex flex-col mx-4 mt-9 mb-4">
+                            {/* title */}
+                            <div className = "w-full flex justify-center text-2xl text-black dark:text-white">
+                                Proyek Baru
+                            </div>
+                            <InputDefaultComponent 
+                                title="Judul Proyek"
+                                placeholder="Judul Proyek"
+                                onChange={(val) => setDataProject({...dataProject, title: val})}
+                                value={dataProject.title}
+                                showValidInput={showValidInput}
+                                showTitle = {true}
+                            />
+                            <InputColorComponent
+                                title="Background (Opsional)"
+                                loading = {colorFetch}
+                                showTitle={true}
+                                showValidInput = {showValidInput}
+                                list = {listColor}
+                                onSelect = {(e) => setDataProject({...dataProject, color: e.id})}
+                                value = {dataProject.color}
+                            />
+                            <div className = "flex flex-row space-x-2 w-full items-center justify-center">
+                                <div onClick={() => setNewProject(false)} className=" bg-white border border-[#FF0000] text-[#FF0000] px-4 py-4 my-3 rounded-md w-full text-center">
+                                    Batal
+                                </div>
+                                <div onClick={() => checkCompleteData(() => !loading && saving())} className=" bg-[#FF0000] px-4 py-4 my-3 rounded-md w-full text-white text-center">
+                                    {loading ? "Menambahkan ... ":"Tambah"}
+                                </div>
+                            </div>
+                        </div>
+                    </ModalWrapper>
             </Layout>
-            <ModalWrapper showed = {newProject} setShowed = {(e) => setNewProject(e)} loading = {loading} >
-                <div className = "flex flex-col mx-4 mt-9 mb-4">
-                    {/* title */}
-                    <div className = "w-full flex justify-center text-2xl text-black dark:text-white">
-                        Proyek Baru
-                    </div>
-                    <InputDefaultComponent 
-                        title="Judul Proyek"
-                        placeholder="Judul Proyek"
-                        onChange={(val) => setDataProject({...dataProject, title: val})}
-                        value={dataProject.title}
-                        showValidInput={showValidInput}
-                        showTitle = {true}
-                    />
-                    <InputColorComponent
-                        title="Background (Opsional)"
-                        loading = {colorFetch}
-                        showTitle={true}
-                        showValidInput = {showValidInput}
-                        list = {listColor}
-                        onSelect = {(e) => setDataProject({...dataProject, color: e.id})}
-                    />
-                    <div className = "flex flex-row space-x-2 w-full items-center justify-center">
-                        <div onClick={() => setNewProject(false)} className=" bg-white border border-[#FF0000] text-[#FF0000] px-4 py-4 my-3 rounded-md w-full text-center">
-                            Batal
-                        </div>
-                        <div onClick={() => checkCompleteData(() => !loading && saving())} className=" bg-[#FF0000] px-4 py-4 my-3 rounded-md w-full text-white text-center">
-                            {loading ? "Menambahkan ... ":"Tambah"}
-                        </div>
-                    </div>
-                </div>
-            </ModalWrapper>
+            
         </>
     )
 }

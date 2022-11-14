@@ -1,8 +1,7 @@
 import Cookies from "universal-cookie";
-import { AddProject_EndPoints } from "../../../endpoints/endpoints";
-import { AddProjectModel } from "../../../models/colaboration/project/add-project-model";
+import { GetListMyTask_EndPoints } from "../../../endpoints/endpoints";
 
-export const requestAddProject = async (token, data: AddProjectModel) => {
+export const requestListMyTask = async (token,status,keyword,sorting) => {
 
     if(token === '-'){
         //client request
@@ -10,10 +9,9 @@ export const requestAddProject = async (token, data: AddProjectModel) => {
     }
 
     let body = JSON.stringify({
-        'title' : data.title,
-        'color' : data.color,
-        'useLogo' : data.useLogo,
-        'pic' : data.pic
+        'taskStatus' : status,
+        'taskSearch' : keyword,
+        'taskSorting' : sorting
     })
 
     let headers = {
@@ -22,7 +20,7 @@ export const requestAddProject = async (token, data: AddProjectModel) => {
         'Authorization': 'Bearer ' + token
     }
 
-    let request = await fetch(AddProject_EndPoints, {
+    let request = await fetch(GetListMyTask_EndPoints, {
         method: 'POST',
         headers: headers,
         body: body

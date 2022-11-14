@@ -1,4 +1,4 @@
-import { TaskAssignmentModel } from "./TaskAssignmentModel";
+import { TaskAssignmentModel } from "./task-assignment-model";
 
 export class ListTaskModel {
 

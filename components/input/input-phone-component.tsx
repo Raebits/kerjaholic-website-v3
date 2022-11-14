@@ -8,12 +8,14 @@ export function InputPhoneComponent({ onChange, onKeyDown, placeholder, title, s
 
     const router = useRouter()
 
-    const [newValue, setNewValue] = React.useState<string>((value) ? value : "")
+    const [newValue, setNewValue] = React.useState<string>("")
+
+    React.useEffect(() => {
+        setNewValue(value)
+    })
 
     const isInvalid = (): boolean => {
         if (showValidInput && newValue == "") {
-            return true
-        } else if (showValidInput && !isValidEmail(newValue) && newValue != "" && type == "email") {
             return true
         }
         return false
@@ -34,7 +36,7 @@ export function InputPhoneComponent({ onChange, onKeyDown, placeholder, title, s
                             <input type={(type) ? type : "text"}
                                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-r-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 placeholder={placeholder}
-                                defaultValue={(value) ? value : ""}
+                                value={newValue}
                                 onChange={(e) => {
                                     (onChange) ? onChange(e.target.value) : console.log("")
                                     setNewValue(e.target.value)
@@ -62,7 +64,7 @@ export function InputPhoneComponent({ onChange, onKeyDown, placeholder, title, s
                             <input type={(type) ? type : "text"}
                                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 placeholder={placeholder}
-                                defaultValue={(value) ? value : ""}
+                                value={newValue}
                                 onChange={(e) => {
                                     (onChange) ? onChange(e.target.value) : console.log("")
                                     setNewValue(e.target.value)

@@ -1,7 +1,6 @@
 import { ColaboratorModel } from "./colaborator-model";
 import {TaskModel} from "./task-model";
-import {FilterModel} from "./filter-model";
-import { SortingModel } from "./sorting-model";
+import { FilterTypes, SortingTypes} from "./detail-project-model-child";
 
 export class DetailProjectModel {
 
@@ -17,7 +16,7 @@ export class DetailProjectModel {
     totalDone: number;
     colaborator:     ColaboratorModel[];
     task: TaskModel[];
-    filter : FilterModel[];
-    sorting: SortingModel[];
+    filter : FilterTypes[];
+    sorting: SortingTypes[];
     deeplink: string;
 }

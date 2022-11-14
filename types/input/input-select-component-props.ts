@@ -1,15 +1,16 @@
 export type InputSelectComponentProps = {
     showTitle? : boolean
-    placeHolder: string
     loading: boolean
     onSelect: (obj: selectedObject) => void
     onSearch: (keyword:string) => void
     fetchData: (opened) => void
     list: ListType[]
-    value: string
-    label:string
+    keyValue: string
+    keyLabel:string
     title: string
     showValidInput? : boolean
+    value: number
+    label: string
 }
 
 type ListType = {

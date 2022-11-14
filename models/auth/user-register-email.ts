@@ -13,5 +13,5 @@ export class UserRegisterEmail {
     role: string =  "workerIndividual";
     username: string = "";
     userName: string = "";
-    domisile: string = "";
+    domisile: number;
 }

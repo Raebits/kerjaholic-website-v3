@@ -11,7 +11,7 @@ export const GetDetailProfile_EndPoints = baseUrl + "social/profile/public/user"
 export const GetListStatusProfile_EndPoints = baseUrl + "social/feed/public/list"
 export const GetListTestimoniProfile_EndPoints = baseUrl + "social/testimony/public/list"
 export const GetDetailJob_EndPoints = baseUrl + "job/detailV2"
-export const GetDetailProject_EndPoints = baseUrl + "pm/share/project/detail"
+export const GetShareDetailProject_EndPoints = baseUrl + "pm/share/project/detail"
 
 export const ConvertImageToBase64_EndPoints = baseUrl + "social/meta/image"
 
@@ -37,9 +37,11 @@ export const UserLogout_EndPoints = baseUrl + "user/setLogout"
 // begin colaboration
 // == project module ==
 export const GetListProject_EndPoints = baseUrl + "pm/list/project"
+export const GetDetailProject_EndPoints = baseUrl + "pm/detail/project"
 export const AddProject_EndPoints = baseUrl + "pm/create/project"
 // == task module ==
 export const GetListTask_EndPoints = baseUrl + "pm/task/list"
+export const GetListMyTask_EndPoints = baseUrl + "pm/task/myList"
 // == global module
 export const GetListColor_EndPoints = baseUrl + "pm/list/color"
 // end of collaboration

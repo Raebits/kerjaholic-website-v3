@@ -61,7 +61,7 @@ export default function LoginModal({ deviceToken, showed, setShowed, showedRegEm
         {showed && (
             <div className = {`bg-gray-600 bg-opacity-60 transition transform  duration-50 w-full fixed top-0 flex justify-center h-screen items-center z-40`}/>
         )}
-        <div className = {`${!showed ? '-translate-y-full' : 'translate-y-1/4'} bg-opacity-60 transition transform ease-in-out duration-1000 w-full fixed -top-0 flex justify-center z-40`}>
+        <div className = {`${!showed ? '-translate-y-full' : 'translate-y-1/4'} bg-opacity-60 transition transform ease-in-out duration-500 w-full fixed -top-0 flex justify-center z-40`}>
             <div ref={ref} className =  "flex flex-col px-5 py-3 bg-white dark:bg-gray-800 w-full mx-2 sm:mx-0 sm:w-2/3 lg:w-1/3 z-50">
 
                 {/* title */}
@@ -74,7 +74,14 @@ export default function LoginModal({ deviceToken, showed, setShowed, showedRegEm
                         value={email}
                     />
                 {/* Password Field  */}
-                <InputPasswordComponent onChange={(val) => setPassword(val)} />
+                <InputPasswordComponent 
+                    title="Kata Sandi"
+                    placeholder="Kata Sandi"
+                    onChange={(val) => setPassword(val)}
+                    showValidInput={false}
+                    showTitle = {false}
+                    value = {password}
+                />
                 {/* lupa kata sandi  */}
                 <div className = "flex my-3 px-1 text-black dark:text-white">Lupa Kata Sandi ? <p className = "text-[#ff0000] dark:text-red-300 mx-1">Ya</p></div>
                 {/* tombol login manual */}

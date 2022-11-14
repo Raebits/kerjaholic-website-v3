@@ -4,4 +4,5 @@ export type InputPasswordComponentProps = {
     placeholder?: string
     showValidInput?: boolean 
     showTitle? : boolean
+    value?: string
 }

@@ -37,6 +37,12 @@ export default function RegisterEmailModal({ deviceToken, showed, setShowed, loa
     const [ isLoading, setIsLoading] = React.useState<boolean>(false)
     const {isAuth, setAuth} = React.useContext(AppAuthContext)
 
+    // rendered when modal shwowed and clean input form
+    React.useEffect(() => {
+        setDataRegister(new UserRegisterEmail())
+        setShowValidInput(false)
+    },[showed === true])
+    
     async function getCity(searchWord){
         await setLoadingCity(true)
         // hit endpoint
@@ -75,6 +81,7 @@ export default function RegisterEmailModal({ deviceToken, showed, setShowed, loa
         
         if (!isCheckedTerm || checkDataModelEmpty(dataRegister)) {
             setShowValidInput(true)
+            console.log("unchecked")
             return;
         }
 
@@ -128,7 +135,7 @@ export default function RegisterEmailModal({ deviceToken, showed, setShowed, loa
         {showed && (
             <div className = {`bg-gray-600 bg-opacity-60 transition transform  duration-50 w-full fixed top-0 flex justify-center h-screen items-center z-40`}/>
         )}
-        <div className = {`${!showed ? '-translate-y-full' : 'translate-y-1/4'} bg-opacity-60 transition transform ease-in-out duration-1000 w-full fixed -top-24 md:top-0 flex justify-center z-40`}>
+        <div className = {`${!showed ? '-translate-y-full' : 'translate-y-1/4'} bg-opacity-60 transition transform ease-in-out duration-500 w-full fixed -top-24 md:top-0 flex justify-center z-40`}>
             <div ref={ref} className =  "flex flex-col px-5 py-3 bg-white dark:bg-gray-800 w-full mx-2 md:mx-8 lg:w-2/3 z-50">
 
                 {/* title */}
@@ -152,19 +159,20 @@ export default function RegisterEmailModal({ deviceToken, showed, setShowed, loa
                             showTitle = {false}
                         />
                         <InputSelectComponent
-                            placeHolder="Pilih Domisili"
-                            list={listCity}
-                            value = "id" // define key for value
-                            title = "Domisili" // define key for label
-                            label = "city"
-                            fetchData = {(val) => val? getCity("") : setListCity([])}
+                            title = "Domisili" // title inputan
+                            showTitle = {false} // show title ??
+                            showValidInput={showValidInput} // validation message
+                            list={listCity} // list city fetching when select clicked
+                            keyValue = "id" // mau ambil key apa dinamis tergantung list untuk nilai value nya
+                            keyLabel = "city" // mau ambil key apa dinamis tergantung list untuk nilai label nya
+                            value = {dataRegister.domisile} // for set value from database
+                            label = {listCity.filter(obj => obj["id"] == dataRegister.domisile)[0]?.city} // for set label from database
+                            fetchData = {(isFetch) => isFetch? getCity("") : setListCity([])} // fetch data true ? if true fetch data
+                            loading = {loadingCity} // loading when fetching
                             onSelect={(val) => {
-                                setDataRegister({...dataRegister, domisile: val.id})
+                                setDataRegister({...dataRegister, domisile: val.id}) // set state
                             }}
-                            onSearch = {(keyword) => getCity(keyword)}
-                            loading = {loadingCity}
-                            showValidInput={showValidInput}
-                            showTitle = {false}
+                            onSearch = {(keyword) => getCity(keyword)} // when search then re fetching data
                         />
                         
                     </div>
@@ -193,13 +201,15 @@ export default function RegisterEmailModal({ deviceToken, showed, setShowed, loa
                             onChange={(val) => setDataRegister({...dataRegister, password: val})}
                             showValidInput={showValidInput}
                             showTitle = {false}
+                            value = {dataRegister.password}
                         />
                     </div>
                 </div>
                 <InputCheckboxComponent
                     onChange={(val) => setIsCheckedTerm(val)}
                     initValue={isCheckedTerm}
-                    title="Syarat"
+                    title="Syarat & Ketentuan"
+                    showValidInput = {showValidInput}
                 >
                     <div className = "flex">
                         <div className = "ml-2">

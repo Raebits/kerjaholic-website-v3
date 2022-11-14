@@ -1,5 +1,3 @@
-import firebase from "firebase";
-import { ProviderAuthType } from "../../enum/auth/provider-auth-type";
 
 type ModalWrapperProps = {
     children: React.ReactNode,

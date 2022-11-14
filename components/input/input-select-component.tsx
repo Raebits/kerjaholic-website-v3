@@ -3,16 +3,18 @@ import React from "react";
 import { InputSelectComponentProps } from "../../types/input/input-select-component-props";
 import {useOnClickOutside} from "../../helper/click-outside";
 
-export function InputSelectComponent( {showTitle, loading, onSelect, title, label, list, placeHolder, value, onSearch, fetchData, showValidInput } : InputSelectComponentProps) {
+export function InputSelectComponent( {showTitle, loading, onSelect, title, keyLabel, list, keyValue, value, label, onSearch, fetchData, showValidInput } : InputSelectComponentProps) {
     const router = useRouter()
     const [listOpened, setListOpened] = React.useState<boolean>(false)
-    const [showedLabel, setShowedLabel] = React.useState<string>(placeHolder)
+    const [showedLabel, setShowedLabel] = React.useState<string>("Pilih "+title)
     const [search, setSearch] = React.useState<string>("")
-    const [ selected, setSelected ] = React.useState<boolean>(false)
     // click outside handler
     const ref = React.useRef()
     useOnClickOutside(ref, () => {setListOpened(false)});
-
+    React.useEffect(() => {
+        !value && setShowedLabel("Pilih "+title)
+    })
+    
     React.useEffect(() => {
         if(listOpened){
             fetchData(true)
@@ -22,7 +24,7 @@ export function InputSelectComponent( {showTitle, loading, onSelect, title, labe
     },[listOpened])
 
     const isInvalid = (): boolean => {
-        if (showValidInput && !selected) {
+        if (showValidInput && !value ) {
             return true
         }
         return false
@@ -67,8 +69,8 @@ export function InputSelectComponent( {showTitle, loading, onSelect, title, labe
                                 list.length > 0 ? (
                                     list.map((item, index) => {
                                         return (
-                                            <div onClick={() => {onSelect(item); setSelected(true); setShowedLabel(item[label]); setListOpened(false)}} key = {index} className = " w-full px-3 py-1 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-900 text-sm dark:text-gray-300">
-                                                {item[label]}
+                                            <div onClick={() => {onSelect(item); setShowedLabel(item[keyLabel]); setListOpened(false)}} key = {index} className = " w-full px-3 py-1 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-900 text-sm dark:text-gray-300">
+                                                {item[keyLabel]}
                                             </div>
                                         )
                                     })

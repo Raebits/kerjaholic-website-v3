@@ -86,7 +86,7 @@ export default function SidebarNavigation({ children }: SidebarProps): JSX.Eleme
             {/* end of small screen handler top*/}
 
             {/* large screen handler */}
-            <div className="hidden sm:block flex-none fixed h-screen w-64">
+            <div className="hidden sm:block flex-none fixed h-screen w-48 md:w-64">
             <div className ="flex flex-col bg-white dark:bg-[#0F172A] border-r border-[#CCCCCC] mt-2 py-4 px-3 h-screen">
                     <div className = "p-3 text-black dark:text-white">
                         Kolaborasi
@@ -157,14 +157,14 @@ export default function SidebarNavigation({ children }: SidebarProps): JSX.Eleme
                     </Link>
                 </div>
             </div>
-            <div className="hidden sm:block flex-none h-screen bg-white w-64 p-3">
+            <div className="hidden sm:block flex-none h-screen bg-white w-48 md:w-64 p-3">
                 {/* content sidebar wrapper */}
                 large spacer
             </div>
 
             {/* end of large screen handler */}
-
-            <div className=" flex-grow">
+            {/* UI cheat for overflow content */}
+            <div style = {{minWidth: 0, flex:1}}>
                 {/* content main wrapper */}
                 <div className =" h-screen dark:bg-[#0F172A] mt-2 ">
                     {children}

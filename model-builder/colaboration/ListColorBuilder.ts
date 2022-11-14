@@ -1,4 +1,4 @@
-import { ListColorModel } from "../../models/colaboration/ListColorModel";
+import { ListColorModel } from "../../models/colaboration/list-color-model";
 
 export class ListColorBuilder {
     public static jsonParse(json: string): ListColorModel[] {

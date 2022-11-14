@@ -6,4 +6,5 @@ export type InputChexboxComponentProps = {
     name?: string
     initValue?: boolean,
     children?: React.ReactNode,
+    showValidInput?: boolean
 }

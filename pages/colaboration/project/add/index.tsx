@@ -10,9 +10,9 @@ import ServerError from "../../../../components/colaboration/server-error";
 import EmptyData from "../../../../components/colaboration/empty-data";
 import { getListColor } from "../../../../api/colaboration/get-list-color";
 import { ListColorBuilder } from "../../../../model-builder/colaboration/ListColorBuilder";
-import { ListColorModel } from "../../../../models/colaboration/ListColorModel";
+import { ListColorModel } from "../../../../models/colaboration/list-color-model";
 import { InputDefaultComponent } from "../../../../components/input/input-default-component";
-import { AddProjectModel } from "../../../../models/colaboration/project/AddProjectModel";
+import { AddProjectModel } from "../../../../models/colaboration/project/add-project-model";
 import { checkDataModelEmpty } from "../../../../helper/common/check-data-model-empty";
 import { requestAddProject } from "../../../../api/colaboration/project/request-add-project";
 import { responseErrorHandler } from "../../../../helper/common/response-request-handler";
@@ -84,6 +84,7 @@ function AddProject({ dataServer }: ServerPageProps) {
                                 showTitle = {true}
                             />
                             <InputColorComponent
+                                loading={false}
                                 title="Warna Latar"
                                 showTitle={true}
                                 showValidInput = {showValidInput}

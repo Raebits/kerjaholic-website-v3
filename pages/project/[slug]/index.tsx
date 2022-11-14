@@ -5,7 +5,7 @@ import { useTranslation } from "next-i18next";
 import qs from 'querystring';
 
 import ShareLayout from "../../../components/share-layout";
-import { getDetailProject_json } from "../../../api/project/get-detail-project";
+import { getShareDetailProject_json } from "../../../api/project/get-detail-project";
 import { checkValidResponse } from "../../../helper/check-error-response";
 import { DetailProjectBuilder } from "../../../model-builder/project/detail-project-builder";
 import DetailProjectPageProps from "../../../types/project/detail-project-page-props";
@@ -44,7 +44,7 @@ function DetailProject({ slug, userIdAccess, dataServer }: DetailProjectPageProp
 
     async function filtering(type){
         await setTaskStatus(type)
-        let response = await getDetailProject_json(slug as string, userIdAccess, type, taskSorting)
+        let response = await getShareDetailProject_json(slug as string, userIdAccess, type, taskSorting)
     
         setDetailProject(response)
     }
@@ -52,7 +52,7 @@ function DetailProject({ slug, userIdAccess, dataServer }: DetailProjectPageProp
     async function sortFunc(key){
         await setTaskSorting(key)
         await setOptionClick(false)
-        let response = await getDetailProject_json(slug as string, userIdAccess, taskStatus, key)
+        let response = await getShareDetailProject_json(slug as string, userIdAccess, taskStatus, key)
     
         setDetailProject(response)
     }
@@ -297,7 +297,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         } 
     }
     
-    let response = await getDetailProject_json(slug as string, userIdAccess, taskStatus, taskSorting)
+    let response = await getShareDetailProject_json(slug as string, userIdAccess, taskStatus, taskSorting)
     
     var dataServer = JSON.stringify(response)
 

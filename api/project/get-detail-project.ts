@@ -1,6 +1,6 @@
-import { GetDetailProject_EndPoints } from "../../endpoints/endpoints";
+import { GetShareDetailProject_EndPoints } from "../../endpoints/endpoints";
 
-export async function getDetailProject_json(slug: string, userId?: string, taskStatus?: string, taskSorting?: string) {
+export async function getShareDetailProject_json(slug: string, userId?: string, taskStatus?: string, taskSorting?: string) {
 
     let body = JSON.stringify({
         slug: slug,
@@ -10,7 +10,7 @@ export async function getDetailProject_json(slug: string, userId?: string, taskS
         taskSorting: taskSorting
     })
     
-    let request = await fetch(GetDetailProject_EndPoints, {
+    let request = await fetch(GetShareDetailProject_EndPoints, {
         method: 'POST',
         headers: {
             Accept: 'application/json',

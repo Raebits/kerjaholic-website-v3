@@ -1,4 +1,4 @@
-import { ListTaskModel } from "../../../models/colaboration/task/ListTaskModel";
+import { ListTaskModel } from "../../../models/colaboration/task/list-task-model";
 
 export class ListTaskBuilder {
     public static jsonParse(json: string): ListTaskModel[] {
