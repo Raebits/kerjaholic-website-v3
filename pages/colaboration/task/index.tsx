@@ -41,7 +41,6 @@ function ListTask({ dataServer }: ServerPageProps) {
                     <GroupImageComponent
                         data = {data}
                         limit = {4}
-                        size = {24}
                     />
                 </div>
             )

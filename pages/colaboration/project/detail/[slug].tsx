@@ -38,11 +38,12 @@ function ListTask({ slug,dataServer }: ServerPageProps) {
             field: 'taskAssignment',
             name: 'Tim',
             render: (data: any) => (
-                <GroupImageComponent
-                    data = {data}
-                    limit = {4}
-                    size = {24}
-                />
+                <div className = "w-24">
+                    <GroupImageComponent
+                        data = {data}
+                        limit = {4}
+                    />
+                </div>
             )
         },{
             field: 'status',
@@ -119,7 +120,22 @@ function ListTask({ slug,dataServer }: ServerPageProps) {
                                         />
                                     </ProjectDetailCard>
                                 </div> */}
-                                <div className = "w-full sm:w-1/2 md:w-1/3 lg:w-80 lg:bg-red-600">
+                                <div className = "w-full lg:w-1/3">
+                                    <div className = "m-1">
+                                    <ProjectDetailCard
+                                        title = {"Kolaborator"}
+                                        onClick = {(e) => console.log(e)}
+                                    >
+                                        <div className = "w-1/2 md:w-1/3 lg:w-10/12">
+                                            <GroupImageComponent
+                                                data = {serverData.colaborator}
+                                                limit = {4}
+                                            />
+                                        </div>
+                                    </ProjectDetailCard>
+                                    </div>
+                                </div>
+                                <div className = "w-1/2 lg:w-1/3 ">
                                     <div className = "m-1">
                                         <ProjectDetailCard
                                             title = {"Jadwal Meeting"}
@@ -134,22 +150,7 @@ function ListTask({ slug,dataServer }: ServerPageProps) {
                                         </ProjectDetailCard>
                                     </div>
                                 </div>
-                                <div className = "w-full sm:w-1/2 md:w-1/3 lg:w-80 ">
-                                    <div className = "m-1">
-                                        <ProjectDetailCard
-                                            title = {"Jadwal Meeting"}
-                                            onClick = {(e) => console.log(e)}
-                                        >
-                                            <div className = "flex space-x-1 items-center md:space-x-3 flex-row ">
-                                                <div className = "w-6">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path stroke="#200E32" strokeLinecap="round" strokeLinejoin="round" d="M17.595 10.932a2.902 2.902 0 1 0 0-5.803M18.929 14.085c.478.032.954.1 1.422.206.651.127 1.434.394 1.713.978.177.374.177.81 0 1.184-.278.584-1.062.85-1.713.984M6.29 10.932a2.902 2.902 0 1 1 0-5.803M4.956 14.085c-.479.032-.955.1-1.423.206-.65.127-1.434.394-1.711.978-.18.374-.18.81 0 1.184.276.584 1.06.85 1.711.984"/><path stroke="#200E32" strokeLinecap="round" strokeLinejoin="round" d="M11.938 14.71c3.246 0 6.02.49 6.02 2.457 0 1.965-2.755 2.475-6.02 2.475-3.248 0-6.021-.491-6.021-2.458 0-1.966 2.755-2.475 6.02-2.475ZM11.938 11.905a3.845 3.845 0 0 1-3.858-3.86 3.845 3.845 0 0 1 3.858-3.858 3.845 3.845 0 0 1 3.858 3.859 3.845 3.845 0 0 1-3.858 3.859Z" clipRule="evenodd"/></svg>
-                                                </div>
-                                                <div className = "text-[#828282] text-xs">3 Jadwal</div>
-                                            </div>
-                                        </ProjectDetailCard>
-                                    </div>
-                                </div>
-                                <div className = "w-full sm:w-1/2 md:w-1/3 lg:w-80">
+                                <div className = "w-1/2 lg:w-1/3">
                                     <div className = "m-1">
                                         <ProjectDetailCard
                                             title = {"Jadwal Meeting"}

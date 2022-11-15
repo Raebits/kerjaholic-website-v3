@@ -8,5 +8,5 @@ export class UserRegisterProvider {
     role: string =  "workerIndividual";
     status: string =  "-"
     username: string = "";
-    domisile: string = "";
+    domisile: number;
 }

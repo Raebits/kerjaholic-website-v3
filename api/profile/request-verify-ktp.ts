@@ -1,6 +1,6 @@
 import axios from "axios";
 import { FormDataKTPModel } from "../../models/profile/formdata-profile-ktp";
-import { VerifyKTP_EndPoints } from "../endpoints";
+import { VerifyKTP_EndPoints } from "../../endpoints/endpoints";
 
 export const requestVerifyKTP = async (data: FormDataKTPModel, progress: (val: number) => void) => {
 

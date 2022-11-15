@@ -243,7 +243,7 @@ export default function SidebarNavigation({ children }: SidebarProps): JSX.Eleme
                 </div>
             </div>
             <div className = "block sm:hidden w-full p-5 mt-2">
-                small spacer
+                {/* small spacer */}
             </div>
             {/* end of small screen handler bottom*/}
         </div>

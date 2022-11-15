@@ -1,5 +1,6 @@
+
+import { UpdateProfileBiodata_EndPoints } from "../../endpoints/endpoints";
 import { FormDataProfileBiodataModel } from "../../models/profile/formdata-profile-biodata-model";
-import { UpdateProfileBiodata_EndPoints } from "../endpoints";
 
 export const requestUpdateProfileBiodata = async (data: FormDataProfileBiodataModel) => {
 

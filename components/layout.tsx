@@ -3,7 +3,6 @@ import Meta from "./meta"
 import { useRouter } from 'next/router';
 import LayoutProps from "../types/layout-props";
 import FooterSectionHome from "../components/home-index/footer-section-component";
-import SeperatorGrayComponent from "./home-index/seperator-gray-component";
 import TopNavigationIndex from "./navigation/top-navigation-index";
 import AppPreloadContext from "../utils/context/preload-context";
 import LoginModal from "./auth/login-modal";

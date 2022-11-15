@@ -1,4 +1,4 @@
-import { ProfileFreelance_EndPoints } from "../endpoints";
+import { ProfileFreelance_EndPoints } from "../../endpoints/endpoints";
 
 export const requestProfileFreelance = async () => {
 

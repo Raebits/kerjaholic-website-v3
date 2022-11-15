@@ -127,39 +127,39 @@ export default function RegisterProviderModal({ deviceToken, showed, setShowed, 
             <div ref={ref} className =  "flex flex-col px-5 py-3 bg-white w-full mx-2 sm:mx-0 sm:w-2/3 lg:w-1/3 z-50">              
                 {/* title */}
                 <div className = "text-3xl mb-4 flex items-center justify-center"> Daftar</div>
-                <InputDefaultComponent 
-                    title="Username"
-                    placeholder="Username"
-                    onChange={(val) => setUserProvider({...userProvider, username: val})}
-                    value={userProvider.username}
-                    showValidInput={showValidInput}
-                    showTitle = {true}
-                />
-                <InputPhoneComponent 
-                    title="Nomor Telepon"
-                    placeholder="Nomor Telepon : Eg 08960820XXXX"
-                    type="tel"
-                    onChange={(val) => setUserProvider({...userProvider, phoneNumber: val})}
-                    value={userProvider.phoneNumber}
-                    showValidInput={showValidInput}
-                    showTitle = {true}
-                />
-                <InputSelectComponent
-                    placeHolder="Pilih Domisili"
-                    list={listCity}
-                    value = "id" // define key for value
-                    label = "city" // define key for label
-                    title = "Domisili"
-                    showTitle = {true}
-                    showValidInput = {true}
-                    fetchData = {(val) => val? getCity("") : setListCity([])}
-                    onSelect={(val) => {
-                        setUserProvider({...userProvider, domisile: val.id})
-                    }}
-                    onSearch = {(keyword) => getCity(keyword)}
-                    loading = {loadingCity}
-                />
-
+                    <InputDefaultComponent 
+                        title="Username"
+                        placeholder="Username"
+                        onChange={(val) => setUserProvider({...userProvider, username: val})}
+                        value={userProvider.username}
+                        showValidInput={showValidInput}
+                        showTitle = {true}
+                    />
+                    <InputPhoneComponent 
+                        title="Nomor Telepon"
+                        placeholder="Nomor Telepon : Eg 08960820XXXX"
+                        type="tel"
+                        onChange={(val) => setUserProvider({...userProvider, phoneNumber: val})}
+                        value={userProvider.phoneNumber}
+                        showValidInput={showValidInput}
+                        showTitle = {true}
+                    />
+                    <InputSelectComponent
+                        title = "Domisili" // title inputan
+                        showTitle = {false} // show title ??
+                        showValidInput={showValidInput} // validation message
+                        list={listCity} // list city fetching when select clicked
+                        keyValue = "id" // mau ambil key apa dinamis tergantung list untuk nilai value nya
+                        keyLabel = "city" // mau ambil key apa dinamis tergantung list untuk nilai label nya
+                        value = {userProvider.domisile} // for set value from database
+                        label = {listCity.filter(obj => obj["id"] == userProvider.domisile)[0]?.city} // for set label from database
+                        fetchData = {(val) => val? getCity("") : setListCity([])}
+                        loading = {loadingCity} // loading when fetching
+                        onSelect={(val) => {
+                            setUserProvider({...userProvider, domisile: val.id})
+                        }}
+                        onSearch = {(keyword) => getCity(keyword)} // when search then re fetching data
+                    />
                     <div onClick={() => checkCompleteData(() => onRegister())} className=" bg-[#FF0000] px-4 py-4 my-3 rounded-full text-white text-center">
                         Lanjutkan
                     </div>

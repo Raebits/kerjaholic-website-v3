@@ -1,4 +1,4 @@
-import { ForgotPassword_EndPoints } from "../endpoints";
+import { ForgotPassword_EndPoints } from "../../endpoints/endpoints";
 
 export const requestForgotPassword = async (email: string) => {
 

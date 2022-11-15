@@ -1,4 +1,4 @@
-import { UpdateLanguage_EndPoints } from "../endpoints";
+import { UpdateLanguage_EndPoints } from "../../endpoints/endpoints";
 
 export const requestUpdateLanguage = async (userLang: string) => {
 

@@ -1,5 +1,5 @@
 import { FormDataProfileCVModel } from "../../models/profile/formdata-profile-cv-model";
-import { UpdateProfileCV_EndPoints } from "../endpoints";
+import { UpdateProfileCV_EndPoints } from "../../endpoints/endpoints";
 
 export const requestUpdateProfileCV = async (data: FormDataProfileCVModel) => {
 

@@ -1,4 +1,4 @@
-import { ProfileCV_EndPoints } from "../endpoints";
+import { ProfileCV_EndPoints } from "../../endpoints/endpoints";
 
 export const requestProfileCV = async () => {
 
