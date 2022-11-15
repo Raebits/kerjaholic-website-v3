@@ -17,13 +17,11 @@ export function BtnLoginGoogleComponent( { success, notFound, className, onLoadi
         firebase.auth().signOut();
         // - Listened from state change
         firebase.auth().onAuthStateChanged(function (user) {
-            onLoading(true)
+            console.log("executed")
             if (user) {
                 user.getIdToken().then(function (idToken) {
                     requestLogin(idToken, user);
                 });
-            }else{
-                onLoading(false)
             }
         });
     }
@@ -52,6 +50,7 @@ export function BtnLoginGoogleComponent( { success, notFound, className, onLoadi
 
     async function handleSuccess(data: GoogleLoginResponse | GoogleLoginResponseOffline) {
 
+        onLoading(true)
         // init Auth State Changed
         initOnAuthStateChanged()
         let googleUser = data as GoogleLoginResponse
@@ -65,7 +64,7 @@ export function BtnLoginGoogleComponent( { success, notFound, className, onLoadi
     };
 
     function handleFailure(error: any) {
-
+        console.log(error)
     };
 
     return (

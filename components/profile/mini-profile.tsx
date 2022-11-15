@@ -51,7 +51,7 @@ export default function MiniProfile({ showed, setShowed, loading }: MiniProfileP
         {/* {showed && (
             <div className = {`bg-gray-600 bg-opacity-60 transition transform  duration-50 w-full fixed top-0 flex justify-center h-screen items-center z-40`}/>
         )} */}
-        <div className = {`${!showed ? '-translate-y-full' : 'translate-y-1/4'} w-96 transition transform ease-in-out duration-500 fixed top-0 right-6 flex justify-center z-50`}>
+        <div className = {`${!showed ? '-translate-y-full' : 'translate-y-1/4'} w-full px-6 sm:px-0 sm:w-96 transition transform ease-in-out duration-500 fixed top-0 right-0 sm:right-6 flex justify-center z-50`}>
             <div ref={ref} className =  {`flex flex-col px-5 py-3 bg-white dark:bg-[#0F172A] border border-gray-300 ${showed && 'shadow-xl'} w-full z-50 rounded-lg`}>
 
                 <div className = "flex space-x-3 items-center px-3">

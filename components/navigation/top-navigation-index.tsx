@@ -75,11 +75,11 @@ export default function TopNavigationIndex({ setShowed }: MainNavigationProps): 
                     </div>
 
                     <Link href="/article">
-                        <a className=" hidden sm:block px-2 text-sm md:text-md text-black dark:text-white">Artikel</a>
+                        <a className=" sm:block px-2 text-sm md:text-md text-black dark:text-white">Artikel</a>
                     </Link>
-                    <a className="hidden sm:block px-2 text-sm md:text-md text-black dark:text-white" href="https://academy.kerjaholic.com" >Akademi</a>
+                    {/* <a className="hidden sm:block px-2 text-sm md:text-md text-black dark:text-white" href="https://academy.kerjaholic.com" >Akademi</a> */}
                     <Link href="/colaboration">
-                        <a className="hidden sm:block last:px-2 text-sm md:text-md text-black dark:text-white">Kolaborasi</a>
+                        <a className=" sm:block last:px-2 text-sm md:text-md text-black dark:text-white">Kolaborasi</a>
                     </Link>
                     {isAuth === null ? (
                         <div onClick = {() => setOpenProfile(true)} className = "flex space-x-1 items-center px-3">
@@ -93,9 +93,9 @@ export default function TopNavigationIndex({ setShowed }: MainNavigationProps): 
                         </div>
                     ):(
                         <>
-                        {!isAuth && (
+                        {/* {!isAuth && (
                             <div style={{cursor: "pointer"}} onClick = {()=>setShowed(true)} className = "text-sm md:text-md bg-[#FF0000] shadow-md px-4 mx-2 py-2 rounded-lg text-white">Login</div>
-                        )}
+                        )} */}
 
                         {isAuth && (  
                             <div onClick = {() => setOpenProfile(true)} className = "flex space-x-3 items-center px-3">
