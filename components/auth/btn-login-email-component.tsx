@@ -25,9 +25,9 @@ export function BtnLoginEmailComponent({ email, password, success, onLoading }: 
 
 
     return (
-        <div className = "bg-[#ff0000] p-3 my-1 rounded-lg flex justify-center text-white"
+        <div className = "bg-[#ff0000] text-sm p-2 my-1 rounded-lg flex justify-center text-white w-full"
                 onClick={() => onLoginWithEmail()}>
-                MASUK
+                Masuk
         </div>
     );
 };

@@ -4,8 +4,10 @@ import MiniProfileProps from "../../types/profile/mini-profile-props";
 import AppAuthContext from "../../utils/context/auth-context";
 import Cookies from 'universal-cookie';
 import { requestUserLogout } from "../../api/profile/request-user-logout";
-import { useGoogleLogout, GoogleLogout } from 'react-google-login'
 import { useOnClickOutside } from "../../helper/click-outside";
+import { googleLogout } from '@react-oauth/google';
+
+
 
 export default function MiniProfile({ showed, setShowed, loading }: MiniProfileProps): JSX.Element {
     const router = useRouter()
@@ -25,9 +27,8 @@ export default function MiniProfile({ showed, setShowed, loading }: MiniProfileP
         // await firebase.auth().signOut();
         await setLogoutLoading(true)
         await requestUserLogout()
-
+        googleLogout();
         setAuth(false);
-        localStorage.removeItem("auth");
         localStorage.removeItem("avatar");
         localStorage.removeItem("userId");
         localStorage.removeItem("username");
@@ -81,20 +82,13 @@ export default function MiniProfile({ showed, setShowed, loading }: MiniProfileP
 
                     <div className = "block ">Pengaturan</div>
                 </div>
-                <GoogleLogout
-                    clientId="17773254584-tv67vbs94kln4jvsj86q4setb5ee0uc5.apps.googleusercontent.com"
-                    buttonText="Logout"
-                    onLogoutSuccess={logout}
-                    render={renderProps => (
-                        <div onClick={renderProps.onClick} className="flex my-1 py-3 bg-[#FF0000] dark:bg-white text-white dark:text-black rounded-lg">                         
-                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6 mx-3">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
-                            </svg>
-                            <div className = "block ">{!logoutLoading ? 'Keluar' : 'Loading . . .'}</div>
-                         </div>
-                     )} 
-                    >
-                </GoogleLogout>
+                
+                <div onClick={logout} className="flex my-1 py-3 bg-[#FF0000] dark:bg-white text-white dark:text-black rounded-lg">                         
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6 mx-3">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
+                    </svg>
+                    <div className = "block ">{!logoutLoading ? 'Keluar' : 'Loading . . .'}</div>
+                </div>
                 {/* <div onClick = {() => logout()} className="flex my-1 py-3 bg-[#FF0000] text-white rounded-lg">
                     <img className = "px-3 h-6 w-auto" src="/images/logout.svg"/>
                     <div className = "block ">{!logoutLoading ? 'Keluar' : 'Loading . . .'}</div>

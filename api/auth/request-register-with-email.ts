@@ -27,8 +27,6 @@ export const requestRegisterWithEmail = async (user: UserRegisterEmail) => {
         domisile: user.domisile
     })
 
-    console.log(JSON.parse(body))
-
     let headers = {
         Accept: 'application/json',
         'Content-Type': 'application/json',

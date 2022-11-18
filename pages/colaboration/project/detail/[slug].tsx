@@ -135,7 +135,7 @@ function ListTask({ slug,dataServer }: ServerPageProps) {
                                     </ProjectDetailCard>
                                     </div>
                                 </div>
-                                <div className = "w-1/2 lg:w-1/3 ">
+                                <div className = "w-full md:w-1/2 lg:w-1/3 ">
                                     <div className = "m-1">
                                         <ProjectDetailCard
                                             title = {"Jadwal Meeting"}
@@ -150,7 +150,7 @@ function ListTask({ slug,dataServer }: ServerPageProps) {
                                         </ProjectDetailCard>
                                     </div>
                                 </div>
-                                <div className = "w-1/2 lg:w-1/3">
+                                <div className = "w-full md:w-1/2 lg:w-1/3">
                                     <div className = "m-1">
                                         <ProjectDetailCard
                                             title = {"Jadwal Meeting"}

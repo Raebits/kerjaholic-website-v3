@@ -6,6 +6,7 @@ import "slick-carousel/slick/slick-theme.css";
 import '../public/css/globals.css'
 import { appWithTranslation } from 'next-i18next'
 import ContextProvider from '../utils/context/context-provider';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 function MyApp({ Component, pageProps }: AppProps) {
   
@@ -18,9 +19,11 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, []);
 
   return (
-      <ContextProvider>
+    <GoogleOAuthProvider clientId="17773254584-tv67vbs94kln4jvsj86q4setb5ee0uc5.apps.googleusercontent.com">
+        <ContextProvider>
           <Component {...pageProps} />
       </ContextProvider>
+    </GoogleOAuthProvider>
   )
 }
 

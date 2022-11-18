@@ -25,7 +25,6 @@ import AlertComponent from "../../../components/colaboration/alert-component";
 
 
 function ListProject({ dataServer }: ServerPageProps) {
-    
     let serverData = ListProjectBuilder.jsonParse((dataServer == null)? null : dataServer)
     if(serverData == null){
         return (
@@ -55,6 +54,7 @@ function ListProject({ dataServer }: ServerPageProps) {
     async function addData() {
         // using page
         // router.push("project/add")
+
         // using modal
         await setDataProject(new AddProjectModel())
         await setShowValidInput(false)
@@ -66,9 +66,6 @@ function ListProject({ dataServer }: ServerPageProps) {
             await setListColor(response)
             await setColorFetch(false)
         }
-
-        
-        
     }
 
     const checkCompleteData = (callback: () => void) => {
@@ -101,6 +98,15 @@ function ListProject({ dataServer }: ServerPageProps) {
     return (
         <>
             <Layout title={"Tambah Kenalan sekaligus Cari Kerjaan | Kerjaholic"} useFooter = {false}>
+                {/* <AlertComponent
+                    title={"coba coba"}
+                    icon = {"https://embed.lottiefiles.com/animation/105198"}
+                    isConfirmation = {(e) => console.log(e)}
+                    message = {"ini adalah message"}
+                    setShowed = {(e) => console.log(e)}
+                    showed = {true}
+
+                /> */}
                     <SidebarNavigation>
                         <div className="flex flex-col bg-white dark:bg-[#0F172A]">
                             <StickyHeader 
@@ -154,36 +160,40 @@ function ListProject({ dataServer }: ServerPageProps) {
                             
                         </div>
                     </SidebarNavigation>
-                    <ModalWrapper showed = {newProject} setShowed = {(e) => setNewProject(e)} loading = {loading} >
-                        <div className = "flex flex-col mx-4 mt-9 mb-4">
-                            {/* title */}
-                            <div className = "w-full flex justify-center text-2xl text-black dark:text-white">
-                                Proyek Baru
+                    <ModalWrapper 
+                        showed = {newProject} 
+                        setShowed = {(e) => setNewProject(e)} 
+                        loading = {loading} 
+                        extendClass = {"w-full sm:w-1/2 lg:w-1/3 mx-4 flex flex-col px-4 pt-9 pb-4 bg-white rounded-md w-full"}
+                        closeOutsideClick = {true}
+                    >
+                        {/* title */}
+                        <div className = "w-full flex justify-center text-2xl text-black dark:text-white">
+                            Proyek Baru
+                        </div>
+                        <InputDefaultComponent 
+                            title="Judul Proyek"
+                            placeholder="Judul Proyek"
+                            onChange={(val) => setDataProject({...dataProject, title: val})}
+                            value={dataProject.title}
+                            showValidInput={showValidInput}
+                            showTitle = {true}
+                        />
+                        <InputColorComponent
+                            title="Background (Opsional)"
+                            loading = {colorFetch}
+                            showTitle={true}
+                            showValidInput = {showValidInput}
+                            list = {listColor}
+                            onSelect = {(e) => setDataProject({...dataProject, color: e.id})}
+                            value = {dataProject.color}
+                        />
+                        <div className = "flex flex-row space-x-2 w-full items-center justify-center">
+                            <div onClick={() => setNewProject(false)} className=" bg-white border border-[#FF0000] text-[#FF0000] px-4 py-4 my-3 rounded-md w-full text-center">
+                                Batal
                             </div>
-                            <InputDefaultComponent 
-                                title="Judul Proyek"
-                                placeholder="Judul Proyek"
-                                onChange={(val) => setDataProject({...dataProject, title: val})}
-                                value={dataProject.title}
-                                showValidInput={showValidInput}
-                                showTitle = {true}
-                            />
-                            <InputColorComponent
-                                title="Background (Opsional)"
-                                loading = {colorFetch}
-                                showTitle={true}
-                                showValidInput = {showValidInput}
-                                list = {listColor}
-                                onSelect = {(e) => setDataProject({...dataProject, color: e.id})}
-                                value = {dataProject.color}
-                            />
-                            <div className = "flex flex-row space-x-2 w-full items-center justify-center">
-                                <div onClick={() => setNewProject(false)} className=" bg-white border border-[#FF0000] text-[#FF0000] px-4 py-4 my-3 rounded-md w-full text-center">
-                                    Batal
-                                </div>
-                                <div onClick={() => checkCompleteData(() => !loading && saving())} className=" bg-[#FF0000] px-4 py-4 my-3 rounded-md w-full text-white text-center">
-                                    {loading ? "Menambahkan ... ":"Tambah"}
-                                </div>
+                            <div onClick={() => checkCompleteData(() => !loading && saving())} className=" bg-[#FF0000] px-4 py-4 my-3 rounded-md w-full text-white text-center">
+                                {loading ? "Menambahkan ... ":"Tambah"}
                             </div>
                         </div>
                     </ModalWrapper>

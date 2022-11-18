@@ -1,5 +1,5 @@
 import React from "react";
-import { useRouter } from "next/router";
+import { Router, useRouter } from "next/router";
 import Link from "next/link";
 import AppAuthContext from "../../utils/context/auth-context";
 import MainNavigationProps from "../../types/navigation/main-navigation-props";
@@ -10,6 +10,7 @@ import AppDarkContext from "../../utils/context/dark-context";
 export default function TopNavigationIndex({ setShowed }: MainNavigationProps): JSX.Element {
     
     const router = useRouter()
+    const { redirect, pn } = router.query;
     const {isDark, setDark} = React.useContext(AppDarkContext)
     const {isAuth, setAuth} = React.useContext(AppAuthContext)
     const [openProfile, setOpenProfile] = React.useState<boolean>(false)
@@ -45,6 +46,14 @@ export default function TopNavigationIndex({ setShowed }: MainNavigationProps): 
     //     }
     // }, [navBarColor])
 
+    function handlerDirect(link){
+        if(pn === '/'+link){
+            setShowed(true)
+        }else{
+            router.push("/"+link)
+        }
+    }
+
     function setDarkMode(val){
         setDark(val)
         if(val){
@@ -78,9 +87,9 @@ export default function TopNavigationIndex({ setShowed }: MainNavigationProps): 
                         <a className=" sm:block px-2 text-sm md:text-md text-black dark:text-white">Artikel</a>
                     </Link>
                     {/* <a className="hidden sm:block px-2 text-sm md:text-md text-black dark:text-white" href="https://academy.kerjaholic.com" >Akademi</a> */}
-                    <Link href="/colaboration">
-                        <a className=" sm:block last:px-2 text-sm md:text-md text-black dark:text-white">Kolaborasi</a>
-                    </Link>
+                    {/* <Link href="/colaboration"> */}
+                        <a onClick = {() => handlerDirect('colaboration')} className=" sm:block last:px-2 text-sm md:text-md text-black dark:text-white">Kolaborasi</a>
+                    {/* </Link> */}
                     {isAuth === null ? (
                         <div onClick = {() => setOpenProfile(true)} className = "flex space-x-1 items-center px-3">
                             <div className = "flex animate-pulse justify-center">

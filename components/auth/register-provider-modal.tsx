@@ -18,6 +18,7 @@ import { CityModel } from "../../models/city-model";
 import { getCity_json } from "../../api/get-list-city";
 import { InputSelectComponent } from "../input/input-select-component";
 import { InputPhoneComponent } from "../input/input-phone-component";
+import ModalWrapper from "../modal-wrapper";
 
 export default function RegisterProviderModal({ deviceToken, showed, setShowed, loading, providerType, user, idTokenFirebase }: RegisterProviderModalProps): JSX.Element {
     const router = useRouter()
@@ -117,55 +118,53 @@ export default function RegisterProviderModal({ deviceToken, showed, setShowed, 
     }
 
     return (
-        <>
-        <Loading showed={isLoading} text={"Loading ..."} />
-        {/* <div className = {`${!isAuth ? 'scale-0' : 'scale-100'} bg-gray-600 bg-opacity-60 transition transform  duration-50 w-full fixed top-0 flex justify-center h-screen items-center z-40`}/> */}
-        {showed && (
-            <div className = {`bg-gray-600 bg-opacity-60 transition transform  duration-500 w-full fixed top-0 flex justify-center h-screen items-center z-40`}/>
-        )}
-        <div className = {`${!showed ? '-translate-y-full' : 'translate-y-1/4'} bg-opacity-60 transition transform ease-in-out duration-1000 w-full fixed -top-20 flex justify-center z-40`}>
-            <div ref={ref} className =  "flex flex-col px-5 py-3 bg-white w-full mx-2 sm:mx-0 sm:w-2/3 lg:w-1/3 z-50">              
-                {/* title */}
-                <div className = "text-3xl mb-4 flex items-center justify-center"> Daftar</div>
-                    <InputDefaultComponent 
-                        title="Username"
-                        placeholder="Username"
-                        onChange={(val) => setUserProvider({...userProvider, username: val})}
-                        value={userProvider.username}
-                        showValidInput={showValidInput}
-                        showTitle = {true}
-                    />
-                    <InputPhoneComponent 
-                        title="Nomor Telepon"
-                        placeholder="Nomor Telepon : Eg 08960820XXXX"
-                        type="tel"
-                        onChange={(val) => setUserProvider({...userProvider, phoneNumber: val})}
-                        value={userProvider.phoneNumber}
-                        showValidInput={showValidInput}
-                        showTitle = {true}
-                    />
-                    <InputSelectComponent
-                        title = "Domisili" // title inputan
-                        showTitle = {false} // show title ??
-                        showValidInput={showValidInput} // validation message
-                        list={listCity} // list city fetching when select clicked
-                        keyValue = "id" // mau ambil key apa dinamis tergantung list untuk nilai value nya
-                        keyLabel = "city" // mau ambil key apa dinamis tergantung list untuk nilai label nya
-                        value = {userProvider.domisile} // for set value from database
-                        label = {listCity.filter(obj => obj["id"] == userProvider.domisile)[0]?.city} // for set label from database
-                        fetchData = {(val) => val? getCity("") : setListCity([])}
-                        loading = {loadingCity} // loading when fetching
-                        onSelect={(val) => {
-                            setUserProvider({...userProvider, domisile: val.id})
-                        }}
-                        onSearch = {(keyword) => getCity(keyword)} // when search then re fetching data
-                    />
-                    <div onClick={() => checkCompleteData(() => onRegister())} className=" bg-[#FF0000] px-4 py-4 my-3 rounded-full text-white text-center">
-                        Lanjutkan
-                    </div>
+        <ModalWrapper 
+            showed = {showed} 
+            setShowed = {(e) => setShowed(e)}
+            extendClass = " flex flex-col px-5 py-3 bg-white w-full mx-2 sm:mx-0 sm:w-2/3 lg:w-1/3 z-50" 
+            closeOutsideClick = {true}
+            loading = {isLoading}
+        >    
+            {/* title */}
+            <div className = "text-3xl mb-4 flex items-center justify-center"> Daftar</div>
+            <InputDefaultComponent 
+                title="Username"
+                placeholder="Username"
+                onChange={(val) => setUserProvider({...userProvider, username: val})}
+                value={userProvider.username}
+                showValidInput={showValidInput}
+                showTitle = {true}
+            />
+            <InputPhoneComponent 
+                title="Nomor Telepon"
+                placeholder="Nomor Telepon : Eg 08960820XXXX"
+                type="tel"
+                onChange={(val) => setUserProvider({...userProvider, phoneNumber: val})}
+                value={userProvider.phoneNumber}
+                showValidInput={showValidInput}
+                showTitle = {true}
+            />
+            <InputSelectComponent
+                title = "Domisili" // title inputan
+                showTitle = {false} // show title ??
+                showValidInput={showValidInput} // validation message
+                list={listCity} // list city fetching when select clicked
+                keyValue = "id" // mau ambil key apa dinamis tergantung list untuk nilai value nya
+                keyLabel = "city" // mau ambil key apa dinamis tergantung list untuk nilai label nya
+                value = {userProvider.domisile} // for set value from database
+                label = {listCity.filter(obj => obj["id"] == userProvider.domisile)[0]?.city} // for set label from database
+                fetchData = {(val) => val? getCity("") : setListCity([])}
+                loading = {loadingCity} // loading when fetching
+                onSelect={(val) => {
+                    setUserProvider({...userProvider, domisile: val.id})
+                }}
+                onSearch = {(keyword) => getCity(keyword)} // when search then re fetching data
+            />
+            <div onClick={() => checkCompleteData(() => onRegister())} className=" bg-[#FF0000] px-4 py-4 my-3 rounded-full text-white text-center">
+                Lanjutkan
             </div>
-        </div>
-        </>
+            
+        </ModalWrapper>
     )
 }
 

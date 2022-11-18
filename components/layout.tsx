@@ -17,6 +17,8 @@ import AppDarkContext from "../utils/context/dark-context";
 import RegisterEmailModal from "./auth/register-email-modal";
 import RegisterProviderModal from "./auth/register-provider-modal";
 import { ProviderAuthType } from "../enum/auth/provider-auth-type";
+import Loading from "./loading";
+import { baseUrl } from "../constant/base-url";
 
 export default function Layout({ children, title, useFooter }: LayoutProps): JSX.Element {
     const router = useRouter();
@@ -160,22 +162,25 @@ export default function Layout({ children, title, useFooter }: LayoutProps): JSX
     
     return (
         <div className={`${isDark && 'dark'} font-poppinsRegular`} onClick={() => setshowPopUpMore(!showPopUpMore)}>
-            {isPreload && (
+            <Loading showed={isPreload} text={"Loading ..."} />
+            {/* {isPreload && (
                 <div className = "bg-[#FF0000] h-1 animate-pulse absolute flex top-0 w-full z-50">
 
                 </div>
-            )}
+            )} */}
             <RegisterEmailModal 
-            showed = {isEmailRegister} 
-            setShowed = {(isShowed) => setIsEmailRegister(isShowed)}
-            deviceToken = {firebaseToken}  />
+                showed = {isEmailRegister} 
+                setShowed = {(isShowed) => setIsEmailRegister(isShowed)}
+                deviceToken = {firebaseToken}  
+            />
             <RegisterProviderModal 
-            providerType={providerAuthType}
-            showed = {isProviderRegister} 
-            setShowed = {(isShowed) => setIsProviderRegister(isShowed)}
-            user = {userRegisterProvider}
-            idTokenFirebase = {idTokenFirebase} 
-            deviceToken = {firebaseToken} />
+                providerType={providerAuthType}
+                showed = {isProviderRegister} 
+                setShowed = {(isShowed) => setIsProviderRegister(isShowed)}
+                user = {userRegisterProvider}
+                idTokenFirebase = {idTokenFirebase} 
+                deviceToken = {firebaseToken} 
+            />
         
             <LoginModal 
                 setEmailReg={(data)=> setIsEmailRegister(data)} 
@@ -202,6 +207,17 @@ export default function Layout({ children, title, useFooter }: LayoutProps): JSX
             <div className = "bg-gray-100 dark:bg-gray-700 h-1"/>
             {/* Footer Home  */}
             {useFooter && <FooterSectionHome />}
+            {/* development mode flag*/}
+            {!useFooter ? (
+                baseUrl === 'https://dev.kerjaholic.com/api/' && (
+                    <div className = "fixed bg-[#FF0000] text-white p-3 bg-opacity-30 rounded-md bottom-16 sm:bottom-0 right-0 m-3"> Development Mode</div>
+                )
+            ) : (
+                baseUrl === 'https://dev.kerjaholic.com/api/' && (
+                    <div className = "fixed bg-[#FF0000] text-white p-3 bg-opacity-30 rounded-md bottom-0 right-0 m-3"> Development Mode</div>
+                )
+            )}
+            
         </div>
     )
   }

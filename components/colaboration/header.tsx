@@ -11,8 +11,8 @@ export default function Header({ title, children, onSearching, onSorting , onBac
     return (
         <>
             {/* header tool */}
-            <div className = "sticky flex justify-center items-center top-14 h-16 bg-white shadow-md dark:bg-[#0F172A] px-2  z-40 w-full mr-3">
-                <div className = "flex space-x-2 items-center justify-center flex-none px-3  ">
+            <div className = "sticky flex justify-center items-center top-14 h-16 bg-white shadow-md dark:bg-[#0F172A] px-2  z-30 w-full mr-3">
+                <div className = "flex space-x-2 items-center justify-center flex-none px-1 md:px-3  ">
                     {onBack &&(
                         <div onClick = {() => onBack(true)} className="rounded-md text-black dark:text-white dark:hover:text-[#FF0000] hover:text-[#FF0000]">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6]">
@@ -20,7 +20,7 @@ export default function Header({ title, children, onSearching, onSorting , onBac
                             </svg>
                         </div> 
                     )}
-                    <div className = "text-lg md:text-xl text-black dark:text-white">{title}</div>
+                    <div className = "text-md lg:text-lg  text-black dark:text-white">{title}</div>
                 </div>
                 <div className = "hidden md:block flex-grow p-2"/>
                 <div className = "  w-full px-3 md:w-fit md:flex-none flex flex-row items-center justify-center ">

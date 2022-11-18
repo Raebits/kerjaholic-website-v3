@@ -1,12 +1,16 @@
 import firebase from "firebase";
 import React from "react";
-import GoogleLogin, { GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login';
 import { requestLoginWithProvider } from "../../api/auth/request-login-with-provider";
 import { ProviderAuthType } from "../../enum/auth/provider-auth-type";
 import { responseErrorHandler } from "../../helper/common/response-request-handler";
 import { UserRegisterProvider } from "../../models/auth/user-register-provider";
 
 import { BtnLoginGoogleComponentProps } from "../../types/auth/btn-login-google-component-props";
+import { GoogleLogin } from '@react-oauth/google';
+import { useGoogleOneTapLogin } from '@react-oauth/google';
+import jwt_decode from "jwt-decode";
+import { useGoogleLogin } from '@react-oauth/google';
+import { hasGrantedAllScopesGoogle } from '@react-oauth/google';
 
 export function BtnLoginGoogleComponent( { success, notFound, className, onLoading } : BtnLoginGoogleComponentProps) {
 
@@ -17,7 +21,6 @@ export function BtnLoginGoogleComponent( { success, notFound, className, onLoadi
         firebase.auth().signOut();
         // - Listened from state change
         firebase.auth().onAuthStateChanged(function (user) {
-            console.log("executed")
             if (user) {
                 user.getIdToken().then(function (idToken) {
                     requestLogin(idToken, user);
@@ -26,9 +29,18 @@ export function BtnLoginGoogleComponent( { success, notFound, className, onLoadi
         });
     }
 
+    async function handleSuccess(data){
+        onLoading(true)
+        // init Auth State Changed
+        initOnAuthStateChanged()
+        
+        var credential = firebase.auth.GoogleAuthProvider.credential(data.credential);
+        var requestSignIn = await firebase.auth().signInWithCredential(credential)
+        setUserProvider({ ...userProvider, firebaseUser: requestSignIn.user});
+    }
+    
     async function requestLogin(idToken: string, user: firebase.User) {
         const requestSignIn =  await requestLoginWithProvider(ProviderAuthType.google, idToken, { ...userProvider, firebaseUser: user})
-
         if (requestSignIn.status == 'success') {
 
             // Next -> get data profile user 
@@ -38,7 +50,6 @@ export function BtnLoginGoogleComponent( { success, notFound, className, onLoadi
             if (requestSignIn.status === 'notFound') {
                 onLoading(false)
                 notFound(user, idToken);
-                console.log('redirect to register page')
             } else {
                 responseErrorHandler(requestSignIn, (message) => {
                     onLoading(false)
@@ -48,39 +59,39 @@ export function BtnLoginGoogleComponent( { success, notFound, className, onLoadi
         }
     }
 
-    async function handleSuccess(data: GoogleLoginResponse | GoogleLoginResponseOffline) {
 
-        onLoading(true)
-        // init Auth State Changed
-        initOnAuthStateChanged()
-        let googleUser = data as GoogleLoginResponse
-        if (googleUser) {
-            var credential = firebase.auth.GoogleAuthProvider.credential(googleUser.getAuthResponse().id_token);
+    const login = useGoogleLogin({
+        onSuccess: (response) => {
+            const userInfo = fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+            headers: { Authorization: `Bearer ${response.access_token}` },
+            })
+            .then(res => console.log(res));
 
-            var requestSignIn = await firebase.auth().signInWithCredential(credential)
-
-            setUserProvider({ ...userProvider, firebaseUser: requestSignIn.user});
-        }
-    };
-
-    function handleFailure(error: any) {
-        console.log(error)
-    };
+        },
+        onError(errorResponse) {
+            console.log(errorResponse)
+        },
+        
+      });
 
     return (
-        <div onClick = {() => onLoading(true)}>
+        <>
             <GoogleLogin
-                clientId="17773254584-tv67vbs94kln4jvsj86q4setb5ee0uc5.apps.googleusercontent.com"
-                buttonText="Login with Google"
-                onSuccess={(data) => handleSuccess(data)}
-                onFailure={(error) => handleFailure(error)}
-                render={renderProps => (
-                   <div onClick={renderProps.onClick} className = "bg-white border border-gray-500 p-3 my-1 rounded-lg flex justify-center text-white">
-                        <img src="/icons/ic_google.png" width="26px" height="25px"/>
-                        <div className="text-black ml-3">Lanjutkan dengan Google</div>
-                    </div>
-                )} 
+                onSuccess={credentialResponse => {
+                    handleSuccess(credentialResponse);
+                }}
+                onError={() => {
+                    console.log('Login Failed');
+                }}
+                size = {"large"}
+                theme = {"outline"}
+                shape = {"rectangular"}
+                auto_select= {false}
+                type = {"icon"}
+                
             />
-        </div>
+
+            {/* <div onClick = {() => login()} className = "bg-red-600">Test</div> */}
+            </>
     );
 };
