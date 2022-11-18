@@ -210,11 +210,11 @@ export default function Layout({ children, title, useFooter }: LayoutProps): JSX
             {/* development mode flag*/}
             {!useFooter ? (
                 baseUrl === 'https://dev.kerjaholic.com/api/' && (
-                    <div className = "fixed bg-[#FF0000] text-white p-3 bg-opacity-30 rounded-md bottom-16 sm:bottom-0 right-0 m-3"> Development Mode</div>
+                    <div className = "z-50 fixed bg-[#FF0000] text-sm text-white py-1 px-3 bg-opacity-30 rounded-full bottom-16 sm:bottom-0 right-0 m-3"> Development Mode</div>
                 )
             ) : (
                 baseUrl === 'https://dev.kerjaholic.com/api/' && (
-                    <div className = "fixed bg-[#FF0000] text-white p-3 bg-opacity-30 rounded-md bottom-0 right-0 m-3"> Development Mode</div>
+                    <div className = "z-50 fixed bg-[#FF0000] text-sm text-white py-1 px-3 bg-opacity-30 rounded-full bottom-0 right-0 m-3"> Development Mode</div>
                 )
             )}
             

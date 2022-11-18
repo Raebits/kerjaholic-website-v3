@@ -164,7 +164,7 @@ function ListProject({ dataServer }: ServerPageProps) {
                         showed = {newProject} 
                         setShowed = {(e) => setNewProject(e)} 
                         loading = {loading} 
-                        extendClass = {"w-full sm:w-1/2 lg:w-1/3 mx-4 flex flex-col px-4 pt-9 pb-4 bg-white rounded-md w-full"}
+                        extendClass = {"w-full sm:w-1/2 lg:w-1/3 mx-4 flex flex-col px-4 pt-9 pb-4 bg-white dark:bg-gray-800 rounded-md w-full"}
                         closeOutsideClick = {true}
                     >
                         {/* title */}
