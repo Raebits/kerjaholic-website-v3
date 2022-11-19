@@ -42,6 +42,7 @@ export const AddProject_EndPoints = baseUrl + "pm/create/project"
 // == task module ==
 export const GetListTask_EndPoints = baseUrl + "pm/task/list"
 export const GetListMyTask_EndPoints = baseUrl + "pm/task/myList"
+export const GetDetailTask_EndPoints = baseUrl + "pm/task/detail"
 // == global module
 export const GetListColor_EndPoints = baseUrl + "pm/list/color"
 // end of collaboration

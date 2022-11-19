@@ -2,7 +2,7 @@ import React from "react";
 import { useRouter } from "next/router";
 import TableProps from "../types/table-props";
 
-export default function Table({ config, data }: TableProps): JSX.Element {
+export default function Table({ config, data, onClick }: TableProps): JSX.Element {
     
     const router = useRouter()
 
@@ -40,7 +40,7 @@ export default function Table({ config, data }: TableProps): JSX.Element {
                     {data.map((dObj,dKey) => 
                         <tr key = {dKey} className ="bg-white border-b border-[#F5F5F5] dark:bg-[#0F172A] dark:border-gray-700">
                             {config.map((cObj, cKey) =>
-                                <td key = {cKey} className ="py-4 pr-6 whitespace-nowrap">
+                                <td onClick = {() => onClick(dObj)} key = {cKey} className ="py-4 pr-6 whitespace-nowrap">
                                     {cObj.render ? cObj.render(dObj[cObj.field]) : dObj[cObj.field]}
                                 </td>                                                
                             )}

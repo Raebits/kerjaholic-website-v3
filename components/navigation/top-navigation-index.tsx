@@ -71,8 +71,8 @@ export default function TopNavigationIndex({ setShowed }: MainNavigationProps): 
                     <svg className="h-7 md:h-9 w-auto dark:fill-[#CCCCCC]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 529.39 166.54">
                         <defs>
                             <linearGradient id="a" x1="5128.97" x2="5189.75" y1="1033.67" y2="1066.67" gradientTransform="translate(-49.21 118.79)" gradientUnits="userSpaceOnUse">
-                                <stop offset="0" stop-color="#a00"/>
-                                <stop offset="1" stop-color="red"/>
+                                <stop offset="0" stopColor="#a00"/>
+                                <stop offset="1" stopColor="red"/>
                             </linearGradient>
                         </defs>
                         <path d="M23.69 0v120.35A23.69 23.69 0 0 1 0 144V23.69A23.69 23.69 0 0 1 23.69 0Z"/>

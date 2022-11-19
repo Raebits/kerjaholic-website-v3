@@ -6,7 +6,7 @@ export function BadgeOutlineComponent( { color,text} : BadgeOutlineComponentProp
     const router = useRouter()
 
     return (
-        <div style = {{borderColor:color, color:color}} className =  {`$ flex border text-xs lg:text-sm w-full items-center justify-center rounded-full px-4 py-2`}>
+        <div style = {{borderColor:color, color:color}} className =  {`$ flex border text-xs w-full items-center justify-center rounded-full px-4 py-1`}>
             {text}
         </div>
     );

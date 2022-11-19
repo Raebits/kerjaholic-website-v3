@@ -18,6 +18,9 @@ import { requestDetailProject } from "../../../../api/colaboration/project/reque
 import { DetailProjectBuilder } from "../../../../model-builder/colaboration/project/detail-project-builder";
 import { DetailProjectModel } from "../../../../models/colaboration/project/detail-project-model";
 import ProjectDetailCard from "../../../../components/colaboration/project/project-detail-card";
+import { route } from "next/dist/server/router";
+import { BadgeOutlineComponent } from "../../../../components/badge/badge-outline-component";
+import { BadgeComponent } from "../../../../components/badge/badge-component";
 
 
 function ListTask({ slug,dataServer }: ServerPageProps) {
@@ -29,7 +32,6 @@ function ListTask({ slug,dataServer }: ServerPageProps) {
         )
     }
     
-
     const tableHeadConfig:any  = [
         {
             field: 'title',
@@ -48,12 +50,72 @@ function ListTask({ slug,dataServer }: ServerPageProps) {
         },{
             field: 'status',
             name: 'Status',
-            sorting: true
+            sorting: true,
+            render: (data?: string) => (
+                // wrapping with flex for sizing
+                <div className = "inline-block">
+                    {(data === "finished") && (
+                        <BadgeComponent
+                            textColor="#00B828"
+                            bgColor="#D7FFE0"
+                            text={"Selesai"}
+                        />
+                    )}
+
+                    {(data === "new") && (
+                        <BadgeComponent
+                            textColor="#43B9FF"
+                            bgColor="#E7F6FF"
+                            text={"Baru"}
+                        />
+                    )}
+
+                    {(data === "postponed") && (
+                        <BadgeComponent
+                            textColor="#FF0000"
+                            bgColor="#FFE7E7"
+                            text={"Ditunda"}
+                        />
+                    )}
+
+                    {(data === "processing") && (
+                        <BadgeComponent
+                            textColor="#FFA51F"
+                            bgColor="#FFEFD7"
+                            text={"Dalam Proses"}
+                        />
+                    )}
+                    
+                </div>
+            )
         },{
             field: 'priority',
             name: 'Priority',
-            render: (data?: number) => (
-                <div className =  {`${data == 0 ? 'bg-red-600' : 'bg-blue-600'} flex w-1/2 items-center justify-center rounded-full text-white`}>{data}</div>
+            render: (data?: string) => (
+                // wrapping with flex for sizing
+                <div className = "inline-block">
+                    {(data == "1") && (
+                        <BadgeOutlineComponent
+                            color = {'#00B828'}
+                            text = {"Rendah"}
+                        />
+                    )}
+
+                    {(data == "2") && (
+                        <BadgeOutlineComponent
+                            color = {'#FFA51F'}
+                            text = {"Sedang"}
+                        />
+                    )}
+
+                    {(data == "3") && (
+                        <BadgeOutlineComponent
+                            color = {'#FF0000'}
+                            text = {"Tinggi"}
+                        />
+                    )}
+                    
+                </div>
             )
         },{
             field: 'reminder',
@@ -88,24 +150,26 @@ function ListTask({ slug,dataServer }: ServerPageProps) {
                     <div className="flex flex-col bg-white dark:bg-[#0F172A]">
                         <StickyHeader 
                             title = {"Detail Proyek"}
+                            breadcrumb = {[{title : "Proyek", path : "/colaboration/project"},{title : serverData.title, path : "/"}]}
                             onSearching = {(e) => getTaskList(e)}
                             onSorting = {(e) => console.log(e)}
+                            onBack = {(e) => router.push("/colaboration/project")}
                         >
                             {/* button join project */}
-                            <div onClick = {() => {}} className = "flex items-center justify-center bg-[#FF0000] rounded-lg px-1 lg:px-6 ">
+                            <div onClick = {() => {}} className = "flex items-center justify-center bg-[#FF0000] rounded-md lg:rounded-full px-1 text-sm ">
                                 <svg className = "fill-white" xmlns="http://www.w3.org/2000/svg" width="41" height="40">
                                     <g>
                                         <path d="M20.832 32c-6.617 0-12-5.383-12-12s5.383-12 12-12c6.618 0 12 5.383 12 12s-5.382 12-12 12Zm0-22.5c-5.79 0-10.5 4.71-10.5 10.5s4.71 10.5 10.5 10.5 10.5-4.71 10.5-10.5-4.71-10.5-10.5-10.5Z"/><path d="M26.082 20.75h-10.5a.75.75 0 0 1 0-1.5h10.5a.75.75 0 0 1 0 1.5Z"/>
                                         <path d="M20.832 26a.75.75 0 0 1-.75-.75v-10.5a.75.75 0 0 1 1.5 0v10.5a.75.75 0 0 1-.75.75Z"/>
                                     </g>
                                 </svg>
-                                <div className = "hidden lg:block whitespace-nowrap text-white">
+                                <div className = "hidden lg:block whitespace-nowrap text-white mr-2">
                                     Join Proyek
                                 </div>
                             </div>
                         </StickyHeader>
                         {/* content */}
-                        <div className=" mt-6 px-3">
+                        <div className=" mt-2 px-3">
                                 
                             <div className="flex flex-wrap my-5 ">
                                 {/* <div className = "w-1/3">
@@ -126,7 +190,7 @@ function ListTask({ slug,dataServer }: ServerPageProps) {
                                         title = {"Kolaborator"}
                                         onClick = {(e) => console.log(e)}
                                     >
-                                        <div className = "w-1/2 md:w-1/3 lg:w-10/12">
+                                        <div className = "w-1/3 lg:w-2/3">
                                             <GroupImageComponent
                                                 data = {serverData.colaborator}
                                                 limit = {4}
@@ -163,6 +227,24 @@ function ListTask({ slug,dataServer }: ServerPageProps) {
                                                 <div className = "text-[#828282] text-xs">3 Catatan</div>
                                             </div>
                                         </ProjectDetailCard>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className = "flex mb-3">
+                                <div className="flex w-1/2 items-center justify-start">
+                                    Tugas (10)
+                                </div>
+                                <div className="flex w-1/2 items-center justify-end">
+                                    <div onClick = {() => {}} className = "flex items-center justify-center bg-[#FF0000] rounded-full px-1 text-sm ">
+                                        <svg className = "fill-white" xmlns="http://www.w3.org/2000/svg" width="41" height="40">
+                                            <g>
+                                                <path d="M20.832 32c-6.617 0-12-5.383-12-12s5.383-12 12-12c6.618 0 12 5.383 12 12s-5.382 12-12 12Zm0-22.5c-5.79 0-10.5 4.71-10.5 10.5s4.71 10.5 10.5 10.5 10.5-4.71 10.5-10.5-4.71-10.5-10.5-10.5Z"/><path d="M26.082 20.75h-10.5a.75.75 0 0 1 0-1.5h10.5a.75.75 0 0 1 0 1.5Z"/>
+                                                <path d="M20.832 26a.75.75 0 0 1-.75-.75v-10.5a.75.75 0 0 1 1.5 0v10.5a.75.75 0 0 1-.75.75Z"/>
+                                            </g>
+                                        </svg>
+                                        <div className = "flex whitespace-nowrap text-white mr-2">
+                                            Tambah Tugas
+                                        </div>
                                     </div>
                                 </div>
                             </div>

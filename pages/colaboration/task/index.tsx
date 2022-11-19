@@ -31,13 +31,16 @@ function ListTask({ dataServer }: ServerPageProps) {
     
     const tableHeadConfig:any  = [
         {
+            field: 'projectTitle',
+            name: 'Project',
+        },{
             field: 'title',
             name: 'Tugas',
         },{
             field: 'taskAssignment',
             name: 'Tim',
             render: (data: any) => (
-                <div className = "flex-row flex">
+                <div className = "w-24">
                     <GroupImageComponent
                         data = {data}
                         limit = {4}
@@ -51,23 +54,67 @@ function ListTask({ dataServer }: ServerPageProps) {
             render: (data?: string) => (
                 // wrapping with flex for sizing
                 <div className = "inline-block">
-                    <BadgeOutlineComponent
-                        color = {'#FF0000'}
-                        text = {"Ini Data"}
-                    />
+                    {(data === "finished") && (
+                        <BadgeComponent
+                            textColor="#00B828"
+                            bgColor="#D7FFE0"
+                            text={"Selesai"}
+                        />
+                    )}
+
+                    {(data === "new") && (
+                        <BadgeComponent
+                            textColor="#43B9FF"
+                            bgColor="#E7F6FF"
+                            text={"Baru"}
+                        />
+                    )}
+
+                    {(data === "postponed") && (
+                        <BadgeComponent
+                            textColor="#FF0000"
+                            bgColor="#FFE7E7"
+                            text={"Ditunda"}
+                        />
+                    )}
+
+                    {(data === "processing") && (
+                        <BadgeComponent
+                            textColor="#FFA51F"
+                            bgColor="#FFEFD7"
+                            text={"Dalam Proses"}
+                        />
+                    )}
+                    
                 </div>
             )
         },{
             field: 'priority',
             name: 'Priority',
-            render: (data?: number) => (
+            render: (data?: string) => (
                 // wrapping with flex for sizing
                 <div className = "inline-block">
-                    <BadgeComponent
-                        textColor="#43B9FF"
-                        bgColor="#E7F6FF"
-                        text="Ini Data"
-                    />
+                    {(data == "1") && (
+                        <BadgeOutlineComponent
+                            color = {'#00B828'}
+                            text = {"Rendah"}
+                        />
+                    )}
+
+                    {(data == "2") && (
+                        <BadgeOutlineComponent
+                            color = {'#FFA51F'}
+                            text = {"Sedang"}
+                        />
+                    )}
+
+                    {(data == "3") && (
+                        <BadgeOutlineComponent
+                            color = {'#FF0000'}
+                            text = {"Tinggi"}
+                        />
+                    )}
+                    
                 </div>
             )
         },{
@@ -105,17 +152,18 @@ function ListTask({ dataServer }: ServerPageProps) {
                             title = {"All Task"}
                             onSearching = {(e) => searchingFunc(e)}
                             onSorting = {(e) => console.log(e)}
+                            onFilter = {(e) => console.log(e)}
                         >
-                            {/* button add project */}
-                            <div onClick = {() => addData()} className = "flex items-center justify-center bg-[#FF0000] rounded-lg px-1 lg:px-6 ">
+                            {/* button add task */}
+                            <div onClick = {() => {}} className = "flex items-center justify-center bg-[#FF0000] rounded-md lg:rounded-full px-1 text-sm ">
                                 <svg className = "fill-white" xmlns="http://www.w3.org/2000/svg" width="41" height="40">
                                     <g>
                                         <path d="M20.832 32c-6.617 0-12-5.383-12-12s5.383-12 12-12c6.618 0 12 5.383 12 12s-5.382 12-12 12Zm0-22.5c-5.79 0-10.5 4.71-10.5 10.5s4.71 10.5 10.5 10.5 10.5-4.71 10.5-10.5-4.71-10.5-10.5-10.5Z"/><path d="M26.082 20.75h-10.5a.75.75 0 0 1 0-1.5h10.5a.75.75 0 0 1 0 1.5Z"/>
                                         <path d="M20.832 26a.75.75 0 0 1-.75-.75v-10.5a.75.75 0 0 1 1.5 0v10.5a.75.75 0 0 1-.75.75Z"/>
                                     </g>
                                 </svg>
-                                <div className = "hidden lg:block whitespace-nowrap text-white">
-                                    Tambah Proyek
+                                <div className = "hidden lg:block whitespace-nowrap text-white mr-2">
+                                    Tambah Tugas
                                 </div>
                             </div>
                         </StickyHeader>
@@ -124,6 +172,7 @@ function ListTask({ dataServer }: ServerPageProps) {
                             <Table
                                 config = {tableHeadConfig}
                                 data = {listTask}
+                                onClick = {(data) => router.push("/colaboration/task/detail/"+data.projectSlug+"/"+data.taskSlug)}
                             />
                         </div>
                         

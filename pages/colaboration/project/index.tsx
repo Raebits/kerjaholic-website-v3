@@ -111,18 +111,19 @@ function ListProject({ dataServer }: ServerPageProps) {
                         <div className="flex flex-col bg-white dark:bg-[#0F172A]">
                             <StickyHeader 
                                 title = {"Proyek"}
+                                // breadcrumb = {[{title : "Proyek", path : "colaboration/project"},{title : "List Proyek", path : "/"}]}
                                 onSearching = {(e) => refetching(e)}
                                 onSorting = {(e) => console.log(e)}
                             >
                                 {/* button add project */}
-                                <div onClick = {() => addData()} className = "flex items-center justify-center bg-[#FF0000] rounded-lg px-1 lg:px-6 ">
+                                <div onClick = {() => addData()} className = "flex items-center justify-center bg-[#FF0000] rounded-md lg:rounded-full px-1 text-sm ">
                                     <svg className = "fill-white" xmlns="http://www.w3.org/2000/svg" width="41" height="40">
                                         <g>
                                             <path d="M20.832 32c-6.617 0-12-5.383-12-12s5.383-12 12-12c6.618 0 12 5.383 12 12s-5.382 12-12 12Zm0-22.5c-5.79 0-10.5 4.71-10.5 10.5s4.71 10.5 10.5 10.5 10.5-4.71 10.5-10.5-4.71-10.5-10.5-10.5Z"/><path d="M26.082 20.75h-10.5a.75.75 0 0 1 0-1.5h10.5a.75.75 0 0 1 0 1.5Z"/>
                                             <path d="M20.832 26a.75.75 0 0 1-.75-.75v-10.5a.75.75 0 0 1 1.5 0v10.5a.75.75 0 0 1-.75.75Z"/>
                                         </g>
                                     </svg>
-                                    <div className = "hidden lg:block whitespace-nowrap text-white">
+                                    <div className = "hidden lg:block whitespace-nowrap text-white mr-2">
                                         Tambah Proyek
                                     </div>
                                 </div>
