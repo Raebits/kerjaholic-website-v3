@@ -33,12 +33,12 @@ export default function Header({ title, children, onSearching, onSorting , onBac
                         //     <input onChange = {(e) => setSearching(e.target.value)} type="text" id="simple-search" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search" required/>
                         // </div>
                         <div className = "bg-purple-600 absolute right-24 mr-2 lg:right-64 flex items-center w-[calc(100vw-115px)] sm:w-[calc(100vw-305px)] lg:w-[calc(100vw-535px)]">
-                            <div className =  {`${slideSearch ? 'translate-x-1/2 scale-x-0' : 'translate-none'} pr-10 overflow-x-hidden transition transform ease-in-out duration-500 absolute flex w-full`}>
+                            <div className =  {`${!slideSearch ? 'translate-x-1/2 scale-x-0' : 'translate-none'} pr-10 overflow-x-hidden transition transform ease-in-out duration-500 absolute flex w-full`}>
                                 <input onChange = {(e) => setSearching(e.target.value)} type="text" id="simple-search" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search" required/>
                             </div>
                             {/* <div onClick = {() => setSlideSearch(!slideSearch)} className = "flex items-center justify-center bg-black-500 w-3/4 p-2">s</div>
                             */}
-                            <div onClick = {() => {setSlideSearch(!slideSearch); !slideSearch && onSearching(searching);}} className = "absolute bg-white dark:bg-[#0F172A] right-0 flex items-center justify-center h-10 p-2 hover:text-gray-600">
+                            <div onClick = {() => {setSlideSearch(!slideSearch); slideSearch && onSearching(searching);}} className = "absolute bg-white dark:bg-[#0F172A] right-0 flex items-center justify-center h-10 p-2 hover:text-gray-600">
                             <svg aria-hidden="true" className="w-4 h-4 fill-black dark:fill-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd"></path></svg>
                             </div>
                            
