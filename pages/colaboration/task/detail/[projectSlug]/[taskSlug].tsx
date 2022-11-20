@@ -23,6 +23,7 @@ import { BadgeOutlineComponent } from "../../../../../components/badge/badge-out
 import { BadgeComponent } from "../../../../../components/badge/badge-component";
 import { requestDetailTask } from "../../../../../api/colaboration/task/request-detail-task";
 import { DetailTaskBuilder } from "../../../../../model-builder/colaboration/task/detail-task-builder";
+import { InputSelectComponent } from "../../../../../components/input/input-select-component";
 
 
 function DetailTask({ slug,dataServer }: ServerPageProps) {
@@ -33,6 +34,44 @@ function DetailTask({ slug,dataServer }: ServerPageProps) {
             <ServerError/>
         )
     }
+
+    React.useEffect(() => {
+        console.log(serverData)
+    })
+
+    const dbProgressList = [
+        {
+            key : 'new',
+            lable : 'Baru'
+        },
+        {
+            key : 'finished',
+            lable : 'Selesai'
+        },
+        {
+            key : 'postponed',
+            lable : 'Dibatalkan'
+        },
+        {
+            key : 'processing',
+            lable : 'Dalam Proses'
+        }
+    ]
+
+    const dbPriorityList = [
+        {
+            key : '1',
+            lable : 'Rendah'
+        },
+        {
+            key : '2',
+            lable : 'Sedang'
+        },
+        {
+            key : '3',
+            lable : 'Tinggi'
+        }
+    ]
 
     const [loading, setLoading] = React.useState<boolean>(false)
     return (
@@ -59,8 +98,9 @@ function DetailTask({ slug,dataServer }: ServerPageProps) {
                         </StickyHeader>
                         {/* content */}
                         <div className=" mt-2 px-5">
-                            <div className="flex flex-col md:flex-row  md:space-x-3">
+                            <div className="flex flex-col md:flex-row  space-y-4 md:space-x-3">
                                 <div className="flex flex-col w-full md:w-1/2">
+                                    {/* left side */}
                                     <div className = "text-[#FF0000]">
                                         Tim
                                     </div>
@@ -87,12 +127,84 @@ function DetailTask({ slug,dataServer }: ServerPageProps) {
                                     </div>
                                         <div className = "text-sm mt-4">{serverData.description}</div>
                                 </div>
-                                <div className="flex w-full md:w-1/2">
-                                    <div className = "flex w-1/2">
-                                        1
+
+                                {/* right side */}
+                                <div className = "flex flex-col w-full md:w-1/2">
+                                    <div className="flex space-x-2">
+                                        <div className = "w-full">
+                                            <InputSelectComponent
+                                                title = "Status" // title inputan
+                                                showTitle = {true} // show title ??
+                                                showValidInput={false} // validation message
+                                                list={dbProgressList} // list city fetching when select clicked
+                                                keyValue = "key" // mau ambil key apa dinamis tergantung list untuk nilai value nya
+                                                keyLabel = "lable" // mau ambil key apa dinamis tergantung list untuk nilai label nya
+                                                value = {serverData.progress} // for set value from database
+                                                label = {dbProgressList.filter(obj => obj["key"] == serverData.progress)[0]?.lable} // for set label from database
+                                                fetchData = {(val) => val&& console.log(val)}
+                                                loading = {false} // loading when fetching
+                                                onSelect={(val) => {
+                                                    console.log(val)
+                                                }}// when search then re fetching data
+                                                disabled
+                                            />
+                                        </div>
+                                        <div className = "w-full">
+                                            <InputSelectComponent
+                                                title = "Priority" // title inputan
+                                                showTitle = {true} // show title ??
+                                                showValidInput={false} // validation message
+                                                list={dbPriorityList} // list city fetching when select clicked
+                                                keyValue = "key" // mau ambil key apa dinamis tergantung list untuk nilai value nya
+                                                keyLabel = "lable" // mau ambil key apa dinamis tergantung list untuk nilai label nya
+                                                value = {serverData.priority} // for set value from database
+                                                label = {dbPriorityList.filter(obj => obj["key"] == serverData.priority)[0]?.lable} // for set label from database
+                                                fetchData = {(val) => val&& console.log(val)}
+                                                loading = {false} // loading when fetching
+                                                onSelect={(val) => {
+                                                    console.log(val)
+                                                }}// when search then re fetching data
+                                                disabled
+                                            />
+                                        </div>
                                     </div>
-                                    <div className = "flex w-1/2">
-                                        2
+                                    <div className="flex space-x-2 mt-4 mb-2">
+                                        <div className = "w-full text-[#FF0000]">
+                                            Pengingat
+                                        </div>
+                                        <div className = "w-full"/>
+                                    </div>
+                                    <div className="flex space-x-2 mt-2 mb-2 items-center">
+                                        <div className = "w-full">
+                                            Tanggal
+                                        </div>
+                                        <div className = "w-full">
+                                            {serverData.reminderDate}
+                                        </div>
+                                    </div>
+                                    <div className="flex space-x-2 mt-4 mb-2 items-center">
+                                        <div className = "w-full">
+                                            Waktu
+                                        </div>
+                                        <div className = "w-full">
+                                            {serverData.reminder}
+                                        </div>
+                                    </div>
+                                    <div className="flex space-x-2 mt-4 mb-2 items-center">
+                                        <div className = "w-full">
+                                            Interval
+                                        </div>
+                                        <div className = "w-full">
+                                            {serverData.reminder}
+                                        </div>
+                                    </div>
+                                    <div className="flex space-x-2 mt-4 mb-2 items-center">
+                                        <div className = "w-full">
+                                            Alarm
+                                        </div>
+                                        <div className = "w-full">
+                                            {serverData.reminder}
+                                        </div>
                                     </div>
                                 </div>
                             </div>

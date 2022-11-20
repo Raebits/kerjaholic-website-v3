@@ -7,11 +7,8 @@ export function InputColorComponent( { onSelect, loading, title, showTitle, show
     const [ newValue, setNewValue ] = React.useState<string>("")
 
     const router = useRouter()
-    const [color, setColor] = React.useState<string>("")
+    const [color, setColor] = React.useState<string>("1")
     
-    React.useEffect(()=>{
-        setColor(value)
-    })    
 
     const isInvalid = (): boolean => {
         if (showValidInput && !color) {

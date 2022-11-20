@@ -2,7 +2,7 @@ import React from "react";
 import { useRouter } from "next/router";
 import ProjectListCardProps from "../../../types/colaboration/project/project-list-card-props";
 
-export default function ProjectListCard({ listId, onClick, title, totalColaborator, totalTask, creator, createdDate, messageUnread, pic, slug, done, projectCreated }: ProjectListCardProps): JSX.Element {
+export default function ProjectListCard({ listId, color, onClick, title, totalColaborator, totalTask, creator, createdDate, messageUnread, pic, slug, done, projectCreated }: ProjectListCardProps): JSX.Element {
     
     const router = useRouter()
     
@@ -16,7 +16,7 @@ export default function ProjectListCard({ listId, onClick, title, totalColaborat
 
     return (
         <div key = {listId} onClick={() => onClick(slug) } className = "w-full lg:w-1/2 ">
-            <div className = "bg-white dark:bg-[#374151] dark:text-[#CCCCCC] shadow-md rounded-md m-2 p-3 relative">
+            <div style = {{backgroundColor : color}} className = "dark:mix-blend-difference  shadow-md rounded-md m-2 p-3 relative">
                 {/* chat absolute */}
                 <div className = "absolute right-3 top-2 p-2">
                     <div className = "flex flex-row">
@@ -52,7 +52,7 @@ export default function ProjectListCard({ listId, onClick, title, totalColaborat
                                 {totalTask} Tugas
                             </div>
                         </div>
-                        <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-300">
+                        <div className="w-full bg-[#CCCCCC] rounded-full h-2.5 dark:bg-gray-300">
                         
                             <div className={`${progressCounter(done) < 100 ? 'bg-[#FF0000] dark:bg-[#FF0000]' :'bg-green-500 dark:bg-green-500'}  h-2.5 rounded-full`} style={{width: progressCounter(done)+'%'}}></div>
                         </div>

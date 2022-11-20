@@ -13,6 +13,7 @@ type ProjectListCardProps = {
     onClick ?: (slug:string) => void,
     done?: number,
     projectCreated?: string
+    color?: string
 }
   
 export default ProjectListCardProps

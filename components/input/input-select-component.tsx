@@ -3,17 +3,14 @@ import React from "react";
 import { InputSelectComponentProps } from "../../types/input/input-select-component-props";
 import {useOnClickOutside} from "../../helper/click-outside";
 
-export function InputSelectComponent( {showTitle, loading, onSelect, title, keyLabel, list, keyValue, value, label, onSearch, fetchData, showValidInput } : InputSelectComponentProps) {
+export function InputSelectComponent( {showTitle, loading, disabled, onSelect, title, keyLabel, list, keyValue, value, label, onSearch, fetchData, showValidInput } : InputSelectComponentProps) {
     const router = useRouter()
     const [listOpened, setListOpened] = React.useState<boolean>(false)
-    const [showedLabel, setShowedLabel] = React.useState<string>("Pilih "+title)
+    const [showedLabel, setShowedLabel] = React.useState<string>(!value ? "Pilih "+title : label) 
     const [search, setSearch] = React.useState<string>("")
     // click outside handler
     const ref = React.useRef()
     useOnClickOutside(ref, () => {setListOpened(false)});
-    React.useEffect(() => {
-        !value && setShowedLabel("Pilih "+title)
-    })
     
     React.useEffect(() => {
         if(listOpened){
@@ -36,18 +33,18 @@ export function InputSelectComponent( {showTitle, loading, onSelect, title, keyL
             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">{title}</label>
         )}
         <div ref={ref} className = "relative bg-gray-50 border border-gray-300 dark:bg-gray-700 dark:border-gray-600 w-full rounded-lg" >
-            <div onClick = {() => setListOpened(!listOpened)}  className = "flex px-3 py-2">
-                <div className = "flex-none font-medium text-sm text-gray-400 dark:text-gray-300">
+            <div onClick = {() => !disabled && setListOpened(!listOpened)}  className = "flex px-3 py-3">
+                <div className = "flex-none font-medium text-xs text-gray-400 dark:text-gray-300">
                     {showedLabel}
                 </div>
                 <div className = "flex-grow"/>
                 <div className = "flex-none flex items-center bg-blend-luminosity">
                     {listOpened ? (
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6 dark:text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-4 h-4 dark:text-white">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
                         </svg>
                     ):(
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6 dark:text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-4 h-4 dark:text-white">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
                         </svg>
 
@@ -55,14 +52,16 @@ export function InputSelectComponent( {showTitle, loading, onSelect, title, keyL
                 </div>
             </div>
             {listOpened && (
-                <div className = "absolute flex-col bg-white dark:bg-gray-500 rounded-lg w-full top-10 px-2 py-6 flex  items-center justify-center shadow-xl">
-                     <input type={"text" }
-                        className="bg-gray-50 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="Search"
-                        onChange={(e) => {
-                            onSearch(e.target.value)
-                        }}
-                    />
+                <div className = "absolute flex-col bg-white dark:bg-gray-500 rounded-lg w-full top-11 px-2 py-6 flex  items-center justify-center shadow-xl">
+                    {onSearch && (
+                        <input type={"text" }
+                            className="bg-gray-50 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            placeholder="Search"
+                            onChange={(e) => {
+                                onSearch(e.target.value)
+                            }}
+                        />
+                    )}
                     <div className = "flex flex-col h-32 w-full overflow-y-scroll bg-white dark:bg-gray-500">
                         {
                             !loading ? (

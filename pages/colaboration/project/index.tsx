@@ -48,6 +48,7 @@ function ListProject({ dataServer }: ServerPageProps) {
         const sorting = "asc"
         const response = await requestListProject(token, lastPage,take,keyword,sorting)
         await setListProject(response)
+        console.log(response)
     
     }
 
@@ -149,6 +150,7 @@ function ListProject({ dataServer }: ServerPageProps) {
                                                     slug = {obj.projectId}
                                                     done={obj.taskDone}
                                                     projectCreated = {obj.projectCreated}
+                                                    color = {obj.color}
 
                                                 />
                                             )
