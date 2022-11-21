@@ -69,7 +69,7 @@ function AddProject({ dataServer }: ServerPageProps) {
                     <div className="flex flex-col bg-white dark:bg-[#0F172A]">
                         <StickyHeader 
                             title = {"Tambah Proyek"}
-                            onBack = {(e) => router.back()}
+                            onBack = {true}
                         >
                             <div/>
                         </StickyHeader>

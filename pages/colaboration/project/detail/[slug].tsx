@@ -153,7 +153,7 @@ function ListTask({ slug,dataServer }: ServerPageProps) {
                             breadcrumb = {[{title : "Proyek", path : "/colaboration/project"},{title : serverData.title, path : "/"}]}
                             onSearching = {(e) => getTaskList(e)}
                             onSorting = {(e) => console.log(e)}
-                            onBack = {(e) => router.push("/colaboration/project")}
+                            onBack = {true}
                         >
                             {/* button join project */}
                             <div onClick = {() => {}} className = "flex items-center justify-center bg-[#FF0000] rounded-md lg:rounded-full px-1 text-sm ">
@@ -231,7 +231,7 @@ function ListTask({ slug,dataServer }: ServerPageProps) {
                                 </div>
                             </div>
                             <div className = "flex mb-3">
-                                <div className="flex w-1/2 items-center justify-start">
+                                <div className="flex w-1/2 items-center dark:text-white justify-start">
                                     Tugas (10)
                                 </div>
                                 <div className="flex w-1/2 items-center justify-end">
@@ -251,6 +251,8 @@ function ListTask({ slug,dataServer }: ServerPageProps) {
                             <Table
                                 config = {tableHeadConfig}
                                 data = {listTask}
+                                onClick = {(data) => router.push("/colaboration/task/detail/"+serverData.projectId+"/"+data.id)}
+                                stickyColIndex = {1}
                             />
                         </div>
                         

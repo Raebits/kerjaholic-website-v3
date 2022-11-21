@@ -81,7 +81,7 @@ function DetailTask({ slug,dataServer }: ServerPageProps) {
                         <StickyHeader 
                             title = {"Detail Proyek"}
                             breadcrumb = {[{title : "Proyek", path : "/colaboration/project"},{title : serverData.title, path : "/"}]}
-                            onBack = {(e) => router.push("/colaboration/task")}
+                            onBack = {true}
                         >
                             {/* button edit tugas */}
                             <div onClick = {() => {}} className = "flex items-center justify-center bg-[#FF0000] rounded-md lg:rounded-full px-1 text-sm ">
@@ -116,7 +116,7 @@ function DetailTask({ slug,dataServer }: ServerPageProps) {
                                         </div>
                                     </div>
                                     
-                                    <div className = "mt-6 text-xl ">
+                                    <div className = "mt-6 text-xl dark:text-white ">
                                         {serverData.title}
                                     </div>
                                     <div className = "flex space-x-1 text-xs">
@@ -125,7 +125,7 @@ function DetailTask({ slug,dataServer }: ServerPageProps) {
                                             {serverData.projectName}
                                         </div>
                                     </div>
-                                        <div className = "text-sm mt-4">{serverData.description}</div>
+                                        <div className = "text-sm mt-4 dark:text-gray-300">{serverData.description}</div>
                                 </div>
 
                                 {/* right side */}
@@ -174,7 +174,7 @@ function DetailTask({ slug,dataServer }: ServerPageProps) {
                                         </div>
                                         <div className = "w-full"/>
                                     </div>
-                                    <div className="flex space-x-2 mt-2 mb-2 items-center">
+                                    <div className="flex space-x-2 mt-2 mb-2 items-center text-sm dark:text-gray-300">
                                         <div className = "w-full">
                                             Tanggal
                                         </div>
@@ -182,7 +182,7 @@ function DetailTask({ slug,dataServer }: ServerPageProps) {
                                             {serverData.reminderDate}
                                         </div>
                                     </div>
-                                    <div className="flex space-x-2 mt-4 mb-2 items-center">
+                                    <div className="flex space-x-2 mt-4 mb-2 items-center text-sm dark:text-gray-300 ">
                                         <div className = "w-full">
                                             Waktu
                                         </div>
@@ -190,7 +190,7 @@ function DetailTask({ slug,dataServer }: ServerPageProps) {
                                             {serverData.reminder}
                                         </div>
                                     </div>
-                                    <div className="flex space-x-2 mt-4 mb-2 items-center">
+                                    <div className="flex space-x-2 mt-4 mb-2 items-center text-sm dark:text-gray-300">
                                         <div className = "w-full">
                                             Interval
                                         </div>
@@ -198,7 +198,7 @@ function DetailTask({ slug,dataServer }: ServerPageProps) {
                                             {serverData.reminder}
                                         </div>
                                     </div>
-                                    <div className="flex space-x-2 mt-4 mb-2 items-center">
+                                    <div className="flex space-x-2 mt-4 mb-2 items-center text-sm dark:text-gray-300">
                                         <div className = "w-full">
                                             Alarm
                                         </div>

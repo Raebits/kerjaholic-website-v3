@@ -6,7 +6,7 @@ type StickyHeaderProps = {
     breadcrumb?: any,
     onSearching ?: (val: string) => void,
     onSorting ?: (val: string) => void,
-    onBack ?: (val: boolean) => void,
+    onBack ?: boolean,
     onFilter ?: (val: boolean) => void
 }
   

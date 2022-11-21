@@ -130,7 +130,7 @@ function ListProject({ dataServer }: ServerPageProps) {
                                 </div>
                             </StickyHeader>
                             {/* content */}
-                            <div className=" mt-6 px-3">
+                            <div className=" mt-6 px-3 mb-20 sm:mb-6">
                                 {/* card wrapper */}
                                 <div className = "flex flex-wrap w-full">
                                     {listProject.length > 0 ? (

@@ -19,15 +19,15 @@ export default function Header({ title, breadcrumb, children, onSearching, onSor
                             {breadcrumb?.map((obj, index) => {
                                 return(
                                     <>
-                                        <div onClick = {() => index !== breadcrumb.length - 1 && router.push(obj.path)} className = {`${index == breadcrumb.length - 1 ? 'text-[#2C2C2C]' : 'text-[#828282]'} `}>{obj.title} </div>
-                                        <div className = "px-1">{index < breadcrumb.length-1 && ">"}</div>
+                                        <div onClick = {() => index !== breadcrumb.length - 1 && router.push(obj.path)} className = {`${index == breadcrumb.length - 1 ? 'text-[#2C2C2C] dark:text-white' : 'text-[#828282]'} `}>{obj.title} </div>
+                                        <div className = "px-1 text-black dark:text-gray-500">{index < breadcrumb.length-1 && ">"}</div>
                                     </>
                                 )
                             })}
                         </div>
                         <div className="flex items-center space-x-1">
                             {onBack &&(
-                                <div onClick = {() => onBack(true)} className="rounded-full text-black dark:text-white dark:hover:text-[#FF0000] hover:text-[#FF0000]">
+                                <div onClick = {() => router.back() } className="rounded-full text-black dark:text-white dark:hover:text-[#FF0000] hover:text-[#FF0000]">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-4 h-4">
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
                                     </svg>

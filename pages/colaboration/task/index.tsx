@@ -173,6 +173,7 @@ function ListTask({ dataServer }: ServerPageProps) {
                                 config = {tableHeadConfig}
                                 data = {listTask}
                                 onClick = {(data) => router.push("/colaboration/task/detail/"+data.projectSlug+"/"+data.taskSlug)}
+                                stickyColIndex = {1}
                             />
                         </div>
                         
