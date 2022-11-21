@@ -15,7 +15,7 @@ export default function Table({ config, data, onClick, stickyColIndex }: TablePr
                             {
                                 return (stickyColIndex && cKey == stickyColIndex-1 ? 
                                     (
-                                        <th key = {cKey} scope="col" className ="sticky left-0 py-3 pr-6 bg-white dark:bg-[#0F172A]">
+                                        <th key = {cKey} scope="col" className ="sticky left-0 py-3 px-3 bg-gray-50 dark:bg-gray-600">
                                             
                                             <div className = "flex flex-row space-x-2 items-center">
                                                 <div>{cObj.name}</div>
@@ -38,7 +38,7 @@ export default function Table({ config, data, onClick, stickyColIndex }: TablePr
                                             </div>
                                         </th>
                                     ):(
-                                        <th key = {cKey} scope="col" className ="py-3 pr-6">
+                                        <th key = {cKey} scope="col" className ={`py-3 ${cKey > 0 && 'pl-3'} pr-3`}>
                                             <div className = "flex flex-row space-x-2 items-center">
                                                 <div>{cObj.name}</div>
                                                 <div className = "flex flex-col">
@@ -72,18 +72,14 @@ export default function Table({ config, data, onClick, stickyColIndex }: TablePr
                                 {
                                     return (stickyColIndex && cKey == stickyColIndex-1 ? 
                                         (
-                                            <td onClick = {() => onClick && onClick(dObj)} key = {cKey} className =" sticky left-0  ">
-                                                <div className = "flex">
-                                                    <div className="flex py-3 items-center w-20 md:w-full bg-white dark:bg-[#0F172A] overflow-y-scroll whitespace-nowrap">
-                                                        {cObj.render ? cObj.render(dObj[cObj.field]) : dObj[cObj.field]}
-                                                    </div>
-                                                    {/* overflow spacer */}
-                                                    <div className = "flex w-10 p-3 bg-white dark:bg-[#0F172A]"/>
+                                            <td onClick = {() => onClick && onClick(dObj)} key = {cKey} className ={` bg-gray-50 dark:bg-gray-600 sticky left-0 px-3 `}>
+                                                <div className="flex py-3 items-center w-20 sm:w-28 md:w-32 lg:w-full bg-gray-50 dark:bg-gray-600 overflow-y-scroll whitespace-nowrap">
+                                                    {cObj.render ? cObj.render(dObj[cObj.field]) : dObj[cObj.field]}
                                                 </div>
                                             </td>
                                         ) : 
                                         (
-                                            <td onClick = {() => onClick && onClick(dObj)} key = {cKey} className ="py-4 pr-6 whitespace-nowrap">
+                                            <td onClick = {() => onClick && onClick(dObj)} key = {cKey} className ={`py-4 ${cKey > 0 && 'pl-3'} pr-3 whitespace-nowrap`}>
                                                 {cObj.render ? cObj.render(dObj[cObj.field]) : dObj[cObj.field]}
                                             </td>
                                         )
