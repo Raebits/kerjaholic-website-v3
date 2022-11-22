@@ -7,7 +7,7 @@ export default function Table({ config, data, onClick, stickyColIndex }: TablePr
     const router = useRouter()
 
     return (
-        <div className =" sm:rounded-lg h-[calc(100vh-150px)] sm:h-[calc(100vh-170px)] overflow-x-scroll ">
+        <div className =" h-[calc(100vh-150px)] sm:h-[calc(100vh-170px)] overflow-x-scroll [@media(max-width:767px)]:scrollbar-hide ">
             <table className ="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                 <thead className ="sticky top-0 z-20 bg-white dark:bg-[#0F172A] shadow-[0px_1px_0px_0px_rgba(204,204,204,1)] text-xs text-gray-700 uppercase dark:text-gray-400">
                     <tr>
@@ -15,7 +15,7 @@ export default function Table({ config, data, onClick, stickyColIndex }: TablePr
                             {
                                 return (stickyColIndex && cKey == stickyColIndex-1 ? 
                                     (
-                                        <th key = {cKey} scope="col" className ="sticky left-0 py-3 px-3 bg-gray-50 dark:bg-gray-600">
+                                        <th key = {cKey} scope="col" className ="sticky left-0 py-3  bg-white dark:bg-[#0F172A]">
                                             
                                             <div className = "flex flex-row space-x-2 items-center">
                                                 <div>{cObj.name}</div>
@@ -72,9 +72,15 @@ export default function Table({ config, data, onClick, stickyColIndex }: TablePr
                                 {
                                     return (stickyColIndex && cKey == stickyColIndex-1 ? 
                                         (
-                                            <td onClick = {() => onClick && onClick(dObj)} key = {cKey} className ={` bg-gray-50 dark:bg-gray-600 sticky left-0 px-3 `}>
-                                                <div className="flex py-3 items-center w-20 sm:w-28 md:w-32 lg:w-full bg-gray-50 dark:bg-gray-600 overflow-y-scroll whitespace-nowrap">
-                                                    {cObj.render ? cObj.render(dObj[cObj.field]) : dObj[cObj.field]}
+                                            <td onClick = {() => onClick && onClick(dObj)} key = {cKey} className ={`  sticky left-0 `}>
+                                                {/* [@media(max-width:767px)]:scrollbar-hide */}
+                                                <div className="flex">
+                                                    <div className="flex py-3 items-center -ml-1 pl-1 w-20 sm:w-28 md:w-32 lg:w-full bg-white dark:bg-[#0F172A] overflow-y-scroll scrollbar-hide whitespace-nowrap">
+                                                        {cObj.render ? cObj.render(dObj[cObj.field]) : dObj[cObj.field]}
+                                                    </div>
+                                                    {/* spacer for overflowing */}
+                                                    <div className = "flex bg-white dark:bg-[#0F172A] px-5 shadow-[5px_0_12px_0_rgba(255,255,255,0.9)] dark:shadow-[5px_0_12px_0_rgba(15,23,42,0.9)]"/>
+                                                    <></>
                                                 </div>
                                             </td>
                                         ) : 
