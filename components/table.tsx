@@ -15,7 +15,7 @@ export default function Table({ config, data, onClick, stickyColIndex }: TablePr
                             {
                                 return (stickyColIndex && cKey == stickyColIndex-1 ? 
                                     (
-                                        <th key = {cKey} scope="col" className ="sticky left-0 py-3  bg-white dark:bg-[#0F172A]">
+                                        <th key = {cKey} scope="col" className ="sticky left-0 py-3  bg-white dark:bg-[#0F172A] shadow-[5px_0_12px_0_rgba(255,255,255,0.9)] dark:shadow-[5px_0_12px_0_rgba(15,23,42,0.9)]">
                                             
                                             <div className = "flex flex-row space-x-2 items-center">
                                                 <div>{cObj.name}</div>
