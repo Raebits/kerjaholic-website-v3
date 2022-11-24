@@ -9,16 +9,15 @@ export const requestAddProject = async (token, data: AddProjectModel) => {
         token = new Cookies().get("token")
     }
 
-    let body = JSON.stringify({
-        'title' : data.title,
-        'color' : data.color,
-        'useLogo' : data.useLogo,
-        'pic' : data.pic
-    })
 
+    let body = new FormData();
+    body.append("title", data.title);
+    body.append("color", data.color);
+    body.append("useLogo", data.useLogo.toString());
+    body.append("pic", data.pic);
+    console.log(body)
     let headers = {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
+        // "Content-Type": "multipart/form-data",
         'Authorization': 'Bearer ' + token
     }
 

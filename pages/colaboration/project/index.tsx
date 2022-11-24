@@ -22,6 +22,10 @@ import { ListColorModel } from "../../../models/colaboration/list-color-model";
 import { AddProjectModel } from "../../../models/colaboration/project/add-project-model";
 import { getListColor } from "../../../api/colaboration/get-list-color";
 import AlertComponent from "../../../components/colaboration/alert-component";
+import { TypeImageInputComponent } from "../../../types/input/input-image-component-props";
+import  InputImageComponent  from "../../../components/input/input-image-component";
+import { InputFileComponent } from "../../../components/input/input-file-component";
+import { TypeFileInputComponent } from "../../../types/input/input-file-component-props";
 
 
 function ListProject({ dataServer }: ServerPageProps) {
@@ -32,6 +36,8 @@ function ListProject({ dataServer }: ServerPageProps) {
         )
     }
     
+    const inputRef = React.createRef<HTMLInputElement>();
+
     const [loading, setLoading] = React.useState<boolean>(false)
     const [newProject, setNewProject] = React.useState<boolean>(false)
     const [listProject, setListProject] = React.useState<ListProjectModel[]>(serverData)
@@ -39,6 +45,8 @@ function ListProject({ dataServer }: ServerPageProps) {
     const [ showValidInput, setShowValidInput ] = React.useState<boolean>(false)
     const [listColor, setListColor] = React.useState<ListColorModel[]>([])
     const [colorFetch, setColorFetch] = React.useState<boolean>(false)
+    const [cropImage, setCropImage] = React.useState<boolean>(false)
+    const [previewImage, setPreviewImage] = React.useState(null)
 
     async function refetching(e){
         const token = '-'
@@ -70,7 +78,6 @@ function ListProject({ dataServer }: ServerPageProps) {
     }
 
     const checkCompleteData = (callback: () => void) => {
-        
         if (checkDataModelEmpty(dataProject)) {
             setShowValidInput(true)
             return;
@@ -81,7 +88,7 @@ function ListProject({ dataServer }: ServerPageProps) {
     async function saving() {
 
         setLoading(true)
-
+        console.log(dataProject,'before input')
         const request = await requestAddProject('-',dataProject)
 
         if (request.status == 'success') {
@@ -96,6 +103,26 @@ function ListProject({ dataServer }: ServerPageProps) {
         }
     }
     
+    const onChangePic = async (file: File) => {
+        if (file) {
+            console.log(file)
+            await setDataProject({...dataProject, useLogo: 1, pic:file})
+            let reader = new FileReader();
+            reader.onload = (e) => {
+                setPreviewImage(e.target.result)
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+
+    async function modalAction(e){
+        setNewProject(e)
+        if(!e){
+            await setDataProject(new AddProjectModel())
+            await setPreviewImage(null)
+        }
+    }
+
     return (
         <>
             <Layout title={"Tambah Kenalan sekaligus Cari Kerjaan | Kerjaholic"} useFooter = {false}>
@@ -165,40 +192,69 @@ function ListProject({ dataServer }: ServerPageProps) {
                     </SidebarNavigation>
                     <ModalWrapper 
                         showed = {newProject} 
-                        setShowed = {(e) => setNewProject(e)} 
+                        setShowed = {(e) => modalAction(e)} 
                         loading = {loading} 
                         extendClass = {"w-full sm:w-1/2 lg:w-1/3 mx-4 flex flex-col px-4 pt-9 pb-4 bg-white dark:bg-gray-800 rounded-md w-full"}
                         closeOutsideClick = {true}
                     >
-                        {/* title */}
-                        <div className = "w-full flex justify-center text-2xl text-black dark:text-white">
-                            Proyek Baru
-                        </div>
-                        <InputDefaultComponent 
-                            title="Judul Proyek"
-                            placeholder="Judul Proyek"
-                            onChange={(val) => setDataProject({...dataProject, title: val})}
-                            value={dataProject.title}
-                            showValidInput={showValidInput}
-                            showTitle = {true}
-                        />
-                        <InputColorComponent
-                            title="Background (Opsional)"
-                            loading = {colorFetch}
-                            showTitle={true}
-                            showValidInput = {showValidInput}
-                            list = {listColor}
-                            onSelect = {(e) => setDataProject({...dataProject, color: e.id})}
-                            value = {dataProject.color}
-                        />
-                        <div className = "flex flex-row space-x-2 w-full items-center justify-center">
-                            <div onClick={() => setNewProject(false)} className=" bg-white border border-[#FF0000] text-[#FF0000] px-4 py-4 my-3 rounded-md w-full text-center">
-                                Batal
-                            </div>
-                            <div onClick={() => checkCompleteData(() => !loading && saving())} className=" bg-[#FF0000] px-4 py-4 my-3 rounded-md w-full text-white text-center">
-                                {loading ? "Menambahkan ... ":"Tambah"}
-                            </div>
-                        </div>
+                            {!cropImage && (
+                                <>
+                                <div className = "w-full flex justify-center text-2xl text-black dark:text-white">
+                                    Proyek Baru
+                                </div>
+                                
+                                <div className="flex space-x-2 items-center">
+                                    <div onClick={() => inputRef.current.click()} className = "flex-none p-1">
+                                        <div className = "flex items-center justify-center border-2 h-12 w-12 border-white bg-white rounded-full">
+                                            {previewImage ? (
+                                                <img className="shadow rounded-full max-w-full h-auto align-middle border-none" src={previewImage} />
+                                            ):(
+                                                <>+</>
+                                            )}
+                                        </div>
+                                    </div>
+                                    <div className = "flex-grow">
+                                        <InputDefaultComponent 
+                                            title="Judul Proyek"
+                                            placeholder="Judul Proyek"
+                                            onChange={(val) => setDataProject({...dataProject, title: val})}
+                                            value={dataProject.title}
+                                            showValidInput={showValidInput}
+                                            showTitle = {true}
+                                        />
+                                    </div>
+                                </div>
+                                
+                                <InputColorComponent
+                                    title="Background (Opsional)"
+                                    loading = {colorFetch}
+                                    showTitle={true}
+                                    showValidInput = {showValidInput}
+                                    list = {listColor}
+                                    onSelect = {(e) => setDataProject({...dataProject, color: e.id})}
+                                    value = {dataProject.color}
+                                />
+                                <div className = "flex flex-row space-x-2 w-full items-center justify-center">
+                                    <div onClick={() => setNewProject(false)} className=" bg-white border border-[#FF0000] text-[#FF0000] px-4 py-4 my-3 rounded-md w-full text-center">
+                                        Batal
+                                    </div>
+                                    <div onClick={() => checkCompleteData(() => !loading && saving())} className=" bg-[#FF0000] px-4 py-4 my-3 rounded-md w-full text-white text-center">
+                                        {loading ? "Menambahkan ... ":"Tambah"}
+                                    </div>
+                                </div>
+                            </>
+                            )}
+
+                            <InputImageComponent 
+                                ref={inputRef}
+                                label="Foto Diri"
+                                placeholder={"Image"}
+                                onChange={(file) => onChangePic(file)}
+                                type={TypeImageInputComponent.image}
+                                showValidInput={showValidInput}
+                                initValue={null}
+                                isShowed = {(e) => setCropImage(e)}
+                            />
                     </ModalWrapper>
             </Layout>
             
