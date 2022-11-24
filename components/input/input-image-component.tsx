@@ -164,18 +164,20 @@ const InputImageComponent = React.forwardRef<HTMLInputElement, InputImageCompone
 
 
 
+                        
+                    <div className = "absolute top-0 flex items-center justify-center flex-row space-x-2 w-full pt-6">
                         {!!completedCrop && (
-                            <div className = "absolute left-2 top-2 flex w-20 h-20 border-2 dark:border-white border-gray-300 rounded-lg">
+                                <div className = "flex-none h-10 w-10 mx-3">
                                 <canvas
                                     id = "previewCanvas"
                                     ref={previewCanvasRef}
-                                    className = "object-cover w-full rounded-md"
+                                    className = "object-cover flex-none w-full rounded-md"
                                 />
-                            </div>
+                                </div>
                         )}
-                    <div className = "absolute bottom-0 flex p-2 items-center justify-center flex-row space-x-2 w-full pt-6">
-                        <div className = "bg-green-500 rounded-full text-white p-3 w-1/3 flex items-center justify-center" onClick={() => doCrop()}>Selesai</div>
-                        <div className = "bg-red-500 rounded-full text-white p-3 w-1/3 flex items-center justify-center" onClick={() => closeCrop()}>Batal</div>
+                        <div className = "bg-green-500 rounded-full text-white p-2 w-1/3 flex items-center justify-center" onClick={() => doCrop()}>Selesai</div>
+                        <div className = "bg-red-500 rounded-full text-white p-2 w-1/3 flex items-center justify-center" onClick={() => closeCrop()}>Batal</div>
+                        
                     </div>
                 </div>
             </div>
