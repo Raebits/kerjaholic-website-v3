@@ -195,10 +195,10 @@ function ListProject({ dataServer }: ServerPageProps) {
                         setShowed = {(e) => modalAction(e)} 
                         loading = {loading} 
                         extendClass = {"w-full sm:w-1/2 lg:w-1/3 mx-4 flex flex-col px-4 pt-9 pb-4 bg-white dark:bg-gray-800 rounded-md w-full"}
-                        closeOutsideClick = {true}
+                        // closeOutsideClick = {true}
                     >
-                            {!cropImage && (
-                                <>
+                            {/* {!cropImage && (
+                                <> */}
                                 <div className = "w-full flex justify-center text-2xl text-black dark:text-white">
                                     Proyek Baru
                                 </div>
@@ -242,10 +242,10 @@ function ListProject({ dataServer }: ServerPageProps) {
                                         {loading ? "Menambahkan ... ":"Tambah"}
                                     </div>
                                 </div>
-                            </>
-                            )}
+                            {/* </>
+                            )} */}
 
-                            <InputImageComponent 
+                            {/* <InputImageComponent 
                                 ref={inputRef}
                                 label="Foto Diri"
                                 placeholder={"Image"}
@@ -254,8 +254,18 @@ function ListProject({ dataServer }: ServerPageProps) {
                                 showValidInput={showValidInput}
                                 initValue={null}
                                 isShowed = {(e) => setCropImage(e)}
-                            />
+                            /> */}
                     </ModalWrapper>
+                    <InputImageComponent 
+                        ref={inputRef}
+                        label="Foto Diri"
+                        placeholder={"Image"}
+                        onChange={(file) => onChangePic(file)}
+                        type={TypeImageInputComponent.image}
+                        showValidInput={showValidInput}
+                        initValue={null}
+                        isShowed = {(e) => setCropImage(e)}
+                    />
             </Layout>
             
         </>

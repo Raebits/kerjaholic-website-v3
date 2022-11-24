@@ -133,49 +133,54 @@ const InputImageComponent = React.forwardRef<HTMLInputElement, InputImageCompone
     }
 
     return (
-        <div className = {`${cropping ? "flex" : "hidden"} relative flex items-center justify-center flex-col space-y-2 w-full `}>
-                <div  className = " flex items-center justify-center rounded-md flex-grow ">
-                    <div className = {` ${''}  rounded-lg w-full max-h-[calc(100vh-290px)] sm:max-h-[calc(100vh-170px)] overflow-scroll scrollbar-hide`}>
-                        <input
-                            ref={ref}
-                            onChange={(e) => onSelectFile(e)}
-                            type="file"
-                            hidden
-                            accept={type}
+        <>
+        <input
+            ref={ref}
+            onChange={(e) => onSelectFile(e)}
+            type="file"
+            hidden
+            accept={type}
+        />
+        {cropping && (
+            <div className = {`fixed top-0 left-0 flex  z-50 w-full h-screen`}>
+                <div className = "relative bg-opacity-75 bg-gray-600 w-full h-screen items-center justify-center  flex flex-col">
+                
+                    {!!imgSrc && (
+                        <ReactCrop
+                        crop={crop}
+                        onChange={(_, percentCrop) => {setCrop(percentCrop);}}
+                        onComplete={async(c) => setCompletedCrop(c)}
+                        aspect={aspect}
+                        >
+                        <img
+                            ref={imgRef}
+                            alt="Crop me"
+                            src={imgSrc}
+                            onLoad={onImageLoad}
+                            className = "max-h-full max-w-full "
                         />
-                        {!!imgSrc && (
-                            <ReactCrop
-                            crop={crop}
-                            onChange={(_, percentCrop) => {setCrop(percentCrop);}}
-                            onComplete={async(c) => setCompletedCrop(c)}
-                            aspect={aspect}
-                            >
-                            <img
-                                ref={imgRef}
-                                alt="Crop me"
-                                src={imgSrc}
-                                onLoad={onImageLoad}
-                                className = "block h-full w-auto"
-                            />
-                            </ReactCrop>
-                        )}
-                        
-                    </div>
-                    {!!completedCrop && (
-                        <div className = "absolute -left-2 -top-6 flex w-20 h-20 border-2 dark:border-white border-gray-300 rounded-lg">
-                            <canvas
-                                id = "previewCanvas"
-                                ref={previewCanvasRef}
-                                className = "object-cover w-full rounded-md"
-                            />
-                        </div>
+                        </ReactCrop>
                     )}
+
+
+
+                        {!!completedCrop && (
+                            <div className = "absolute left-2 top-2 flex w-20 h-20 border-2 dark:border-white border-gray-300 rounded-lg">
+                                <canvas
+                                    id = "previewCanvas"
+                                    ref={previewCanvasRef}
+                                    className = "object-cover w-full rounded-md"
+                                />
+                            </div>
+                        )}
+                    <div className = "absolute bottom-0 flex p-2 items-center justify-center flex-row space-x-2 w-full pt-6">
+                        <div className = "bg-green-500 rounded-full text-white p-3 w-1/3 flex items-center justify-center" onClick={() => doCrop()}>Selesai</div>
+                        <div className = "bg-red-500 rounded-full text-white p-3 w-1/3 flex items-center justify-center" onClick={() => closeCrop()}>Batal</div>
+                    </div>
                 </div>
-                <div className = "flex items-center justify-center flex-row space-x-2 w-full pt-6">
-                    <div className = "bg-green-500 rounded-full text-white p-3 w-1/3 flex items-center justify-center" onClick={() => doCrop()}>Selesai</div>
-                    <div className = "bg-red-500 rounded-full text-white p-3 w-1/3 flex items-center justify-center" onClick={() => closeCrop()}>Batal</div>
-                </div>
-        </div>
+            </div>
+        )}
+        </>
     );
 });
 
