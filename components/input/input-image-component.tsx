@@ -55,6 +55,7 @@ const InputImageComponent = React.forwardRef<HTMLInputElement, InputImageCompone
     const [cropping, setCropping] = React.useState<boolean>(false)
     const [isImgPotrait, setIsImgPotrait] = React.useState<boolean>(false)
     const [windowSize, setWindowSize] = React.useState(getWindowSize());
+    const [croppingLoading, setCroppingLoading] = React.useState<boolean>(false)
 
     React.useEffect(() => {
         function handleWindowResize() {
@@ -149,6 +150,8 @@ const InputImageComponent = React.forwardRef<HTMLInputElement, InputImageCompone
         }
         let croppedImage = await new File([u8arr], filename, {type:mime});
         await onChange(croppedImage)
+        await setCroppingLoading(false)
+        await closeCrop()
     }
 
     async function closeCrop() {
@@ -157,8 +160,9 @@ const InputImageComponent = React.forwardRef<HTMLInputElement, InputImageCompone
     }
 
     async function doCrop() {
+        setCroppingLoading(true)
         await getCroppedImg()
-        await closeCrop()
+        
     }
 
     return (
@@ -202,13 +206,19 @@ const InputImageComponent = React.forwardRef<HTMLInputElement, InputImageCompone
 
 
 
-                        
+                    
                     <div className = "fixed bottom-3 flex items-center justify-center flex-row space-x-2 w-full pt-6">
                         
-                        <div className = "bg-green-500 rounded-full text-white text-xs px-4 py-4 flex items-center justify-center" onClick={() => doCrop()}>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                            </svg>
+                        <div className = "bg-green-500 rounded-full text-white text-xs px-4 py-4 flex items-center justify-center" onClick={() => !croppingLoading && (doCrop())}>
+                            {!croppingLoading ? (
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                                </svg>
+                            ):(
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6 animate-spin">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+                                </svg>
+                            )}
 
                         </div>
                         <div className = "bg-red-500 rounded-full text-white text-xs px-4 py-4 flex items-center justify-center" onClick={() => closeCrop()}>
