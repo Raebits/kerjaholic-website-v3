@@ -53,6 +53,7 @@ const InputImageComponent = React.forwardRef<HTMLInputElement, InputImageCompone
     const [rotate, setRotate] = React.useState(0)
     const [aspect, setAspect] = React.useState<number | undefined>(1 / 1)
     const [cropping, setCropping] = React.useState<boolean>(false)
+    const [isImgPotrait, setIsImgPotrait] = React.useState<boolean>(false)
     
     async function onSelectFile(e) {
         await isShowed(true)
@@ -65,7 +66,6 @@ const InputImageComponent = React.forwardRef<HTMLInputElement, InputImageCompone
             )
             reader.readAsDataURL(e.target.files[0])
         }
-
     }
 
     // set cropped possition
@@ -73,6 +73,11 @@ const InputImageComponent = React.forwardRef<HTMLInputElement, InputImageCompone
         if (aspect) {
         const { width, height } = e.currentTarget
             setCrop(centerAspectCrop(width, height, aspect))
+        }
+        if(imgRef.current.naturalHeight > imgRef.current.naturalWidth){
+            setIsImgPotrait(true)
+        }else{
+            setIsImgPotrait(false)
         }
     }
 
@@ -144,7 +149,15 @@ const InputImageComponent = React.forwardRef<HTMLInputElement, InputImageCompone
         {cropping && (
             <div className = {`fixed top-0 left-0 flex  z-50 w-full h-screen`}>
                 <div className = "relative bg-opacity-75 bg-gray-600 w-full h-screen items-center justify-center  flex flex-col">
-                
+                    {!!completedCrop && (
+                            <div className = "absolute left-2 top-2 h-20 w-20 mx-3 z-50">
+                            <canvas
+                                id = "previewCanvas"
+                                ref={previewCanvasRef}
+                                className = "object-cover flex-none w-full rounded-md"
+                            />
+                            </div>
+                    )}
                     {!!imgSrc && (
                         <ReactCrop
                         crop={crop}
@@ -157,7 +170,7 @@ const InputImageComponent = React.forwardRef<HTMLInputElement, InputImageCompone
                             alt="Crop me"
                             src={imgSrc}
                             onLoad={onImageLoad}
-                            className = "max-h-full max-w-full "
+                            className = {`${isImgPotrait ? ("max-h-full w-auto") : ("w-full h-auto lg:h-screen lg:w-auto")}`}
                         />
                         </ReactCrop>
                     )}
@@ -165,18 +178,23 @@ const InputImageComponent = React.forwardRef<HTMLInputElement, InputImageCompone
 
 
                         
-                    <div className = "absolute top-0 flex items-center justify-center flex-row space-x-2 w-full pt-6">
-                        {!!completedCrop && (
-                                <div className = "flex-none h-10 w-10 mx-3">
-                                <canvas
-                                    id = "previewCanvas"
-                                    ref={previewCanvasRef}
-                                    className = "object-cover flex-none w-full rounded-md"
-                                />
-                                </div>
-                        )}
-                        <div className = "bg-green-500 rounded-full text-white p-2 w-1/3 flex items-center justify-center" onClick={() => doCrop()}>Selesai</div>
-                        <div className = "bg-red-500 rounded-full text-white p-2 w-1/3 flex items-center justify-center" onClick={() => closeCrop()}>Batal</div>
+                    <div className = "fixed bottom-3 flex items-center justify-center flex-row space-x-2 w-full pt-6">
+                        
+                        <div className = "bg-green-500 rounded-full text-white text-xs px-4 py-4 flex items-center justify-center" onClick={() => doCrop()}>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                            </svg>
+
+                        </div>
+                        <div className = "bg-red-500 rounded-full text-white text-xs px-4 py-4 flex items-center justify-center" onClick={() => closeCrop()}>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </div>
+                        
+                    </div>
+                    <div className = "fixed bottom-2 left-2 text-gray-400">
+                        {imgRef.current?.naturalWidth}px x {imgRef.current?.naturalHeight}px
                         
                     </div>
                 </div>
