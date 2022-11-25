@@ -170,7 +170,7 @@ const InputImageComponent = React.forwardRef<HTMLInputElement, InputImageCompone
                             alt="Crop me"
                             src={imgSrc}
                             onLoad={onImageLoad}
-                            className = {`${isImgPotrait ? ("max-h-full w-auto") : ("w-full h-auto lg:h-screen lg:w-auto")}`}
+                            className = {`${isImgPotrait ? ("h-screen w-auto") : ("w-full h-auto lg:h-screen lg:w-auto")}`}
                         />
                         </ReactCrop>
                     )}
@@ -193,8 +193,8 @@ const InputImageComponent = React.forwardRef<HTMLInputElement, InputImageCompone
                         </div>
                         
                     </div>
-                    <div className = "fixed bottom-2 left-2 text-gray-400">
-                        {imgRef.current?.naturalWidth}px x {imgRef.current?.naturalHeight}px
+                    <div className = "fixed right-3 text-xs top-3 text-gray-400">
+                        Size: {imgRef.current?.naturalWidth} x {imgRef.current?.naturalHeight}
                         
                     </div>
                 </div>
