@@ -58,7 +58,7 @@ const InputImageComponent = React.forwardRef<HTMLInputElement, InputImageCompone
     async function onSelectFile(e) {
         
         if (e.target.files && e.target.files.length > 0) {
-            setCrop(undefined) // Makes crop preview update between images.
+            await setCrop(undefined) // Makes crop preview update between images.
             const reader = new FileReader()
             reader.addEventListener('load', (e) =>
                 init(reader),
@@ -156,7 +156,7 @@ const InputImageComponent = React.forwardRef<HTMLInputElement, InputImageCompone
             <div className = {`fixed top-0 left-0 flex  z-50 w-full h-screen`}>
                 <div className = "relative bg-opacity-75 bg-gray-600 w-full h-screen items-center justify-center  flex flex-col">
                     {!!completedCrop && (
-                            <div className = "absolute left-2 top-2 h-20 w-20 mx-3 z-50">
+                            <div className = "absolute flex left-2 top-2 h-20 w-20 mx-3 z-50">
                             <canvas
                                 id = "previewCanvas"
                                 ref={previewCanvasRef}
@@ -176,7 +176,7 @@ const InputImageComponent = React.forwardRef<HTMLInputElement, InputImageCompone
                             alt="Crop me"
                             src={imgSrc}
                             onLoad={onImageLoad}
-                            className = {`${isImgPotrait ? ("h-screen w-auto") : ("w-full h-auto lg:h-screen lg:w-auto")}`}
+                            className = {`${isImgPotrait ? ("h-screen w-auto") : ("w-full h-auto lg:h-screen lg:w-auto")} `}
                         />
                         </ReactCrop>
                     )}
