@@ -54,7 +54,25 @@ const InputImageComponent = React.forwardRef<HTMLInputElement, InputImageCompone
     const [aspect, setAspect] = React.useState<number | undefined>(1 / 1)
     const [cropping, setCropping] = React.useState<boolean>(false)
     const [isImgPotrait, setIsImgPotrait] = React.useState<boolean>(false)
-    
+    const [windowSize, setWindowSize] = React.useState(getWindowSize());
+
+    React.useEffect(() => {
+        function handleWindowResize() {
+        setWindowSize(getWindowSize());
+        }
+
+        window.addEventListener('resize', handleWindowResize);
+
+        return () => {
+        window.removeEventListener('resize', handleWindowResize);
+        };
+    }, []);
+
+    function getWindowSize() {
+        const {innerWidth, innerHeight} = window;
+        return {innerWidth, innerHeight};
+    }
+
     async function onSelectFile(e) {
         
         if (e.target.files && e.target.files.length > 0) {
@@ -156,11 +174,11 @@ const InputImageComponent = React.forwardRef<HTMLInputElement, InputImageCompone
             <div className = {`fixed top-0 left-0 flex  z-50 w-full h-screen`}>
                 <div className = "relative bg-opacity-75 bg-gray-600 w-full h-screen items-center justify-center  flex flex-col">
                     {!!completedCrop && (
-                            <div className = "absolute flex left-2 top-2 h-20 w-20 mx-3 z-50">
+                            <div className = "absolute flex left-2 top-2 h-20 w-20 mx-3 z-50 p-1 bg-white">
                             <canvas
                                 id = "previewCanvas"
                                 ref={previewCanvasRef}
-                                className = "object-cover flex-none w-full rounded-md"
+                                // className = "object-cover"
                             />
                             </div>
                     )}
@@ -176,7 +194,8 @@ const InputImageComponent = React.forwardRef<HTMLInputElement, InputImageCompone
                             alt="Crop me"
                             src={imgSrc}
                             onLoad={onImageLoad}
-                            className = {`${isImgPotrait ? ("h-screen w-auto") : ("w-full h-auto lg:h-screen lg:w-auto")} `}
+                            className = {`${isImgPotrait ? ("h-[calc(100vh-400px)] sm:h-[calc(100vh-200px)] lg:h-screen w-auto ") : ("w-full h-auto lg:h-screen lg:w-auto")} object-fit`}
+                          
                         />
                         </ReactCrop>
                     )}
