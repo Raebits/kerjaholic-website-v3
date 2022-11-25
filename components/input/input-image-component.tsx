@@ -56,23 +56,29 @@ const InputImageComponent = React.forwardRef<HTMLInputElement, InputImageCompone
     const [isImgPotrait, setIsImgPotrait] = React.useState<boolean>(false)
     
     async function onSelectFile(e) {
-        await isShowed(true)
-        await setCropping(true)
+        
         if (e.target.files && e.target.files.length > 0) {
             setCrop(undefined) // Makes crop preview update between images.
             const reader = new FileReader()
             reader.addEventListener('load', (e) =>
-                setImgSrc(reader.result?.toString() || ''),
+                init(reader),
             )
             reader.readAsDataURL(e.target.files[0])
+            
         }
     }
 
+    async function init (reader){
+        await setImgSrc(reader.result?.toString() || '')
+        isShowed(true)
+        setCropping(true)
+    }
+
     // set cropped possition
-    function onImageLoad(e: React.SyntheticEvent<HTMLImageElement>) {
+    async function onImageLoad(e: React.SyntheticEvent<HTMLImageElement>) {
         if (aspect) {
-        const { width, height } = e.currentTarget
-            setCrop(centerAspectCrop(width, height, aspect))
+            const { width, height } = await e.currentTarget
+            await setCrop(centerAspectCrop(width, height, aspect))
         }
         if(imgRef.current.naturalHeight > imgRef.current.naturalWidth){
             setIsImgPotrait(true)
