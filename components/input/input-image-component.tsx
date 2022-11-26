@@ -32,7 +32,8 @@ function centerAspectCrop(
         mediaHeight,
     )
 }
-  
+
+
 const InputImageComponent = React.forwardRef<HTMLInputElement, InputImageComponentProps>(( { onChange, isShowed, placeholder, label, type, className, showValidInput, initValue },ref) => {
 
     const [ value, setValue ] = React.useState<File>(initValue)
@@ -54,26 +55,11 @@ const InputImageComponent = React.forwardRef<HTMLInputElement, InputImageCompone
     const [aspect, setAspect] = React.useState<number | undefined>(1 / 1)
     const [cropping, setCropping] = React.useState<boolean>(false)
     const [isImgPotrait, setIsImgPotrait] = React.useState<boolean>(false)
-    const [windowSize, setWindowSize] = React.useState(getWindowSize());
     const [croppingLoading, setCroppingLoading] = React.useState<boolean>(false)
-
-    React.useEffect(() => {
-        function handleWindowResize() {
-        setWindowSize(getWindowSize());
-        }
-
-        window.addEventListener('resize', handleWindowResize);
-
-        return () => {
-        window.removeEventListener('resize', handleWindowResize);
-        };
-    }, []);
-
-    function getWindowSize() {
-        const {innerWidth, innerHeight} = window;
-        return {innerWidth, innerHeight};
-    }
-
+    const [imgClass, setImgClass] = React.useState<string>("")
+    const [fitW, setFitW] = React.useState<number>(0)
+    const [fitH, setFitH] = React.useState<number>(0)
+    
     async function onSelectFile(e) {
         
         if (e.target.files && e.target.files.length > 0) {
@@ -95,17 +81,81 @@ const InputImageComponent = React.forwardRef<HTMLInputElement, InputImageCompone
 
     // set cropped possition
     async function onImageLoad(e: React.SyntheticEvent<HTMLImageElement>) {
+        const { innerWidth:dWidth,  innerHeight:dHeight } = window
+        const imHeight = imgRef.current.naturalHeight
+        const imWidth = imgRef.current.naturalWidth
+        
+        // const pClass = "h-[calc(100vh-400px)] sm:h-[calc(100vh-200px)] lg:h-screen w-auto "
+        // const lClass = "w-full h-auto lg:h-screen lg:w-auto"
+
+        // console.log(innerHeight,'dh')
+        // console.log(innerWidth,"dw")
+        // console.log(imHeight,'imh')
+        // console.log(imWidth,'imw')
+        var imgScalling = await imScaller(dHeight, dWidth, imHeight, imWidth)
+        await setFitW(imgScalling.w)
+        await setFitH(imgScalling.h)
+
         if (aspect) {
-            const { width, height } = await e.currentTarget
-            await setCrop(centerAspectCrop(width, height, aspect))
+            // const { width, height } = await e.currentTarget
+            await setCrop(centerAspectCrop(imgScalling.w, imgScalling.h, aspect))
         }
-        if(imgRef.current.naturalHeight > imgRef.current.naturalWidth){
-            setIsImgPotrait(true)
+        console.log(imgScalling,'imgscalling')
+        if( imHeight > imWidth){
+
+            await setImgClass("h-["+imgScalling.h+"px] "+"w-["+imgScalling.w+"px]" )
         }else{
-            setIsImgPotrait(false)
+
+
+            await setImgClass("h-["+imgScalling.h+"px] "+"w-["+imgScalling.w+"px]" )
         }
+
+        
+
+        
     }
 
+    function imScaller( dHeight, dWidth, imHeight, imWidth ){
+        const hRatio = dHeight / imHeight * 100
+        const wRatio = dWidth / imWidth * 100
+        // console.log(hRatio,'hRatio')
+        // console.log(wRatio,'wRatio')
+        var niHeight = 0
+        var niWidth = 0
+
+        // height kurang
+        if(dHeight < imHeight){
+            niHeight = imHeight - (imHeight - dHeight )
+            niWidth = imWidth * niHeight / imHeight
+            // console.log(niHeight)
+            // console.log(niWidth)
+            // checking width is over ?
+            if(dWidth < niWidth ){
+                niWidth = niWidth - (niWidth - dWidth )
+                niHeight = imHeight * niWidth / imWidth
+                
+            }
+            return {h: niHeight, w: niWidth, st:'ok'}
+        }
+        // else if (dWidth < imWidth){
+        //     niWidth = imWidth - (dWidth - imWidth )
+        //     niHeight = imHeight - (dWidth - imWidth )
+
+        //     if(dHeight < niHeight){
+        //         niWidth = niWidth - (dHeight - imHeight )
+        //         niHeight = imHeight - (dHeight - imHeight )
+        //     }
+        //     return {h: niHeight, w: niWidth}
+        // }
+        else{
+            return {h: imHeight, w: imWidth}
+        }
+        // const spacer = 5
+        // if(imWidth > dWidth){
+        //     imWidth = imWidth - (dWidth-imHeight + spacer)
+        //     imHeight = imHeight - 5
+        // }
+    }
     useDebounceEffect(
         async () => {
             if (
@@ -198,7 +248,8 @@ const InputImageComponent = React.forwardRef<HTMLInputElement, InputImageCompone
                             alt="Crop me"
                             src={imgSrc}
                             onLoad={onImageLoad}
-                            className = {`${isImgPotrait ? ("h-[calc(100vh-400px)] sm:h-[calc(100vh-200px)] lg:h-screen w-auto ") : ("w-full h-auto lg:h-screen lg:w-auto")} object-fit`}
+                            // className = {`${imgClass} object-contain`}
+                            style = {{width: fitW, height: fitH}}
                           
                         />
                         </ReactCrop>
@@ -211,19 +262,19 @@ const InputImageComponent = React.forwardRef<HTMLInputElement, InputImageCompone
                         
                         <div className = "bg-green-500 rounded-full text-white text-xs px-4 py-4 flex items-center justify-center" onClick={() => !croppingLoading && (doCrop())}>
                             {!croppingLoading ? (
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
                                 </svg>
                             ):(
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6 animate-spin">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6 animate-spin">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
                                 </svg>
                             )}
 
                         </div>
                         <div className = "bg-red-500 rounded-full text-white text-xs px-4 py-4 flex items-center justify-center" onClick={() => closeCrop()}>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                             </svg>
                         </div>
                         
