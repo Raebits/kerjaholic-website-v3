@@ -100,7 +100,7 @@ const InputImageComponent = React.forwardRef<HTMLInputElement, InputImageCompone
             // const { width, height } = await e.currentTarget
             await setCrop(centerAspectCrop(imgScalling.w, imgScalling.h, aspect))
         }
-        console.log(imgScalling,'imgscalling')
+                
         if( imHeight > imWidth){
 
             await setImgClass("h-["+imgScalling.h+"px] "+"w-["+imgScalling.w+"px]" )
@@ -137,16 +137,17 @@ const InputImageComponent = React.forwardRef<HTMLInputElement, InputImageCompone
             }
             return {h: niHeight, w: niWidth, st:'ok'}
         }
-        // else if (dWidth < imWidth){
-        //     niWidth = imWidth - (dWidth - imWidth )
-        //     niHeight = imHeight - (dWidth - imWidth )
+        else if (dWidth < imWidth){
+            niWidth = imWidth - ( imWidth - dWidth)
+            niHeight = imHeight * (niWidth / imWidth )
 
-        //     if(dHeight < niHeight){
-        //         niWidth = niWidth - (dHeight - imHeight )
-        //         niHeight = imHeight - (dHeight - imHeight )
-        //     }
-        //     return {h: niHeight, w: niWidth}
-        // }
+            if(dHeight < niHeight){
+                niHeight = niHeight - (niHeight - dHeight )
+                niWidth = imWidth * niHeight / imHeight
+                
+            }
+            return {h: niHeight, w: niWidth}
+        }
         else{
             return {h: imHeight, w: imWidth}
         }
@@ -156,6 +157,7 @@ const InputImageComponent = React.forwardRef<HTMLInputElement, InputImageCompone
         //     imHeight = imHeight - 5
         // }
     }
+                
     useDebounceEffect(
         async () => {
             if (
