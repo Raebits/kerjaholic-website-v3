@@ -202,8 +202,8 @@ const InputImageComponent = React.forwardRef<HTMLInputElement, InputImageCompone
         }
         let croppedImage = await new File([u8arr], filename, {type:mime});
         await onChange(croppedImage)
-        await setCroppingLoading(false)
         await closeCrop()
+        await setCroppingLoading(false)
     }
 
     async function closeCrop() {
