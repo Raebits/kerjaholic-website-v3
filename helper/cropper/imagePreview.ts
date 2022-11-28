@@ -16,9 +16,11 @@ export async function imgPreview(
   crop: PixelCrop,
   scale = 1,
   rotate = 0,
+  smooth,
+  ratioQuality
 ) {
   const canvas = document.createElement('canvas')
-  canvasPreview(image, canvas, crop, scale, rotate)
+  canvasPreview(image, canvas, crop, scale, rotate, smooth, ratioQuality)
 
   const blob = await toBlob(canvas)
 
