@@ -52,6 +52,8 @@ const InputImageComponent = React.forwardRef<HTMLInputElement, InputImageCompone
     const [completedCrop, setCompletedCrop] = React.useState<PixelCrop>()
     const [scale, setScale] = React.useState(1)
     const [rotate, setRotate] = React.useState(0)
+    const [smooth, setSmooth] = React.useState<string>("high")
+    const [ratioQuality, setRatioQuality] = React.useState<number>(1) // 1 mean use full ratio
     const [aspect, setAspect] = React.useState<number | undefined>(1 / 1)
     const [cropping, setCropping] = React.useState<boolean>(false)
     const [isImgPotrait, setIsImgPotrait] = React.useState<boolean>(false)
@@ -84,14 +86,18 @@ const InputImageComponent = React.forwardRef<HTMLInputElement, InputImageCompone
         const { innerWidth:dWidth,  innerHeight:dHeight } = window
         const imHeight = imgRef.current.naturalHeight
         const imWidth = imgRef.current.naturalWidth
-        
         // const pClass = "h-[calc(100vh-400px)] sm:h-[calc(100vh-200px)] lg:h-screen w-auto "
         // const lClass = "w-full h-auto lg:h-screen lg:w-auto"
-
         // console.log(innerHeight,'dh')
         // console.log(innerWidth,"dw")
         // console.log(imHeight,'imh')
         // console.log(imWidth,'imw')
+        if(imHeight >1000 || imWidth > 1000){
+            await setRatioQuality(1000/imHeight)
+        }else{
+            await setRatioQuality(1)
+        }
+        
         var imgScalling = await imScaller(dHeight, dWidth, imHeight, imWidth)
         await setFitW(imgScalling.w)
         await setFitH(imgScalling.h)
@@ -173,6 +179,8 @@ const InputImageComponent = React.forwardRef<HTMLInputElement, InputImageCompone
                     completedCrop,
                     scale,
                     rotate,
+                    smooth,
+                    ratioQuality
                 )
             }
         },100,[completedCrop, scale, rotate],
@@ -196,7 +204,7 @@ const InputImageComponent = React.forwardRef<HTMLInputElement, InputImageCompone
             bstr = atob(arr[1]), 
             n = bstr.length, 
             u8arr = new Uint8Array(n);
-                
+            console.log(n,'length')
         while(n--){
             u8arr[n] = bstr.charCodeAt(n);
         }
@@ -215,6 +223,11 @@ const InputImageComponent = React.forwardRef<HTMLInputElement, InputImageCompone
         setCroppingLoading(true)
         await getCroppedImg()
         
+    }
+
+    async function completeCropHandler(c){
+        await setCompletedCrop(c)
+       
     }
 
     return (
@@ -242,7 +255,7 @@ const InputImageComponent = React.forwardRef<HTMLInputElement, InputImageCompone
                         <ReactCrop
                         crop={crop}
                         onChange={(_, percentCrop) => {setCrop(percentCrop);}}
-                        onComplete={async(c) => setCompletedCrop(c)}
+                        onComplete={async(c) => completeCropHandler(c)}
                         aspect={aspect}
                         >
                         <img
@@ -268,7 +281,7 @@ const InputImageComponent = React.forwardRef<HTMLInputElement, InputImageCompone
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
                                 </svg>
                             ):(
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6 animate-spin">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-4 h-4 m-1 animate-spin">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
                                 </svg>
                             )}

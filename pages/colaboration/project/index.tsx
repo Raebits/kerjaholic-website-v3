@@ -123,6 +123,11 @@ function ListProject({ dataServer }: ServerPageProps) {
         }
     }
 
+    async function deleteCroppedImage () {
+        await setDataProject({...dataProject, useLogo: 0, pic:null})
+        await setPreviewImage(null)
+    }
+
     return (
         <>
             <Layout title={"Tambah Kenalan sekaligus Cari Kerjaan | Kerjaholic"} useFooter = {false}>
@@ -203,17 +208,33 @@ function ListProject({ dataServer }: ServerPageProps) {
                                     Proyek Baru
                                 </div>
                                 
-                                <div className="flex space-x-2 items-center">
-                                    <div onClick={() => inputRef.current.click()} className = "flex-none p-1">
-                                        <div className = "flex items-center justify-center border-2 h-12 w-12 border-white bg-white rounded-full">
+                                <div className="flex space-x-2 items-center ">
+                                    <div onClick={() => inputRef.current.click()} className = "flex-none ">
+                                        <div className = "relative flex items-center justify-center h-16 w-16 bg-[#CCCCCC] rounded-full">
                                             {previewImage ? (
+                                                <>
                                                 <img className="shadow rounded-full max-w-full h-auto align-middle border-none" src={previewImage} />
+                                                {/* <div onClick = {()=>deleteCroppedImage()} className = "absolute p-3.5 bg-opacity-30 hover:bg-opacity-40 hover:bg-[#FF0000] rounded-full">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-4 h-4 text-gray-200">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                                    </svg>
+                                                </div>     */}
+                                                <div className = "absolute p-5 rounded-full group hover:bg-[#FF0000] hover:bg-opacity-20">
+                                                    <svg className = "w-7 h-7 fill-[#828282]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                        <path  d="M16.767 4.5 15.59 2.974A2.518 2.518 0 0 0 13.61 2h-3.22a2.52 2.52 0 0 0-1.98.974L7.232 4.5h9.535ZM12 17a3.333 3.333 0 1 0 0-6.667A3.333 3.333 0 0 0 12 17Z"/>
+                                                        <path  d="M17.833 6.167H6.167A4.172 4.172 0 0 0 2 10.334v7.5a4.172 4.172 0 0 0 4.167 4.167h11.666A4.172 4.172 0 0 0 22 17.834v-7.5a4.172 4.172 0 0 0-4.167-4.167ZM12 18.667a5 5 0 1 1 0-10 5 5 0 0 1 0 10Z"/>
+                                                    </svg>
+                                                </div>
+                                                </>
                                             ):(
-                                                <>+</>
+                                                <svg className = "w-7 h-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                    <path fill="#828282" d="M16.767 4.5 15.59 2.974A2.518 2.518 0 0 0 13.61 2h-3.22a2.52 2.52 0 0 0-1.98.974L7.232 4.5h9.535ZM12 17a3.333 3.333 0 1 0 0-6.667A3.333 3.333 0 0 0 12 17Z"/>
+                                                    <path fill="#828282" d="M17.833 6.167H6.167A4.172 4.172 0 0 0 2 10.334v7.5a4.172 4.172 0 0 0 4.167 4.167h11.666A4.172 4.172 0 0 0 22 17.834v-7.5a4.172 4.172 0 0 0-4.167-4.167ZM12 18.667a5 5 0 1 1 0-10 5 5 0 0 1 0 10Z"/>
+                                                </svg>
                                             )}
                                         </div>
                                     </div>
-                                    <div className = "flex-grow">
+                                    <div className = "flex-grow py-2 pt-5">
                                         <InputDefaultComponent 
                                             title="Judul Proyek"
                                             placeholder="Judul Proyek"
@@ -235,7 +256,7 @@ function ListProject({ dataServer }: ServerPageProps) {
                                     value = {dataProject.color}
                                 />
                                 <div className = "flex flex-row space-x-2 w-full items-center justify-center">
-                                    <div onClick={() => setNewProject(false)} className=" bg-white border border-[#FF0000] text-[#FF0000] px-4 py-4 my-3 rounded-md w-full text-center">
+                                    <div onClick={async () => {await setNewProject(false); await modalAction(false);}} className=" bg-white border border-[#FF0000] text-[#FF0000] px-4 py-4 my-3 rounded-md w-full text-center">
                                         Batal
                                     </div>
                                     <div onClick={() => checkCompleteData(() => !loading && saving())} className=" bg-[#FF0000] px-4 py-4 my-3 rounded-md w-full text-white text-center">

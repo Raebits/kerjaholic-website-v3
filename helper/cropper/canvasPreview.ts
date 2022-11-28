@@ -8,6 +8,8 @@ export async function canvasPreview(
   crop: PixelCrop,
   scale = 1,
   rotate = 0,
+  smooth,
+  ratioQuality
 ) {
   const ctx = canvas.getContext('2d')
 
@@ -21,14 +23,15 @@ export async function canvasPreview(
   // at the expense of slightly slower render times and needing to
   // size the image back down if you want to download/upload and be
   // true to the images natural size.
-  const pixelRatio = window.devicePixelRatio
+  const pixelRatio = window.devicePixelRatio * ratioQuality
   // const pixelRatio = 1
-
+  console.log(pixelRatio)
   canvas.width = Math.floor(crop.width * scaleX * pixelRatio)
   canvas.height = Math.floor(crop.height * scaleY * pixelRatio)
-
+  
   ctx.scale(pixelRatio, pixelRatio)
-  ctx.imageSmoothingQuality = 'high'
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = smooth
 
   const cropX = crop.x * scaleX
   const cropY = crop.y * scaleY
