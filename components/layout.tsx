@@ -208,7 +208,7 @@ export default function Layout({ children, title, useFooter }: LayoutProps): JSX
             {/* Footer Home  */}
             {useFooter && <FooterSectionHome />}
             {/* development mode flag*/}
-            {!useFooter ? (
+            {/* {!useFooter ? (
                 baseUrl === 'https://dev.kerjaholic.com/api/' && (
                     <div className = "z-50 fixed bg-[#FF0000] text-sm text-white py-1 px-3 bg-opacity-30 rounded-full bottom-16 sm:bottom-0 right-0 m-3"> Development Mode</div>
                 )
@@ -216,7 +216,7 @@ export default function Layout({ children, title, useFooter }: LayoutProps): JSX
                 baseUrl === 'https://dev.kerjaholic.com/api/' && (
                     <div className = "z-50 fixed bg-[#FF0000] text-sm text-white py-1 px-3 bg-opacity-30 rounded-full bottom-0 right-0 m-3"> Development Mode</div>
                 )
-            )}
+            )} */}
             
         </div>
     )
