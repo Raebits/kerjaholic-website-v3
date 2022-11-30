@@ -235,7 +235,7 @@ function ListTask({ slug,dataServer }: ServerPageProps) {
                                     Tugas (10)
                                 </div>
                                 <div className="flex w-1/2 items-center justify-end">
-                                    <div onClick = {() => {}} className = "flex items-center justify-center bg-[#FF0000] rounded-full px-1 text-sm ">
+                                    <div onClick = {() => router.push("/colaboration/task/add/"+serverData.projectId)} className = "flex items-center justify-center bg-[#FF0000] rounded-full px-1 text-sm ">
                                         <svg className = "fill-white" xmlns="http://www.w3.org/2000/svg" width="41" height="40">
                                             <g>
                                                 <path d="M20.832 32c-6.617 0-12-5.383-12-12s5.383-12 12-12c6.618 0 12 5.383 12 12s-5.382 12-12 12Zm0-22.5c-5.79 0-10.5 4.71-10.5 10.5s4.71 10.5 10.5 10.5 10.5-4.71 10.5-10.5-4.71-10.5-10.5-10.5Z"/><path d="M26.082 20.75h-10.5a.75.75 0 0 1 0-1.5h10.5a.75.75 0 0 1 0 1.5Z"/>

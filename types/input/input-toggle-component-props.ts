@@ -6,4 +6,5 @@ export type InputToggleComponentProps = {
     name?: string
     initValue?: boolean,
     children?: React.ReactNode,
+    showValidInput? : boolean
 }

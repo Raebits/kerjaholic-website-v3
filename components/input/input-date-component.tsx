@@ -30,13 +30,15 @@ export function InputDateComponent( { onChange, outFormat, title, hideLabel, sho
                     />
                 </span>
                 <input 
-                    defaultValue={value}
+                    // defaultValue={value}
+                    value = {newValue}
                     type="date" 
                     className="rounded-none rounded-r-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 px-3 py-2  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
                     onChange={(e) => {
                         setNewValue(moment(new Date(e.target.value)).format((outFormat) ? outFormat : "YYYY-MM-DD"))
                         onChange(moment(new Date(e.target.value)).format((outFormat) ? outFormat : "YYYY-MM-DD"))
                     }}
+                    placeholder="dd-mm-yyyy"
                 />
             </div>
             {(isInvalid()) && (

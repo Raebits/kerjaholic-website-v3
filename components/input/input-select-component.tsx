@@ -52,7 +52,7 @@ export function InputSelectComponent( {showTitle, loading, disabled, onSelect, t
                 </div>
             </div>
             {listOpened && (
-                <div className = "absolute flex-col bg-white dark:bg-gray-500 rounded-lg w-full top-11 px-2 py-6 flex  items-center justify-center shadow-xl">
+                <div className = "absolute flex-col bg-white dark:bg-gray-500 rounded-lg w-full top-11 px-2 py-6 flex  items-center justify-center shadow-xl z-40">
                     {onSearch && (
                         <input type={"text" }
                             className="bg-gray-50 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
