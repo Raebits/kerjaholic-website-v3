@@ -286,6 +286,7 @@ function ListProject({ dataServer }: ServerPageProps) {
                         showValidInput={showValidInput}
                         initValue={null}
                         isShowed = {(e) => setCropImage(e)}
+                        aspectRatio = {1 / 1}
                     />
             </Layout>
             

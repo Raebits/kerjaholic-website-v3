@@ -7,6 +7,7 @@ export type InputImageComponentProps = {
     showValidInput?: boolean 
     initValue: any
     isShowed?: (e:boolean) => void
+    aspectRatio ?: number
 }
 
 export enum TypeImageInputComponent {

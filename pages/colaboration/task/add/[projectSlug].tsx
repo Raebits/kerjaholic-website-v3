@@ -37,16 +37,23 @@ import { InputDateComponent } from "../../../../components/input/input-date-comp
 import { InputTimeComponent } from "../../../../components/input/input-time-component";
 import { validate } from "../../../../helper/form-validation";
 import Loading from "../../../../components/loading";
+import InputImageComponent from "../../../../components/input/input-image-component";
+import { TypeImageInputComponent } from "../../../../types/input/input-image-component-props";
 
 
 function AddTask({ slug, dataServer }: ServerPageProps) {
     let serverData = JSON.parse((dataServer == null)? null : dataServer)
+
+    const inputRef = React.createRef<HTMLInputElement>();
+
     const [ dataTask, setDataTask ] = React.useState<AddTaskModel>(new AddTaskModel())
     const [ showValidInput, setShowValidInput ] = React.useState<boolean>(false)
     const [loading, setLoading] = React.useState<boolean>(false)
     const [projectId, setProjectId] = React.useState<string>("")
     const [reminderDate, setReminderDate] = React.useState<string>("")
     const [reminderTime, setReminderTIme] = React.useState<string>("")
+    const [previewImage, setPreviewImage] = React.useState([])
+    const [cropImage, setCropImage] = React.useState<boolean>(false)
 
     if(serverData == null){
         return (
@@ -147,8 +154,22 @@ function AddTask({ slug, dataServer }: ServerPageProps) {
         }
     }
 
-    
+    const onChangePic = async (file: File) => {
+        if (file) {
+            console.log(file)
+            // await setDataProject({...dataProject, useLogo: 1, pic:file})
+            let reader = new FileReader();
+            reader.onload = (e) => {
+                setPreviewImage(oldImg => [...oldImg, e.target.result])
+            };
 
+            reader.readAsDataURL(file);
+        }
+    }
+
+    React.useEffect(() => {
+        console.log(previewImage)
+    },[previewImage])
     return (
         <>
         <Loading showed={loading} text={"Loading ..."} />
@@ -230,6 +251,24 @@ function AddTask({ slug, dataServer }: ServerPageProps) {
                                             showValidInput={showValidInput}
                                             showTitle = {true}
                                         />    
+                                    </div>
+                                    <div  className = "flex flex-row space-x-3 p-2 border border-dashed rounded-md ">
+                                        <div onClick={() => inputRef.current.click()} className = "h-10 w-10 flex bg-gray-300 rounded-md items-center justify-center ">+</div>
+                                        {previewImage.length > 0 && (
+                                            previewImage.map((obj, key) => {
+                                                return(
+                                                    <div className = "flex relative">
+                                                        <img key = {key} className="w-auto h-10 rounded-md" src={obj} />
+                                                        <div onClick = {(e)=> setPreviewImage(previewImage.filter(item => item !== obj))} className = "bg-red-600 rounded-full absolute -right-2 -top-1 h-4 w-4 text-xs flex items-center justify-center text-white">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                                        </svg>
+                                                        </div>
+                                                    </div>
+                                                )
+                                            })
+                                            
+                                        )}
                                     </div>
                                 </div>
 
@@ -337,7 +376,16 @@ function AddTask({ slug, dataServer }: ServerPageProps) {
                         
                     </div>
                 </SidebarNavigation>
-            
+                <InputImageComponent 
+                        ref={inputRef}
+                        label="Foto Diri"
+                        placeholder={"Image"}
+                        onChange={(file) => onChangePic(file)}
+                        type={TypeImageInputComponent.image}
+                        showValidInput={showValidInput}
+                        initValue={null}
+                        isShowed = {(e) => setCropImage(e)}
+                    />
         </Layout>
         </>
     )

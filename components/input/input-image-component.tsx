@@ -34,7 +34,7 @@ function centerAspectCrop(
 }
 
 
-const InputImageComponent = React.forwardRef<HTMLInputElement, InputImageComponentProps>(( { onChange, isShowed, placeholder, label, type, className, showValidInput, initValue },ref) => {
+const InputImageComponent = React.forwardRef<HTMLInputElement, InputImageComponentProps>(( { onChange, isShowed, aspectRatio, placeholder, label, type, className, showValidInput, initValue },ref) => {
 
     const [ value, setValue ] = React.useState<File>(initValue)
 
@@ -54,7 +54,7 @@ const InputImageComponent = React.forwardRef<HTMLInputElement, InputImageCompone
     const [rotate, setRotate] = React.useState(0)
     const [smooth, setSmooth] = React.useState<string>("high")
     const [ratioQuality, setRatioQuality] = React.useState<number>(1) // 1 mean use full ratio
-    const [aspect, setAspect] = React.useState<number | undefined>(1 / 1)
+    const [aspect, setAspect] = React.useState<number | undefined>(aspectRatio ? aspectRatio : undefined)
     const [cropping, setCropping] = React.useState<boolean>(false)
     const [isImgPotrait, setIsImgPotrait] = React.useState<boolean>(false)
     const [croppingLoading, setCroppingLoading] = React.useState<boolean>(false)
@@ -74,9 +74,19 @@ const InputImageComponent = React.forwardRef<HTMLInputElement, InputImageCompone
             
         }
     }
-
+    
     async function init (reader){
         await setImgSrc(reader.result?.toString() || '')
+        
+        if(!aspectRatio){
+            var image = new Image();
+            image.src = await reader.result;
+        
+            image.onload = await function() {
+                setAspect(image.width/ image.height)
+            }
+        }
+        
         isShowed(true)
         setCropping(true)
     }
@@ -86,6 +96,7 @@ const InputImageComponent = React.forwardRef<HTMLInputElement, InputImageCompone
         const { innerWidth:dWidth,  innerHeight:dHeight } = window
         const imHeight = imgRef.current.naturalHeight
         const imWidth = imgRef.current.naturalWidth
+        
         // const pClass = "h-[calc(100vh-400px)] sm:h-[calc(100vh-200px)] lg:h-screen w-auto "
         // const lClass = "w-full h-auto lg:h-screen lg:w-auto"
         // console.log(innerHeight,'dh')
@@ -243,7 +254,7 @@ const InputImageComponent = React.forwardRef<HTMLInputElement, InputImageCompone
             <div className = {`fixed top-0 left-0 flex  z-50 w-full h-screen`}>
                 <div className = "relative bg-opacity-75 bg-gray-600 w-full h-screen items-center justify-center  flex flex-col">
                     {!!completedCrop && (
-                            <div className = "absolute flex left-2 top-2 h-20 w-20 mx-3 z-50 p-1 bg-white">
+                            <div className = "absolute left-2 top-2 hidden">
                             <canvas
                                 id = "previewCanvas"
                                 ref={previewCanvasRef}
@@ -257,6 +268,7 @@ const InputImageComponent = React.forwardRef<HTMLInputElement, InputImageCompone
                         onChange={(_, percentCrop) => {setCrop(percentCrop);}}
                         onComplete={async(c) => completeCropHandler(c)}
                         aspect={aspect}
+                        onDragStart={async() => !aspectRatio && ( await setAspect(undefined))}
                         >
                         <img
                             ref={imgRef}
