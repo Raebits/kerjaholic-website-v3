@@ -11,7 +11,7 @@ export default function MainKenalanSectionHome(): JSX.Element {
                 </div>
                 <div className = " w-1/2">
                     <div className = "md:mt-48 md:ml-24">
-                        <div className = "text-[#FF0000] text-3xl lg:text-5xl font-poppinsBold mb-2">TAMBAH KENALAN</div>
+                        <div className = "text-[#FF0000] text-3xl lg:text-5xl font-poppinsBold mb-2">SERVER TEST</div>
                         <div className = "text-[#FF0000] text-2xl lg:text-4xl font-poppinsThin mb-2">Sekaligus</div>
                         <div className = "text-[#FF0000] text-3xl lg:text-5xl mb-10">CARI KERJAAN</div>
                         <a href="https://kerjaholic.page.link/5DWr7m4EkWZj3KTDA" >
